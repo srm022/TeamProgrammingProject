@@ -39,7 +39,7 @@ namespace PZProject.Data.Repositories.User
             var user = _db.Users
                 .Include(r => r.Role)
                 .SingleOrDefault(u => u.Email == email);
-
+                
             if (user == null) throw new Exception("User not found"); //todo
 
             return user;
