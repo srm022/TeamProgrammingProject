@@ -2,6 +2,8 @@
 using PZProject.Data.Database.Entities;
 using PZProject.Data.Database.Entities.User;
 using PZProject.Handlers.User.Model;
+using PZProject.Data.Database.Entities.Group;
+using PZProject.Handlers.Group.Model;
 
 namespace PZProject.Data
 {
@@ -10,6 +12,7 @@ namespace PZProject.Data
         public SystemMapperProfile()
         {
             CreateMap<RegisterUserModel, User>();
+            CreateMap<CreateGroupModel, Group>();
         }
     }
 }

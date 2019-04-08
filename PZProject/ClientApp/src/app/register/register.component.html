@@ -1,10 +1,11 @@
 <div class="login-page">
   <div class="form">
     <div class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
+      <input type="text" required [(ngModel)]="firstName" placeholder="first name"/>
+      <input type="text" required [(ngModel)]="lastName" placeholder="last name" />
+      <input type="password" required [(ngModel)]="password" placeholder="password"/>
+      <input type="text" required [(ngModel)]="email" placeholder="email address"/>
+      <button type="submit" id="registerButton" (click)="register()">create</button>
       <p class="message">Already registered? <a href="/login">Sign In</a></p>
     </div>
   </div>

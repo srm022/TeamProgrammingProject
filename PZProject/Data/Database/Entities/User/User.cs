@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PZProject.Data.Database.Entities.Group;
 
 namespace PZProject.Data.Database.Entities.User
 {
@@ -26,5 +28,7 @@ namespace PZProject.Data.Database.Entities.User
 
         [Required]
         public Role Role { get; set; }
+
+        public List<UserGroup> Groups { get; set; }
     }
 }

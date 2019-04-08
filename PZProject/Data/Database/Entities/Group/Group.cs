@@ -1,30 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PZProject.Data.Database.Entities.Group
 {
-    [Table("User")]
-    public class User
+    [Table("Group")]
+    public class Group
     {
         [Key, Required]
-        public int UserId { get; set; }
+        public int GroupId { get; set; }
 
         [Required, MaxLength(128)]
-        public string Email { get; set; }
-
-        [Required, MaxLength(32)]
-        public string FirstName { get; set; }
-
-        [Required, MaxLength(32)]
-        public string LastName { get; set; }
-
-        [Required, MaxLength(1024)]
-        public byte[] PasswordHash { get; set; }
-
-        [Required, MaxLength(512)]
-        public byte[] PasswordSalt { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public Role Role { get; set; }
+        public int CreatorId { get; set; }
+
+        public List<UserGroup> Users { get; set; }
     }
 }
