@@ -39,9 +39,9 @@ namespace PZProject.Controllers
 
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Unauthorized();
+                return StatusCode(401, ex.Message);
             }
         }
     }

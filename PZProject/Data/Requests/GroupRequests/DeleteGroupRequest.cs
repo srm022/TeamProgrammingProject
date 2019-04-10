@@ -2,6 +2,6 @@
 {
     public class DeleteGroupRequest
     {
-        public int groupId { get; set; }
+        public int GroupId { get; set; }
     }
 }

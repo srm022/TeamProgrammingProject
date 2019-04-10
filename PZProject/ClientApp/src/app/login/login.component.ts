@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Response } from '../../../node_modules/@types/selenium-webdriver/http';
 
 @Component({
   selector: 'app-login',
@@ -26,9 +27,10 @@ export class LoginComponent implements OnInit {
       password: this.password,
     }
 
-    this.http.post('https://localhost:5001/auth/login', credentials, { responseType: 'text' }).subscribe(result => {
-      this.token = result;
-      console.log(result);
+      this.http.post('https://localhost:5001/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
+      console.log(result)
+      this.token = result['token'];
+      console.log(this.token)
     }, error => console.error(error));
   }
 }

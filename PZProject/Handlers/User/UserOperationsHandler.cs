@@ -3,6 +3,7 @@ using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.UserRequests;
 using PZProject.Handlers.Utils;
 using PZProject.Data.Responses;
+using System;
 
 namespace PZProject.Handlers.User
 {
@@ -41,7 +42,7 @@ namespace PZProject.Handlers.User
                 return new LoginUserResponse(token);
             }
 
-            return null;
+            throw new Exception("Wrong credentials");
         }
 
         private Data.Database.Entities.User.User GetUserByEmail(string email)
