@@ -30,7 +30,12 @@
     <Folder Include="Data\Database\Entities\Group\" />
     <Folder Include="Data\Repositories\Group\" />
     <Folder Include="Handlers\Group\" />
-    <Folder Include="Handlers\Group\Model\" />
+    <Folder Include="Data\Requests\" />
+    <Folder Include="Data\Requests\GroupRequests\" />
+    <Folder Include="Data\Requests\UserRequests\" />
+    <Folder Include="Data\Responses\" />
+    <Folder Include="Data\Responses\UserResponses\" />
+    <Folder Include="Data\Responses\GroupResponses\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Handlers\Group\Model\EmptyClass.cs" />

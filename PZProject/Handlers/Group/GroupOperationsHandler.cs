@@ -1,16 +1,16 @@
 ﻿using System;
 using AutoMapper;
-using PZProject.Handlers.Group.Model;
 using PZProject.Data.Repositories.Group;
 using System.Collections.Generic;
+using PZProject.Data.Requests.GroupRequests;
 
 namespace PZProject.Handlers.Group
 {
     public interface IGroupOperationsHandler
     {
-        void CreateNewGroup(CreateGroupModel model, int userId);
+        void CreateNewGroup(CreateGroupRequest request, int userId);
         List<Data.Database.Entities.Group.Group> GetGroupsForUser(int userId);
-        void DeleteGroup(int groupId, int userId);
+        void DeleteGroup(DeleteGroupRequest request, int userId);
     }
 
     public class GroupOperationsHandler: IGroupOperationsHandler
@@ -22,11 +22,10 @@ namespace PZProject.Handlers.Group
             _groupRepository = groupRepository;
         }
 
-        public void CreateNewGroup(CreateGroupModel model, int userId)
+        public void CreateNewGroup(CreateGroupRequest request, int userId)
         {
-            Console.Write("Creating");
-            VerifyNameAvailability(model.Name);
-            var group = MapModelToEntity(model);
+            VerifyNameAvailability(request.Name);
+            var group = MapRequestToEntity(request);
             group.CreatorId = userId;
             Create(group);
         }
@@ -36,8 +35,9 @@ namespace PZProject.Handlers.Group
             return _groupRepository.GetGroupsForUser(userId);
         }
 
-        public void DeleteGroup(int groupId, int userId)
+        public void DeleteGroup(DeleteGroupRequest request, int userId)
         {
+            var groupId = request.GroupId;
             _groupRepository.DeleteGroup(groupId, userId);
         }
 
@@ -51,9 +51,9 @@ namespace PZProject.Handlers.Group
             _groupRepository.CreateGroup(group);
         }
 
-        private Data.Database.Entities.Group.Group MapModelToEntity(CreateGroupModel model)
+        private Data.Database.Entities.Group.Group MapRequestToEntity(CreateGroupRequest request)
         {
-            return Mapper.Map<Data.Database.Entities.Group.Group>(model);
+            return Mapper.Map<Data.Database.Entities.Group.Group>(request);
         }
     }
 }

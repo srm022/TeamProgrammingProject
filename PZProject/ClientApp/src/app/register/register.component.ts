@@ -22,22 +22,15 @@ export class RegisterComponent implements OnInit {
 
     public register() {
 
-    let credentials = new RegisterModel();
-        credentials.email = this.email;
-        credentials.password = this.password;
-        credentials.firstName = this.firstName;
-        credentials.lastName = this.lastName;
-
+    let credentials = {
+        email: this.email,
+        password:  this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+    }
     this.http.post('https://localhost:5001/auth/register', credentials, { responseType: 'text' }).subscribe(result => {
       console.log(result);
     }, error => console.error(error));
   }
 
-}
-
-class RegisterModel {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
 }

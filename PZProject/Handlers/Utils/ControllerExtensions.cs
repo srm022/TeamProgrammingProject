@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PZProject.Handlers.Utils
 {
-    static class UserHelper
+    static class ControllerExtensions
     {
         public static int GetUserId(this Controller controller)
         {
-            return int.Parse(controller.User.Claims.First(i => i.Type == "UserId").Value);
+            return int.Parse(controller.User.Claims.FirstOrDefault().Value);
         }
     }
 }

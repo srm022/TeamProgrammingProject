@@ -24,15 +24,16 @@ namespace PZProject.Data.Repositories.Group
 
         public void CreateGroup(Database.Entities.Group.Group groupEntity)
         {
+            _db.Groups.Add(groupEntity);
+            SaveChanges();
             var user = _db.Users
                 .Where(u => u.UserId == groupEntity.CreatorId)
                 .FirstOrDefault();
-            var userGroup = new Database.Entities.Group.UserGroup();
-
-            userGroup.GroupId = groupEntity.GroupId;
-            userGroup.UserId = user.UserId;
-
-            _db.Groups.Add(groupEntity);
+            var userGroup = new Database.Entities.Group.UserGroup
+            {
+                GroupId = groupEntity.GroupId,
+                UserId = user.UserId
+            };
             _db.UserGroups.Add(userGroup);
             SaveChanges();
         }
@@ -45,16 +46,11 @@ namespace PZProject.Data.Repositories.Group
 
         public List<Database.Entities.Group.Group> GetGroupsForUser(int userId)
         {
-            var userGroups = _db.UserGroups
-                .Where(g => g.UserId == userId);
-            var groups = new List<Database.Entities.Group.Group>();
+            var groupsIds = _db.UserGroups
+                .Where(g => g.UserId == userId)
+                .Select(g => g.GroupId);
 
-            foreach (var userGroup in userGroups) {
-                var group = _db.Groups
-                    .Where(g => g.GroupId == userGroup.GroupId)
-                    .FirstOrDefault();
-                groups.Add(group);
-            }
+            var groups = _db.Groups.Where(x => groupsIds.Contains(x.GroupId)).ToList();
 
             return groups;
         }

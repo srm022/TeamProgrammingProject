@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PZProject.Data.Requests.GroupRequests;
 using PZProject.Handlers.Group;
-using PZProject.Handlers.Group.Model;
 using PZProject.Handlers.Utils;
 
 namespace PZProject.Controllers
@@ -17,7 +17,7 @@ namespace PZProject.Controllers
             _groupOperationsHandler = groupOperationsHandler;
         }
 
-        [Authorize(Roles = "Administrator, Petitioner")]
+        [Authorize]
         [HttpGet]
         public IActionResult GetGroups()
         {
@@ -33,16 +33,16 @@ namespace PZProject.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrator, Petitioner")]
+        [Authorize]
         [HttpPost("create")]
-        public IActionResult Create([FromBody] CreateGroupModel model)
+        public IActionResult Create([FromBody] CreateGroupRequest request)
         {
             try
             {
                 var userId = this.GetUserId();
-                _groupOperationsHandler.CreateNewGroup(model, userId);
+                _groupOperationsHandler.CreateNewGroup(request, userId);
 
-                return Ok();
+                return Created("", null);
             }
             catch (Exception ex)
             {
@@ -50,14 +50,14 @@ namespace PZProject.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrator, Petitioner")]
-        [HttpPost("delete")]
-        public IActionResult Delete([FromBody] int groupId)
+        [Authorize]
+        [HttpDelete("delete")]
+        public IActionResult Delete([FromBody] DeleteGroupRequest request)
         {
             try
             {
                 var userId = this.GetUserId();
-                _groupOperationsHandler.DeleteGroup(groupId, userId);
+                _groupOperationsHandler.DeleteGroup(request, userId);
 
                 return Ok();
             }

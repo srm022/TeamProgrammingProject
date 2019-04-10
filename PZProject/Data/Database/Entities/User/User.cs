@@ -29,6 +29,6 @@ namespace PZProject.Data.Database.Entities.User
         [Required]
         public Role Role { get; set; }
 
-        public List<UserGroup> Groups { get; set; }
+        public List<UserGroup> UserGroups { get; set; }
     }
 }

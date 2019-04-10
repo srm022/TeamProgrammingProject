@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using PZProject.Data.Repositories.User;
-using PZProject.Handlers.User.Model;
+using PZProject.Data.Requests.UserRequests;
 using PZProject.Handlers.Utils;
+using PZProject.Data.Responses;
 
 namespace PZProject.Handlers.User
 {
     public interface IUserOperationsHandler
     {
-        void RegisterNewUser(RegisterUserModel model);
-        string LoginUser(LoginUserModel model);
+        void RegisterNewUser(RegisterUserRequest request);
+        LoginUserResponse LoginUser(LoginUserRequest request);
     }
 
     public class UserOperationsHandler : IUserOperationsHandler
@@ -23,20 +24,21 @@ namespace PZProject.Handlers.User
             _tokenGenerator = tokenGenerator;
         }
 
-        public void RegisterNewUser(RegisterUserModel model)
+        public void RegisterNewUser(RegisterUserRequest request)
         {
-            VerifyEmailAvailability(model.Email);
-            PasswordHashHandler.CreatePasswordHash(model.Password, out var passwordHash, out var passwordSalt);
-            var user = MapModelToEntity(model, passwordHash, passwordSalt);
+            VerifyEmailAvailability(request.Email);
+            PasswordHashHandler.CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
+            var user = MapRequestToEntity(request, passwordHash, passwordSalt);
             Register(user);
         }
 
-        public string LoginUser(LoginUserModel model)
+        public LoginUserResponse LoginUser(LoginUserRequest request)
         {
-            var user = GetUserByEmail(model.Email);
-            if (PasswordHashHandler.VerifyPasswordHash(model.Password, user.PasswordHash, user.PasswordSalt))
+            var user = GetUserByEmail(request.Email);
+            if (PasswordHashHandler.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return _tokenGenerator.GenerateJwtToken(user.UserId, user.Role.Name);
+                var token = _tokenGenerator.GenerateJwtToken(user.UserId, user.Role.Name);
+                return new LoginUserResponse(token);
             }
 
             return null;
@@ -57,9 +59,9 @@ namespace PZProject.Handlers.User
             _userRepository.CreateUser(user);
         }
 
-        private Data.Database.Entities.User.User MapModelToEntity(RegisterUserModel model, byte[] passwordHash, byte[] passwordSalt)
+        private Data.Database.Entities.User.User MapRequestToEntity(RegisterUserRequest request, byte[] passwordHash, byte[] passwordSalt)
         {
-            var user = Mapper.Map<Data.Database.Entities.User.User>(model);
+            var user = Mapper.Map<Data.Database.Entities.User.User>(request);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 

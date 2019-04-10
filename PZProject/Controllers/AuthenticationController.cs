@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using PZProject.Data.Requests.UserRequests;
 using PZProject.Handlers.User;
-using PZProject.Handlers.User.Model;
 
 namespace PZProject.Controllers
 {
@@ -16,13 +16,13 @@ namespace PZProject.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterUserModel model)
+        public IActionResult Register([FromBody] RegisterUserRequest request)
         {
             try
             {
-                _userOperationsHandler.RegisterNewUser(model);
+                _userOperationsHandler.RegisterNewUser(request);
 
-                return Ok();
+                return Created("", null);
             }
             catch (Exception ex)
             {
@@ -31,11 +31,11 @@ namespace PZProject.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginUserModel model)
+        public IActionResult Login([FromBody] LoginUserRequest request)
         {
             try
             {
-                var result = _userOperationsHandler.LoginUser(model);
+                var result = _userOperationsHandler.LoginUser(request);
 
                 return Ok(result);
             }
