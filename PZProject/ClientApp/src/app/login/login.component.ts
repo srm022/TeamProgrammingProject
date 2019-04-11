@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Response } from '../../../node_modules/@types/selenium-webdriver/http';
 
 @Component({
   selector: 'app-login',
