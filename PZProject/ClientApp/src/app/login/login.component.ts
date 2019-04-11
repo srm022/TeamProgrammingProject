@@ -21,18 +21,15 @@ export class LoginComponent implements OnInit {
 
   public login() {
 
-    let credentials = new LoginModel();
-    credentials.email = this.email;
-    credentials.password = this.password;
+    let credentials = {
+      email: this.email,
+      password: this.password,
+    }
 
-    this.http.post('http://localhost:62333/auth/login', credentials, { responseType: 'text' }).subscribe(result => {
-      this.token = result;
-      console.log(result);
+      this.http.post('https://localhost:5001/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
+      console.log(result)
+      this.token = result['token'];
+      console.log(this.token)
     }, error => console.error(error));
   }
-}
-
-class LoginModel {
-  email: string;
-  password: string;
 }

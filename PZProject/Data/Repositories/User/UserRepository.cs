@@ -23,7 +23,7 @@ namespace PZProject.Data.Repositories.User
 
         public void CreateUser(Database.Entities.User.User userEntity)
         {
-            userEntity.Role = _db.Roles.SingleOrDefault(r => r.Name == "Petitioner");
+            userEntity.Role = _db.Roles.SingleOrDefault(r => r.Name == "User");
             _db.Users.Add(userEntity);
             SaveChanges();
         }
@@ -39,7 +39,7 @@ namespace PZProject.Data.Repositories.User
             var user = _db.Users
                 .Include(r => r.Role)
                 .SingleOrDefault(u => u.Email == email);
-
+                
             if (user == null) throw new Exception("User not found"); //todo
 
             return user;

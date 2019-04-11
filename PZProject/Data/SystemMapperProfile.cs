@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using PZProject.Data.Database.Entities;
 using PZProject.Data.Database.Entities.User;
-using PZProject.Handlers.User.Model;
+using PZProject.Data.Database.Entities.Group;
+using PZProject.Data.Requests.GroupRequests;
+using PZProject.Data.Requests.UserRequests;
 
 namespace PZProject.Data
 {
@@ -9,7 +11,8 @@ namespace PZProject.Data
     {
         public SystemMapperProfile()
         {
-            CreateMap<RegisterUserModel, User>();
+            CreateMap<RegisterUserRequest, User>();
+            CreateMap<CreateGroupRequest, Group>();
         }
     }
 }

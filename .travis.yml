@@ -3,4 +3,6 @@ solution: PZProject.sln
 mono: none
 dotnet: 2.1.502
 script:
+ - cd PZProject
  - dotnet restore
+ - dotnet build -c Release

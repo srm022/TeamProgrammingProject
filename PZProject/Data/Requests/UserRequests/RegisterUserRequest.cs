@@ -1,6 +1,6 @@
-﻿namespace PZProject.Handlers.User.Model
+﻿namespace PZProject.Data.Requests.UserRequests
 {
-    public class RegisterUserModel
+    public class RegisterUserRequest
     {
         public string Email { get; set; }
         public string Password { get; set; }
