@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PZProject.Controllers.Utils;
 using PZProject.Data.Requests.GroupRequests;
 using PZProject.Handlers.Group;
-using PZProject.Handlers.Utils;
+using System;
 
 namespace PZProject.Controllers
 {
@@ -29,7 +29,7 @@ namespace PZProject.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
@@ -42,11 +42,11 @@ namespace PZProject.Controllers
                 var userId = this.GetUserId();
                 _groupOperationsHandler.CreateNewGroup(request, userId);
 
-                return Created("", null);
+                return Created(string.Empty, null);
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
@@ -63,7 +63,7 @@ namespace PZProject.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -1,15 +1,17 @@
-﻿using System;
+﻿using PZProject.Data.Database;
+using PZProject.Data.Database.Entities.Group;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PZProject.Data.Database;
 
 namespace PZProject.Data.Repositories.Group
 {
     public interface IGroupRepository
     {
-        void CreateGroup(Database.Entities.Group.Group groupEntity);
+        int CreateGroup(GroupEntity groupEntity);
+        void AssignUserToGroup(int userId, int groupId);
         void VerifyIfGroupExistsForName(string name);
-        List<Database.Entities.Group.Group> GetGroupsForUser(int userId);
+        List<GroupEntity> GetGroupsForUser(int userId);
         void DeleteGroup(int groupId, int userId);
     }
 
@@ -22,18 +24,22 @@ namespace PZProject.Data.Repositories.Group
             _db = db;
         }
 
-        public void CreateGroup(Database.Entities.Group.Group groupEntity)
+        public int CreateGroup(GroupEntity groupEntity)
         {
             _db.Groups.Add(groupEntity);
             SaveChanges();
-            var user = _db.Users
-                .Where(u => u.UserId == groupEntity.CreatorId)
-                .FirstOrDefault();
-            var userGroup = new Database.Entities.Group.UserGroup
+
+            return groupEntity.GroupId;
+        }
+
+        public void AssignUserToGroup(int userId, int groupId)
+        {
+            var userGroup = new UserGroupEntity
             {
-                GroupId = groupEntity.GroupId,
-                UserId = user.UserId
+                GroupId = groupId,
+                UserId = userId
             };
+
             _db.UserGroups.Add(userGroup);
             SaveChanges();
         }
@@ -44,7 +50,7 @@ namespace PZProject.Data.Repositories.Group
                 throw new Exception($"Name {name} is already taken");
         }
 
-        public List<Database.Entities.Group.Group> GetGroupsForUser(int userId)
+        public List<GroupEntity> GetGroupsForUser(int userId)
         {
             var groupsIds = _db.UserGroups
                 .Where(g => g.UserId == userId)
@@ -57,14 +63,11 @@ namespace PZProject.Data.Repositories.Group
 
         public void DeleteGroup(int groupId, int userId)
         {
-            var group = _db.Groups
-                .Where(g => g.GroupId == groupId)
-                .FirstOrDefault();
+            var group = _db.Groups.FirstOrDefault(g => g.GroupId == groupId);
 
             if (group.CreatorId != userId)
-            {
                 throw new Exception("Only group creator can remove group!");
-            }
+
             _db.Groups.Remove(group);
             SaveChanges();
         }

@@ -1,38 +1,58 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using PZProject.Data.Database.Entities;
+using PZProject.Data.Database.Entities.Group;
 using PZProject.Data.Repositories.Group;
-using System.Collections.Generic;
+using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.GroupRequests;
+using PZProject.Handlers.Group.Model;
+using System.Collections.Generic;
 
 namespace PZProject.Handlers.Group
 {
     public interface IGroupOperationsHandler
     {
         void CreateNewGroup(CreateGroupRequest request, int userId);
-        List<Data.Database.Entities.Group.Group> GetGroupsForUser(int userId);
+        List<GroupEntity> GetGroupsForUser(int userId);
         void DeleteGroup(DeleteGroupRequest request, int userId);
     }
 
     public class GroupOperationsHandler: IGroupOperationsHandler
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IUserRepository _userRepository;
 
-        public GroupOperationsHandler(IGroupRepository groupRepository)
+        public GroupOperationsHandler(IGroupRepository groupRepository,
+            IUserRepository userRepository)
         {
             _groupRepository = groupRepository;
+            _userRepository = userRepository;
         }
 
         public void CreateNewGroup(CreateGroupRequest request, int userId)
         {
             VerifyNameAvailability(request.Name);
-            var group = MapRequestToEntity(request);
-            group.CreatorId = userId;
-            Create(group);
+            VerifyIfUserExists(userId);
+
+            var groupModel = CreateGroupModel(request, userId);
+            var groupEntity = MapModelToEntity(groupModel);
+            Create(groupEntity);
         }
 
-        public List<Data.Database.Entities.Group.Group> GetGroupsForUser(int userId)
+        private void VerifyNameAvailability(string name)
         {
-            return _groupRepository.GetGroupsForUser(userId);
+            _groupRepository.VerifyIfGroupExistsForName(name);
+        }
+
+        private void VerifyIfUserExists(int userId)
+        {
+            var user = _userRepository.GetUserById(userId);
+            user.AssertThatExists();
+        }
+
+        private void Create(GroupEntity group)
+        {
+            var groupId = _groupRepository.CreateGroup(group);
+            _groupRepository.AssignUserToGroup(group.CreatorId, groupId);
         }
 
         public void DeleteGroup(DeleteGroupRequest request, int userId)
@@ -41,19 +61,23 @@ namespace PZProject.Handlers.Group
             _groupRepository.DeleteGroup(groupId, userId);
         }
 
-        private void VerifyNameAvailability(string name)
+        public List<GroupEntity> GetGroupsForUser(int userId)
         {
-            _groupRepository.VerifyIfGroupExistsForName(name);
+            return _groupRepository.GetGroupsForUser(userId);
         }
 
-        private void Create(Data.Database.Entities.Group.Group group)
+        private GroupEntity MapModelToEntity<T>(T model)
         {
-            _groupRepository.CreateGroup(group);
+            return Mapper.Map<GroupEntity>(model);
         }
 
-        private Data.Database.Entities.Group.Group MapRequestToEntity(CreateGroupRequest request)
+        private CreateGroupModel CreateGroupModel(CreateGroupRequest request, int userId)
         {
-            return Mapper.Map<Data.Database.Entities.Group.Group>(request);
+            return new CreateGroupModel
+            {
+                CreatorId = userId,
+                Name = request.Name
+            };
         }
     }
 }

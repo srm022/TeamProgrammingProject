@@ -21,24 +21,23 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Pages\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Pages\**" />
+    <EmbeddedResource Remove="Pages\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Pages\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Database\Entities\Group\" />
     <Folder Include="Data\Repositories\Group\" />
-    <Folder Include="Handlers\Group\" />
     <Folder Include="Data\Requests\" />
     <Folder Include="Data\Requests\GroupRequests\" />
     <Folder Include="Data\Requests\UserRequests\" />
     <Folder Include="Data\Responses\" />
     <Folder Include="Data\Responses\UserResponses\" />
     <Folder Include="Data\Responses\GroupResponses\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Handlers\Group\Model\EmptyClass.cs" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
@@ -60,7 +59,7 @@
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
       <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </ResolvedFileToPublish>
