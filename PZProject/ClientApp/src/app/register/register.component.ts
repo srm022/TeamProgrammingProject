@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-    public register() {
+  public register() {
 
     let credentials = {
         email: this.email,
@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
         firstName: this.firstName,
         lastName: this.lastName,
     }
-    this.http.post('https://localhost:5001/auth/register', credentials, { responseType: 'text' }).subscribe(result => {
+    this.http.post('https://localhost:44366/auth/register', credentials, { responseType: 'text' }).subscribe(result => {
       console.log(result);
     }, error => console.error(error));
   }
