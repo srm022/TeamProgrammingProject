@@ -2,7 +2,7 @@
 using PZProject.Data.Database.Entities.Group;
 using PZProject.Data.Database.Entities.User;
 using PZProject.Data.Requests.UserRequests;
-using PZProject.Handlers.Group.Model;
+using PZProject.Handlers.Group.Operations.Create.Model;
 
 namespace PZProject.Data
 {
@@ -12,7 +12,8 @@ namespace PZProject.Data
         {
             CreateMap<RegisterUserRequest, UserEntity>();
             CreateMap<CreateGroupModel, GroupEntity>()
-                .ForMember(group => group.CreatorId, opt => opt.MapFrom(model => model.CreatorId));
+                .ForMember(group => group.CreatorId, opt => opt.MapFrom(model => model.CreatorId))
+                .ForMember(group => group.Name, opt => opt.MapFrom(model => model.GroupName));
         }
     }
 }

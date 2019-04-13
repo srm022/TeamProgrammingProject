@@ -51,6 +51,40 @@ namespace PZProject.Controllers
         }
 
         [Authorize]
+        [HttpPost("assign")]
+        public IActionResult AssignGroupToUser([FromBody] AssignUserToGroupRequest request)
+        {
+            try
+            {
+                var userId = this.GetUserId();
+                _groupOperationsHandler.AssignUserToGroup(request, userId);
+
+                return Created(string.Empty, null);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("remove")]
+        public IActionResult RemoveUserFromGroup([FromBody] RemoveUserFromGroupRequest request)
+        {
+            try
+            {
+                var userId = this.GetUserId();
+                _groupOperationsHandler.RemoveUserFromGroup(request, userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
         [HttpDelete("delete")]
         public IActionResult Delete([FromBody] DeleteGroupRequest request)
         {

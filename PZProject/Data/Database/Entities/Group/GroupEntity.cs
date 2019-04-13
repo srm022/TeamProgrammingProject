@@ -16,6 +16,6 @@ namespace PZProject.Data.Database.Entities.Group
         [Required]
         public int CreatorId { get; set; }
 
-        public List<UserGroupEntity> Users { get; set; }
+        public List<UserGroupEntity> UserGroups { get; set; }
     }
 }

@@ -14,6 +14,5 @@ namespace PZProject.Data.Database.Entities.Group
     
        [Required]
        public int UserId { get; set; }
-
     }
 }

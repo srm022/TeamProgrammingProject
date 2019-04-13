@@ -9,11 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PZProject.Data;
 using PZProject.Data.Database;
-using PZProject.Data.Repositories.Group;
-using PZProject.Data.Repositories.User;
-using PZProject.Handlers.Group;
-using PZProject.Handlers.User;
-using PZProject.Handlers.Utils;
 using System.Text;
 
 namespace PZProject
@@ -40,12 +35,11 @@ namespace PZProject
 
             Mapper.Initialize(cfg => cfg.AddProfile<SystemMapperProfile>());
             services.AddAutoMapper();
-
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserOperationsHandler, UserOperationsHandler>();
-            services.AddScoped<IGroupRepository, GroupRepository>();
-            services.AddScoped<IGroupOperationsHandler, GroupOperationsHandler>();
-            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            
+            services.Scan(scan =>
+                scan.FromCallingAssembly()
+                    .AddClasses()
+                    .AsMatchingInterface());
 
             services.AddCors(o => o.AddPolicy("CORSPolicy", builder =>
             {

@@ -10,6 +10,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Scrutor" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,8 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Repositories\Group\" />
-    <Folder Include="Data\Requests\" />
-    <Folder Include="Data\Requests\GroupRequests\" />
     <Folder Include="Data\Requests\UserRequests\" />
     <Folder Include="Data\Responses\" />
     <Folder Include="Data\Responses\UserResponses\" />

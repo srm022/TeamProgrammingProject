@@ -7,7 +7,7 @@ namespace PZProject.Data.Database.Entities
         public static void AssertThatExists<T>(this T entity)
         {
             if (entity == null)
-                throw new Exception($"Could not find entity {nameof(entity)}");
+                throw new Exception($"Could not find entity of type [{typeof(T).Name}]");
         }
     }
 }
