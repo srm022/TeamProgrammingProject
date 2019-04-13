@@ -27,9 +27,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.http.post('https://localhost:44366/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
-      console.log(result)
       this.token = result['token'];
-      console.log(this.token)
+      localStorage.setItem('id_token', result['token']);
     }, error => console.error(error));
   }
 }
