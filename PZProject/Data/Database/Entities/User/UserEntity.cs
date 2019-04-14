@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using PZProject.Data.Database.Entities.Group;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using PZProject.Data.Database.Entities.Group;
 
 namespace PZProject.Data.Database.Entities.User
 {
     [Table("User")]
-    public class User
+    public class UserEntity
     {
         [Key, Required]
         public int UserId { get; set; }
@@ -27,8 +27,8 @@ namespace PZProject.Data.Database.Entities.User
         public byte[] PasswordSalt { get; set; }
 
         [Required]
-        public Role Role { get; set; }
+        public RoleEntity Role { get; set; }
 
-        public List<UserGroup> UserGroups { get; set; }
+        public List<UserGroupEntity> UserGroups { get; set; }
     }
 }

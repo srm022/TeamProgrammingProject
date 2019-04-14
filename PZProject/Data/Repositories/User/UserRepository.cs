@@ -1,15 +1,17 @@
-﻿using System;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PZProject.Data.Database;
+using PZProject.Data.Database.Entities.User;
+using System;
+using System.Linq;
 
 namespace PZProject.Data.Repositories.User
 {
     public interface IUserRepository
     {
-        void CreateUser(Database.Entities.User.User userEntity);
+        void CreateUser(UserEntity userEntity);
         void VerifyIfUserExistsForEmail(string email);
-        Database.Entities.User.User GetUserByEmail(string email);
+        UserEntity GetUserByEmail(string email);
+        UserEntity GetUserById(int id);
     }
 
     public class UserRepository : IUserRepository
@@ -21,7 +23,7 @@ namespace PZProject.Data.Repositories.User
             _db = db;
         }
 
-        public void CreateUser(Database.Entities.User.User userEntity)
+        public void CreateUser(UserEntity userEntity)
         {
             userEntity.Role = _db.Roles.SingleOrDefault(r => r.Name == "User");
             _db.Users.Add(userEntity);
@@ -34,7 +36,7 @@ namespace PZProject.Data.Repositories.User
                 throw new Exception($"Email {email} is already taken");
         }
 
-        public Database.Entities.User.User GetUserByEmail(string email)
+        public UserEntity GetUserByEmail(string email)
         {
             var user = _db.Users
                 .Include(r => r.Role)
@@ -45,15 +47,20 @@ namespace PZProject.Data.Repositories.User
             return user;
         }
 
+        public UserEntity GetUserById(int id)
+        {
+            var user = _db.Users
+                .Include(r => r.Role)
+                .SingleOrDefault(u => u.UserId == id);
+
+            if (user == null) throw new Exception("User not found"); //todo
+
+            return user;
+        }
+
         private void SaveChanges()
         {
             _db.SaveChanges();
         }
-    }
-
-    public class UserSecretsModel
-    {
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
     }
 }

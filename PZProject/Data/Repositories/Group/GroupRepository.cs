@@ -1,16 +1,21 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PZProject.Data.Database;
+using PZProject.Data.Database.Entities.Group;
 using System.Collections.Generic;
 using System.Linq;
-using PZProject.Data.Database;
 
 namespace PZProject.Data.Repositories.Group
 {
     public interface IGroupRepository
     {
-        void CreateGroup(Database.Entities.Group.Group groupEntity);
-        void VerifyIfGroupExistsForName(string name);
-        List<Database.Entities.Group.Group> GetGroupsForUser(int userId);
-        void DeleteGroup(int groupId, int userId);
+        GroupEntity GetGroupByName(string name);
+        GroupEntity GetGroupById(int groupId);
+        List<GroupEntity> GetGroupsForUser(int userId);
+
+        GroupEntity CreateGroup(GroupEntity groupEntity);
+        void AssignUserToGroup(int userId, int groupId);
+        void DeleteGroup(GroupEntity group);
+        void RemoveFromGroup(List<UserGroupEntity> group, int userId);
     }
 
     public class GroupRepository : IGroupRepository
@@ -22,51 +27,67 @@ namespace PZProject.Data.Repositories.Group
             _db = db;
         }
 
-        public void CreateGroup(Database.Entities.Group.Group groupEntity)
+        public GroupEntity CreateGroup(GroupEntity groupEntity)
         {
             _db.Groups.Add(groupEntity);
             SaveChanges();
-            var user = _db.Users
-                .Where(u => u.UserId == groupEntity.CreatorId)
-                .FirstOrDefault();
-            var userGroup = new Database.Entities.Group.UserGroup
+
+            return groupEntity;
+        }
+
+        public void AssignUserToGroup(int userId, int groupId)
+        {
+            var userGroup = new UserGroupEntity
             {
-                GroupId = groupEntity.GroupId,
-                UserId = user.UserId
+                GroupId = groupId,
+                UserId = userId
             };
+
             _db.UserGroups.Add(userGroup);
             SaveChanges();
         }
 
-        public void VerifyIfGroupExistsForName(string name)
+        public void RemoveFromGroup(List<UserGroupEntity> group, int userId)
         {
-            if (_db.Groups.Any(x => x.Name == name))
-                throw new Exception($"Name {name} is already taken");
+            var userGroup = group.Single(ug => ug.UserId == userId);
+
+            _db.UserGroups.Remove(userGroup);
+            SaveChanges();
         }
 
-        public List<Database.Entities.Group.Group> GetGroupsForUser(int userId)
+        public GroupEntity GetGroupByName(string name)
+        {
+            return _db.Groups
+                .Include(ug => ug.UserGroups)
+                .SingleOrDefault(g => g.Name == name);
+        }
+
+        public List<GroupEntity> GetGroupsForUser(int userId)
         {
             var groupsIds = _db.UserGroups
                 .Where(g => g.UserId == userId)
-                .Select(g => g.GroupId);
+                .Select(g => g.GroupId)
+                .ToList();
 
-            var groups = _db.Groups.Where(x => groupsIds.Contains(x.GroupId)).ToList();
+            var groups = _db.Groups
+                .Where(x => groupsIds.Contains(x.GroupId))
+                .Include(g => g.UserGroups)
+                .ToList();
 
             return groups;
         }
 
-        public void DeleteGroup(int groupId, int userId)
+        public void DeleteGroup(GroupEntity group)
         {
-            var group = _db.Groups
-                .Where(g => g.GroupId == groupId)
-                .FirstOrDefault();
-
-            if (group.CreatorId != userId)
-            {
-                throw new Exception("Only group creator can remove group!");
-            }
             _db.Groups.Remove(group);
             SaveChanges();
+        }
+
+        public GroupEntity GetGroupById(int groupId)
+        {
+            return _db.Groups
+                .Include(ug => ug.UserGroups)
+                .SingleOrDefault(g => g.GroupId == groupId);
         }
 
         private void SaveChanges()
