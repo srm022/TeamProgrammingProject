@@ -1,5 +1,5 @@
 <div class="container py-5">
-  <h3 class="text-center text-uppercase">List of Employees</h3>
+  <h3 class="text-center text-uppercase">List of User Groups</h3>
   <table class="table table-bordered table-striped">
     <thead>
       <tr class="text-center text-uppercase">
@@ -10,10 +10,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let i of GroupNameArray">
-        <td>{{GroupNameArray[i]}}</td>
-        <td>{{GroupIdArray[i]}}</td>
-        <td>{{UserIdArray[i]}}</td>
+      <tr *ngFor="let element of UserGroupArray">
+        <td>{{element.GroupName}}</td>
+        <td>{{element.GroupId}}</td>
+        <td>{{element.UserId}}</td>
       </tr>
     </tbody>
   </table>
@@ -21,4 +21,4 @@
   <button type="button" id="leaveGroupButton">Leave group</button>-->
 </div>
 
-<h1>{{zmienna}}</h1>
+<!--<h1>{{zmienna}}</h1>-->
