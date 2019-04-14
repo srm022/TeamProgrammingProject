@@ -30,14 +30,11 @@ export class LoginComponent implements OnInit {
 
     this.http.post('https://localhost:44366/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
       localStorage.setItem('id_token', result['token']);
-      this.router.navigate(['/']);
-    }, error => console.error(error))
-    
-    if ( this.isTokenPresent() ){
       this.successfulLogin = true;
-    } else {
-      this.successfulLogin = false;
-    }
+      this.router.navigate(['/']);
+    }, error =>{ console.error(error); this.successfulLogin = false; });
+    
+
   }
   
    isTokenPresent(): boolean {

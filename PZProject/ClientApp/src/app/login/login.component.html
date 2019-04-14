@@ -7,10 +7,10 @@
   </div>
 </div>
 
-<div *ngIf = "!isTokenPresent()" class="login-page">
+<div *ngIf = "isTokenPresent() == false" class="login-page">
     <div class="form">
       <div class="login-form">
-        <div *ngIf = "!successfulLogin" class="alert">* Your password or username is incorrect</div>
+        <div *ngIf = "successfulLogin == false" class="alert">* Your password or username is incorrect</div>
         <input type="text" id="email" required [(ngModel)]="email" placeholder="username"/>
         <input type="password" id="password" required [(ngModel)]="password" placeholder="password"/>
         <button type="submit" id="loginButton" (click)="login()">login</button>
