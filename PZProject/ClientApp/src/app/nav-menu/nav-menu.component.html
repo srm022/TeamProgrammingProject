@@ -23,7 +23,7 @@
               </a>
             </li>
 
-            <li [routerLinkActive]='["link-active"]'>
+            <li *ngIf = "isTokenPresent()" [routerLinkActive]='["link-active"]'>
               <a [routerLink]='["/groups"]' (click)='collapse()'>
                 <span class='glyphicon glyphicon-th-list'></span> Groups
               </a>

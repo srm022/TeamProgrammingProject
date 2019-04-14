@@ -15,4 +15,8 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+  isTokenPresent(): boolean {
+    return localStorage.getItem("id_token") ? true : false;
+  }
 }
