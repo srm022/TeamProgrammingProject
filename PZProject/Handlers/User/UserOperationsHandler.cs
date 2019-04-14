@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
+using PZProject.Data.Database.Entities.User;
 using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.UserRequests;
-using PZProject.Handlers.Utils;
 using PZProject.Data.Responses;
+using PZProject.Handlers.Utils;
 using System;
 
 namespace PZProject.Handlers.User
@@ -45,7 +46,7 @@ namespace PZProject.Handlers.User
             throw new Exception("Wrong credentials");
         }
 
-        private Data.Database.Entities.User.User GetUserByEmail(string email)
+        private UserEntity GetUserByEmail(string email)
         {
             return _userRepository.GetUserByEmail(email);
         }
@@ -55,14 +56,14 @@ namespace PZProject.Handlers.User
             _userRepository.VerifyIfUserExistsForEmail(email);
         }
 
-        private void Register(Data.Database.Entities.User.User user)
+        private void Register(UserEntity userEntity)
         {
-            _userRepository.CreateUser(user);
+            _userRepository.CreateUser(userEntity);
         }
 
-        private Data.Database.Entities.User.User MapRequestToEntity(RegisterUserRequest request, byte[] passwordHash, byte[] passwordSalt)
+        private UserEntity MapRequestToEntity(RegisterUserRequest request, byte[] passwordHash, byte[] passwordSalt)
         {
-            var user = Mapper.Map<Data.Database.Entities.User.User>(request);
+            var user = Mapper.Map<UserEntity>(request);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 

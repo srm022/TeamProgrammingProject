@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PZProject.Data.Database.Entities.Group
 {
     [Table("Group")]
-    public class Group
+    public class GroupEntity
     {
         [Key, Required]
         public int GroupId { get; set; }
@@ -16,6 +16,6 @@ namespace PZProject.Data.Database.Entities.Group
         [Required]
         public int CreatorId { get; set; }
 
-        public List<UserGroup> Users { get; set; }
+        public List<UserGroupEntity> UserGroups { get; set; }
     }
 }

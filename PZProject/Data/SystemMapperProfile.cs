@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using PZProject.Data.Database.Entities;
-using PZProject.Data.Database.Entities.User;
 using PZProject.Data.Database.Entities.Group;
-using PZProject.Data.Requests.GroupRequests;
+using PZProject.Data.Database.Entities.User;
 using PZProject.Data.Requests.UserRequests;
+using PZProject.Handlers.Group.Operations.Create.Model;
 
 namespace PZProject.Data
 {
@@ -11,8 +10,10 @@ namespace PZProject.Data
     {
         public SystemMapperProfile()
         {
-            CreateMap<RegisterUserRequest, User>();
-            CreateMap<CreateGroupRequest, Group>();
+            CreateMap<RegisterUserRequest, UserEntity>();
+            CreateMap<CreateGroupModel, GroupEntity>()
+                .ForMember(group => group.CreatorId, opt => opt.MapFrom(model => model.CreatorId))
+                .ForMember(group => group.Name, opt => opt.MapFrom(model => model.GroupName));
         }
     }
 }
