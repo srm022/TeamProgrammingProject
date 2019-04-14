@@ -10,16 +10,16 @@ import { HttpHeaders} from '@angular/common/http';
 })
 export class GroupsComponent implements OnInit {
 
-  private zmienna: any;
+  private token: any;
   private UserGroupArray = [];
   private i = 0;
 
   constructor(private http: HttpClient) {
-    this.zmienna = localStorage.getItem('id_token');
+    this.token = localStorage.getItem('id_token');
 
     let httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.zmienna
+        'Authorization': 'Bearer ' + this.token
       })
     }
 
@@ -36,8 +36,6 @@ export class GroupsComponent implements OnInit {
 
         this.i++;
       }
-
-
 
     }, error => console.error(error));
   }
