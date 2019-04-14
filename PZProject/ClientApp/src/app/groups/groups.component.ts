@@ -12,7 +12,7 @@ export class GroupsComponent implements OnInit {
 
   private token: any;
   private UserGroupArray = [];
-  private i = 0;
+  private iterator = 0;
 
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem('id_token');
@@ -26,15 +26,15 @@ export class GroupsComponent implements OnInit {
     this.http.get('http://localhost:62333/groups', httpOptions).subscribe(result => {
       console.log(result);
 
-      while (result[this.i]) {
+      while (result[this.iterator]) {
 
         this.UserGroupArray.push({
-          GroupId: result[this.i]['groupId'],
-          GroupName: result[this.i]['name'],
-          UserId: result[this.i]['creatorId']
+          GroupId: result[this.iterator]['groupId'],
+          GroupName: result[this.iterator]['name'],
+          UserId: result[this.iterator]['creatorId']
         });
 
-        this.i++;
+        this.iterator++;
       }
 
     }, error => console.error(error));
