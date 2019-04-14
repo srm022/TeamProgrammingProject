@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  private successfulLogin: boolean;
   private email: string;
   private password: string;
 
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-
+    
     let credentials = {
       email: this.email,
       password: this.password,
@@ -31,7 +31,13 @@ export class LoginComponent implements OnInit {
     this.http.post('https://localhost:44366/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
       localStorage.setItem('id_token', result['token']);
       this.router.navigate(['/']);
-    }, error => console.error(error));
+    }, error => console.error(error))
+    
+    if ( this.isTokenPresent() ){
+      this.successfulLogin = true;
+    } else {
+      this.successfulLogin = false;
+    }
   }
   
    isTokenPresent(): boolean {
@@ -40,5 +46,6 @@ export class LoginComponent implements OnInit {
 
    clearStorage() {
     localStorage.removeItem("id_token");
+    this.successfulLogin = true;
   }
 }

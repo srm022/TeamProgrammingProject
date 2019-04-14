@@ -70,13 +70,22 @@
   font-size: 12px;
 }
 
-.alert {
+.loginText {
   font-family: "Roboto", sans-serif;
   font-size: 18px;
   position: relative;
   color: #6e6e6e;
+  padding-bottom: 30px;
   font-weight: bold;
   max-width: 480px;
   text-align: center;
+}
 
+.alert {
+  font-family: "Roboto", sans-serif;
+  font-size: 11px;
+  position: relative;
+  color: crimson;
+  font-weight: bold;
+  text-align: left;
 }
