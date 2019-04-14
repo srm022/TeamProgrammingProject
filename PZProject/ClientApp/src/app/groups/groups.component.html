@@ -3,20 +3,22 @@
   <table class="table table-bordered table-striped">
     <thead>
       <tr class="text-center text-uppercase">
+        <th>Group name</th>
         <th>Group ID</th>
         <th>User ID</th>
 
       </tr>
     </thead>
     <tbody>
-      <tr >
-        <td></td>
-        <td></td>
+      <tr *ngFor="let i of GroupNameArray">
+        <td>{{GroupNameArray[i]}}</td>
+        <td>{{GroupIdArray[i]}}</td>
+        <td>{{UserIdArray[i]}}</td>
       </tr>
     </tbody>
   </table>
-  <button type="button" id="moreInfo">More info about group</button>
-  <button type="button" id="leaveGroupButton">Leave group</button>
+  <!--<button type="button" id="moreInfo">More info about group</button>
+  <button type="button" id="leaveGroupButton">Leave group</button>-->
 </div>
 
 <h1>{{zmienna}}</h1>
