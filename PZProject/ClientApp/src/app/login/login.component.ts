@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  private token: any;
   private email: string;
   private password: string;
 
@@ -27,7 +26,6 @@ export class LoginComponent implements OnInit {
     }
 
     this.http.post('https://localhost:44366/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
-      this.token = result['token'];
       localStorage.setItem('id_token', result['token']);
     }, error => console.error(error));
   }
