@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PZProject.Data.Requests.UserRequests;
 using PZProject.Handlers.User;
+using System;
 
 namespace PZProject.Controllers
 {
@@ -26,7 +26,7 @@ namespace PZProject.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
