@@ -12,7 +12,8 @@ export class RegisterComponent implements OnInit {
   private password: string;
   private firstName: string;
   private lastName: string;
-
+  private pattern: string = '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$';
+  
   constructor(private http: HttpClient) {
 
   }
@@ -21,16 +22,15 @@ export class RegisterComponent implements OnInit {
   }
 
   public register() {
+      let credentials = {
+          email: this.email,
+          password:  this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+      }
+      this.http.post('https://localhost:44366/auth/register', credentials, { responseType: 'text' }).subscribe(result => {
+        console.log(result);
 
-    let credentials = {
-        email: this.email,
-        password:  this.password,
-        firstName: this.firstName,
-        lastName: this.lastName,
-    }
-    this.http.post('https://localhost:44366/auth/register', credentials, { responseType: 'text' }).subscribe(result => {
-      console.log(result);
-    }, error => console.error(error));
-  }
-
+      }, error => console.error(error));
+    } 
 }

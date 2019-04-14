@@ -1,10 +1,20 @@
-<div class="login-page">
+<div *ngIf = "isTokenPresent()" >
+  <div class="login-page">
+    <div class="form">
+      <div class="alert" >You are logged in</div>
+      <button (click) = "clearStorage()">Log out</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf = "!isTokenPresent()" class="login-page">
     <div class="form">
       <div class="login-form">
+        <div *ngIf = "" class="alert">Your password or username is incorrect</div>
         <input type="text" id="email" required [(ngModel)]="email" placeholder="username"/>
         <input type="password" id="password" required [(ngModel)]="password" placeholder="password"/>
         <button type="submit" id="loginButton" (click)="login()">login</button>
         <p class="message">Not registered? <a href="/register" >Create an account</a></p>
       </div>
     </div>
-  </div>
+</div>

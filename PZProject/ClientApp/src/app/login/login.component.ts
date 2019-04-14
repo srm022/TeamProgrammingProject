@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,11 +9,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  private token: any;
   private email: string;
   private password: string;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router) {
 
   }
 
@@ -27,8 +29,16 @@ export class LoginComponent implements OnInit {
     }
 
     this.http.post('https://localhost:44366/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
-      this.token = result['token'];
       localStorage.setItem('id_token', result['token']);
+      this.router.navigate(['/']);
     }, error => console.error(error));
+  }
+  
+   isTokenPresent(): boolean {
+    return localStorage.getItem("id_token") ? true : false;
+  }
+
+   clearStorage() {
+    localStorage.removeItem("id_token");
   }
 }
