@@ -1,10 +1,14 @@
 <div class="login-page">
   <div class="form">
-    <div class="register-form">
-      <input type="text" required [(ngModel)]="firstName" placeholder="first name"/>
-      <input type="text" required [(ngModel)]="lastName" placeholder="last name" />
-      <input type="password" required [(ngModel)]="password" placeholder="password"/>
-      <input type="text" required [(ngModel)]="email" placeholder="email address"/>
+    <div class="register-form" >
+      <div *ngIf = "firstNameInput.invalid && (firstNameInput.dirty || firstNameInput.touched)" class="alert">* First name required</div>
+      <input type="text" [(ngModel)]="firstName" placeholder="first name" required #firstNameInput="ngModel"/>
+      <div *ngIf = "lastNameInput.invalid && (lastNameInput.dirty || lastNameInput.touched)" class="alert">* Last name required</div>
+      <input type="text" [(ngModel)]="lastName" placeholder="last name" required #lastNameInput = "ngModel"/>
+      <div *ngIf = "passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="alert">* Password required</div>
+      <input type="password" [(ngModel)]="password" placeholder="password"required #passwordInput = "ngModel"/>
+        <div *ngIf = "emailAddress.invalid && (emailAddress.dirty || emailAddress.touched)" class="alert">* Email address required</div>
+      <input type="text" [(ngModel)]="email" placeholder="email address" required #emailAddress = "ngModel" pattern="{{pattern}}"/>
       <button type="submit" id="registerButton" (click)="register()">create</button>
       <p class="message">Already registered? <a href="/login">Sign In</a></p>
     </div>
