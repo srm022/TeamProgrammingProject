@@ -11,8 +11,8 @@ import { HttpHeaders } from '@angular/common/http';
 export class GroupCreatorComponent implements OnInit {
 
   private token: any;
-  private UserGroupArray = [];
-  private iterator = 0;
+  private Name: string;
+  private CreatorId: string;
 
   constructor(private http: HttpClient) {
 
@@ -26,41 +26,11 @@ export class GroupCreatorComponent implements OnInit {
         'Authorization': 'Bearer ' + this.token
       })
     }
-
-    this.displayUserGroups(httpOptions);
-  }
-
-  addUserGroupstoArray(result) : void {
-    while (result[this.iterator]) {
-
-      this.UserGroupArray.push({
-        GroupId: result[this.iterator]['groupId'],
-        GroupName: result[this.iterator]['name'],
-        UserId: result[this.iterator]['creatorId']
-      });
-
-      this.iterator++;
-    }
-  }
-
-  displayUserGroups(httpOptions): void {
-
-    this.http.get('http://localhost:62333/groups', httpOptions).subscribe(result => {
-      this.addUserGroupstoArray(result);
-      console.log(result);
-
-      }, error => console.error(error));
-
-  }
-
-  deleteUserGroup(httpOptions): void {
-        this.http.delete('http://localhost:62333/groups/delete', httpOptions).subscribe(result => {
-
-    }, error => console.error(error));
   }
 
   createUserGroup(httpOptions): void {
     this.http.post('http://localhost:62333/groups/create', httpOptions).subscribe(result => {
+      console.log(result);
 
     }, error => console.error(error));
   }

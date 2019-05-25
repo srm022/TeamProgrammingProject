@@ -9,16 +9,15 @@
 
   <form>
 
-    Group name: <input name="Name" placeholder="GroupName" />
+    Group name:  <input type="text" [(ngModel)]="GroupName" placeholder="Group name" name="GroupName"/>
 
     <br><br>
 
-    <input type="hidden" name="CreatorId"/>
-    <input type="submit" value="Create" />
+    <input type="submit" value="Create" (click)="createUserGroup()"/>
 
     <br><br>
 
-    <a>Back to list</a>
+    <a [routerLink]="['/groups']">Back to list</a>
 
   </form>
 </body>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,9 @@ export class GroupsComponent implements OnInit {
   private UserGroupArray = [];
   private iterator = 0;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router) {
 
   }
 
@@ -28,6 +31,7 @@ export class GroupsComponent implements OnInit {
     }
 
     this.displayUserGroups(httpOptions);
+
   }
 
   addUserGroupstoArray(result) : void {
@@ -53,15 +57,25 @@ export class GroupsComponent implements OnInit {
 
   }
 
-  deleteUserGroup(httpOptions): void {
-        this.http.delete('http://localhost:62333/groups/delete', httpOptions).subscribe(result => {
+  deleteUserGroup(GroupId) {
+    this.token = localStorage.getItem('id_token');
 
-    }, error => console.error(error));
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      }),
+      body: {
+        "GroupId": GroupId
+      },
+    };
+
+    console.log(GroupId);
+
+    this.http.delete('http://localhost:62333/groups/delete', httpOptions).subscribe(result => {
+      window.location.reload;
+    }, error => { console.error(error); });
   }
 
-  createUserGroup(httpOptions): void {
-    this.http.post('http://localhost:62333/groups/create', httpOptions).subscribe(result => {
 
-    }, error => console.error(error));
-  }
 }

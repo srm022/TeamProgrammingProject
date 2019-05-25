@@ -3,18 +3,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupCreatorComponent } from './groupCreator.component';
 
 describe('GroupCreatorComponent', () => {
-  let component: GroupsComponent;
-  let fixture: ComponentFixture<GroupsComponent>;
+  let component: GroupCreatorComponent;
+  let fixture: ComponentFixture<GroupCreatorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupsComponent ]
+      declarations: [ GroupCreatorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GroupsComponent);
+    fixture = TestBed.createComponent(GroupCreatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
