@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { GroupsComponent } from './groups/groups.component';
+import { GroupCreatorComponent } from './groupCreator/groupCreator.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { GroupsComponent } from './groups/groups.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    GroupsComponent
+    GroupsComponent,
+    GroupCreatorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,7 +30,8 @@ import { GroupsComponent } from './groups/groups.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'groups', component: GroupsComponent }
+      { path: 'groups', component: GroupsComponent },
+      { path: 'groupCreator', component: GroupCreatorComponent }
     ])
   ],
   providers: [],

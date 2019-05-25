@@ -5,10 +5,10 @@ import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-groups',
-  templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.css']
+  templateUrl: './groupCreator.component.html',
+  styleUrls: ['./groupCreator.component.css']
 })
-export class GroupsComponent implements OnInit {
+export class GroupCreatorComponent implements OnInit {
 
   private token: any;
   private UserGroupArray = [];
