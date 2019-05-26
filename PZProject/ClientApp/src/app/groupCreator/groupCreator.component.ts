@@ -22,20 +22,20 @@ export class GroupCreatorComponent implements OnInit {
 
   }
 
-  createUserGroup(GroupName:String) {
+  createUserGroup(GroupName: String) {
     this.token = localStorage.getItem('id_token');
 
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
-      }),
-      body: {
-        "GroupName": GroupName
-      },
+      })
     };
-    console.log(GroupName);
-    this.http.post('http://localhost:62333/groups/create', httpOptions).subscribe(result => {
+
+    let bodyOptions = {
+      "GroupName": GroupName
+    }
+    this.http.post('http://localhost:62333/groups/create', bodyOptions, httpOptions).subscribe(result => {
 
     }, error => { console.error(error); });
   }

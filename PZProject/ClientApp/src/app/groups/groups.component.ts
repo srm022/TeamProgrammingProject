@@ -34,7 +34,7 @@ export class GroupsComponent implements OnInit {
 
   }
 
-  addUserGroupstoArray(result) : void {
+  addUserGroupstoArray(result): void {
     while (result[this.iterator]) {
 
       this.UserGroupArray.push({
@@ -53,7 +53,7 @@ export class GroupsComponent implements OnInit {
       this.addUserGroupstoArray(result);
       console.log(result);
 
-      }, error => console.error(error));
+    }, error => console.error(error));
 
   }
 
@@ -85,17 +85,10 @@ export class GroupsComponent implements OnInit {
       })
     };
 
-    //let bodyOptions = {
-    //  body: {
-    //    "UserEmail": UserEmail,
-    //    "GroupName": GroupName
-    //  }
-    //};
-
     let bodyOptions = {
       "UserEmail": UserEmail,
       "GroupName": GroupName
-      }
+    }
     this.http.post('http://localhost:62333/groups/assign', bodyOptions, httpOptions).subscribe(result => {
 
     }, error => { console.error(error); });

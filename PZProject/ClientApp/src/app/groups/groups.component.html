@@ -17,23 +17,17 @@
         <td>
           <button>Update</button><button (click)="deleteUserGroup(element.GroupId)">Delete</button>
 
-          User email:  <input type="text" [(ngModel)]="UserEmail" />
+          User email: <input type="text" [(ngModel)]="UserEmail" />
 
           <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
-
-
 
           <br><br>
 
         </td>
-        
+
       </tr>
     </tbody>
   </table>
   <button [routerLink]="['/groupCreator']">Create new group</button>
 
-  <!--<button type="button" id="moreInfo">More info about group</button>
-  <button type="button" id="leaveGroupButton">Leave group</button>-->
 </div>
-
-<!--<h1>{{zmienna}}</h1>-->
