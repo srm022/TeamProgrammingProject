@@ -1,39 +1,53 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { ToastsManager } from "ng2-toastr";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"]
 })
 export class RegisterComponent implements OnInit {
-
   private email: string;
   private password: string;
   private firstName: string;
   private lastName: string;
-  private pattern: string = '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$';
-  
+  private emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
   constructor(
     private http: HttpClient,
-    private router: Router) {
-
+    private router: Router,
+    private toastr: ToastsManager,
+    private vcr: ViewContainerRef
+  ) {
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public register() {
       let credentials = {
-          email: this.email,
-          password:  this.password,
-          firstName: this.firstName,
-          lastName: this.lastName,
-      }
-      this.http.post('https://localhost:44366/auth/register', credentials, { responseType: 'text' }).subscribe(result => {
-        console.log(result);
-        this.router.navigate(['/login']);
-      }, error => console.error(error));
-    } 
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName
+      };
+
+      this.http.post('https://localhost:44366/auth/register', credentials, {
+          responseType: 'text'
+        })
+        .subscribe(
+          result => {
+            console.log(result);
+            this.router.navigate(['/login']);
+          },
+          error => console.log(error)
+        );
+        this.showEmailTakenError()
+  }
+
+  showEmailTakenError() {
+    this.toastr.error('This email adress is already taken');
+  }
 }

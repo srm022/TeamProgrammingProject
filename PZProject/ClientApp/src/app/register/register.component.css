@@ -80,3 +80,8 @@
   padding: 5px;
   text-align: left;
 }
+
+.form button:disabled {
+  background: #a8a8a8;
+  color: rgb(255, 255, 255);
+}

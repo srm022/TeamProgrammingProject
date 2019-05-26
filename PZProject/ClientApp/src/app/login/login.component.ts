@@ -1,48 +1,57 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject, ViewContainerRef } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  private successfulLogin: boolean;
   private email: string;
   private password: string;
-
   constructor(
-    private http: HttpClient,
-    private router: Router) {
-
-  }
-
-  ngOnInit() {
-  }
-
-  public login() {
-    
-    let credentials = {
-      email: this.email,
-      password: this.password,
+    private http: HttpClient, 
+    private router: Router, 
+    private toastr: ToastsManager,
+    private vcr: ViewContainerRef) {
+      this.toastr.setRootViewContainerRef(vcr);
     }
 
-    this.http.post('http://localhost:62333/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
-      localStorage.setItem('id_token', result['token']);
-      this.successfulLogin = true;
-      this.router.navigate(['/']);
-    }, error =>{ console.error(error); this.successfulLogin = false; });
-    
+  ngOnInit() {}
 
+  public login() {
+    let credentials = {
+      email: this.email,
+      password: this.password
+    };
+
+    this.http
+      .post("https://localhost:44366/auth/login", credentials, {
+        responseType: "json"
+      })
+      .subscribe(
+        result => {
+          localStorage.setItem("id_token", result["token"]);
+          this.router.navigate(["/"]);
+        },
+        error => {
+          console.error(error);
+          this.showLoginError();
+        }
+      );
   }
-  
-   isTokenPresent(): boolean {
+
+  showLoginError() {
+    this.toastr.error('Invalid login or password!');
+  }
+
+  isTokenPresent(): boolean {
     return localStorage.getItem("id_token") ? true : false;
   }
 
-   clearStorage() {
+  clearStorage() {
     localStorage.removeItem("id_token");
-    this.successfulLogin = true;
   }
 }
