@@ -9,11 +9,11 @@
 
   <form>
 
-    Group name:  <input type="text" [(ngModel)]="GroupName" placeholder="Group name" name="GroupName"/>
+    Group name:  <input type="text" [(ngModel)]="GroupName" name="GroupName"/>
 
     <br><br>
 
-    <input type="submit" value="Create" (click)="createUserGroup()"/>
+    <input type="submit" value="Create" (click)="createUserGroup(GroupName)"/>
 
     <br><br>
 

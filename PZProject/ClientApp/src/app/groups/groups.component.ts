@@ -70,10 +70,27 @@ export class GroupsComponent implements OnInit {
       },
     };
 
-    console.log(GroupId);
-
     this.http.delete('http://localhost:62333/groups/delete', httpOptions).subscribe(result => {
       window.location.reload;
+    }, error => { console.error(error); });
+  }
+
+  assignUserGroup(UserEmail, GroupName) {
+    this.token = localStorage.getItem('id_token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      }),
+      body: {
+        "UserEmail": UserEmail,
+        "GroupName": GroupName
+      },
+    };
+
+    this.http.post('http://localhost:62333/groups/assign', httpOptions).subscribe(result => {
+
     }, error => { console.error(error); });
   }
 

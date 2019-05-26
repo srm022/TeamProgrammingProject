@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       password: this.password,
     }
 
-    this.http.post('https://localhost:44366/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
+    this.http.post('http://localhost:62333/auth/login', credentials, { responseType: 'json' }).subscribe(result => {
       localStorage.setItem('id_token', result['token']);
       this.successfulLogin = true;
       this.router.navigate(['/']);

@@ -19,19 +19,24 @@ export class GroupCreatorComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  createUserGroup(GroupName:String) {
     this.token = localStorage.getItem('id_token');
 
     let httpOptions = {
       headers: new HttpHeaders({
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
-      })
-    }
-  }
-
-  createUserGroup(httpOptions): void {
+      }),
+      body: {
+        "GroupName": GroupName
+      },
+    };
+    console.log(GroupName);
     this.http.post('http://localhost:62333/groups/create', httpOptions).subscribe(result => {
-      console.log(result);
 
-    }, error => console.error(error));
+    }, error => { console.error(error); });
   }
 }
