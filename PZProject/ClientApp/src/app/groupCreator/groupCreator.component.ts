@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr';
 
 
 @Component({
@@ -12,35 +13,47 @@ import { Router } from '@angular/router';
 export class GroupCreatorComponent implements OnInit {
 
   private token: any;
-  private Name: string;
-  private CreatorId: string;
+  private groupName: string;
 
   constructor(
     private http: HttpClient,
-    private router: Router) {
-
-  }
+    private router: Router,
+    private toastr: ToastsManager,
+    private vcr: ViewContainerRef) {
+      this.toastr.setRootViewContainerRef(vcr);
+    }
 
   ngOnInit() {
-
+    this.token = localStorage.getItem('id_token');
   }
 
-  createUserGroup(GroupName: String) {
-    this.token = localStorage.getItem('id_token');
-
-    let httpOptions = {
+  createUserGroup() {
+    const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
       })
     };
 
-    let bodyOptions = {
-      "GroupName": GroupName
-    }
+    const bodyOptions = {
+      'GroupName': this.groupName
+    };
     this.http.post('http://localhost:62333/groups/create', bodyOptions, httpOptions).subscribe(result => {
-      alert("Group has been created");
-      this.router.navigate(['/groups']);
-    }, error => { console.error(error); });
+    this.showSuccessAlert();
+      setTimeout(() => {
+        this.router.navigate(['/groups']);
+      },
+      2000);
+    }, error => { this.showGroupNameErrorAlert(error); }
+    );
+  }
+
+  showSuccessAlert() {
+    this.toastr.success('Group "' + this.groupName + '" created successfully');
+  }
+
+  showGroupNameErrorAlert(error: any) {
+    console.error(error);
+    this.toastr.error('Group name already taken');
   }
 }

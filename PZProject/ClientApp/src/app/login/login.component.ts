@@ -1,12 +1,12 @@
-import { Component, OnInit, Inject, ViewContainerRef } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { Component, OnInit, Inject, ViewContainerRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"]
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   private email: string;
@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
     };
 
     this.http
-      .post("https://localhost:44366/auth/login", credentials, {
-        responseType: "json"
+      .post('https://localhost:44366/auth/login', credentials, {
+        responseType: 'json'
       })
       .subscribe(
         result => {
-          localStorage.setItem("id_token", result["token"]);
-          this.router.navigate(["/"]);
+          localStorage.setItem('id_token', result['token']);
+          this.router.navigate(['/']);
         },
         error => {
           console.error(error);
@@ -48,10 +48,10 @@ export class LoginComponent implements OnInit {
   }
 
   isTokenPresent(): boolean {
-    return localStorage.getItem("id_token") ? true : false;
+    return localStorage.getItem('id_token') ? true : false;
   }
 
   clearStorage() {
-    localStorage.removeItem("id_token");
+    localStorage.removeItem('id_token');
   }
 }
