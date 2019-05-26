@@ -14,16 +14,18 @@
         <td>{{element.GroupName}}</td>
         <td>{{element.GroupId}}</td>
         <td>{{element.UserId}}</td>
-        <td><button>Update</button><button (click)="deleteUserGroup(element.GroupId)">Delete</button> <form>
+        <td>
+          <button>Update</button><button (click)="deleteUserGroup(element.GroupId)">Delete</button>
 
-  User email:  <input type="text" [(ngModel)]="UserEmail" name="UserEmail" />
-  <input type="hidden" [(ngModel)]="GroupName" name="GroupName" value={{element.GroupName}} />
+          User email:  <input type="text" [(ngModel)]="UserEmail" />
 
-  <br><br>
+          <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
 
-  <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, GroupName)" />
 
-</form></td>
+
+          <br><br>
+
+        </td>
         
       </tr>
     </tbody>

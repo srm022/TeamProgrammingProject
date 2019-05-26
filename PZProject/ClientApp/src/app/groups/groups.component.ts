@@ -82,14 +82,21 @@ export class GroupsComponent implements OnInit {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.token
-      }),
-      body: {
-        "UserEmail": UserEmail,
-        "GroupName": GroupName
-      },
+      })
     };
 
-    this.http.post('http://localhost:62333/groups/assign', httpOptions).subscribe(result => {
+    //let bodyOptions = {
+    //  body: {
+    //    "UserEmail": UserEmail,
+    //    "GroupName": GroupName
+    //  }
+    //};
+
+    let bodyOptions = {
+      "UserEmail": UserEmail,
+      "GroupName": GroupName
+      }
+    this.http.post('http://localhost:62333/groups/assign', bodyOptions, httpOptions).subscribe(result => {
 
     }, error => { console.error(error); });
   }
