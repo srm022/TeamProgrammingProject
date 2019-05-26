@@ -32,6 +32,7 @@
     "extend": "^3.0.2",
     "hoek": "^6.1.2",
     "lodash": "^4.17.11",
+    "ng2-toastr": "^4.1.2",
     "rxjs": "^5.5.12",
     "tslib": "^1.9.0",
     "webpack-dev-server": "^3.2.1",
