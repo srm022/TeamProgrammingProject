@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,9 @@ export class GroupCreatorComponent implements OnInit {
   private Name: string;
   private CreatorId: string;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router) {
 
   }
 
@@ -36,7 +39,8 @@ export class GroupCreatorComponent implements OnInit {
       "GroupName": GroupName
     }
     this.http.post('http://localhost:62333/groups/create', bodyOptions, httpOptions).subscribe(result => {
-
+      alert("Group has been created");
+      this.router.navigate(['/groups']);
     }, error => { console.error(error); });
   }
 }

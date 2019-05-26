@@ -94,5 +94,23 @@ export class GroupsComponent implements OnInit {
     }, error => { console.error(error); });
   }
 
+  removeUserFromGroup(UserId, GroupId) {
+    this.token = localStorage.getItem('id_token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+
+    let bodyOptions = {
+      "UserId": UserId,
+      "GroupId": GroupId
+    }
+    this.http.post('http://localhost:62333/groups/remove', bodyOptions, httpOptions).subscribe(result => {
+
+    }, error => { console.error(error); });
+  }
 
 }
