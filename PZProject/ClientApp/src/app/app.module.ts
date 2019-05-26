@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { GroupsComponent } from './groups/groups.component';
+import { GroupCreatorComponent } from './groupCreator/groupCreator.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     LoginComponent,
     RegisterComponent,
     GroupsComponent,
+    GroupCreatorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +34,8 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
-      { path: 'groups', component: GroupsComponent }
+      { path: 'groups', component: GroupsComponent },
+      { path: 'groupCreator', component: GroupCreatorComponent }
     ])
   ],
   providers: [],

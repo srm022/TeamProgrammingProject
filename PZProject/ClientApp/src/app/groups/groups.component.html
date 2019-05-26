@@ -4,21 +4,38 @@
     <thead>
       <tr class="text-center text-uppercase">
         <th>Group name</th>
-        <th>Group ID</th>
-        <th>User ID</th>
+        <th>Creator ID</th>
 
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let element of UserGroupArray">
         <td>{{element.GroupName}}</td>
-        <td>{{element.GroupId}}</td>
         <td>{{element.UserId}}</td>
+        <td>
+          <button (click)="deleteUserGroup(element.GroupId)">Delete</button>
+
+          <br><br>
+
+          User email: <input type="text" [(ngModel)]="UserEmail" />
+
+          <br><br>
+
+          <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
+
+          <br><br>
+
+          Remove user from group: <input type="text" [(ngModel)]="UserId" />
+
+          <input type="submit" value="Remove user" (click)="removeUserFromGroup(UserId, element.GroupId)" />
+
+          <br><br>
+
+        </td>
+
       </tr>
     </tbody>
   </table>
-  <!--<button type="button" id="moreInfo">More info about group</button>
-  <button type="button" id="leaveGroupButton">Leave group</button>-->
-</div>
+  <button [routerLink]="['/groupCreator']">Create new group</button>
 
-<!--<h1>{{zmienna}}</h1>-->
+</div>

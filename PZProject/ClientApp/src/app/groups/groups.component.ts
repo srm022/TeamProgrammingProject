@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpHeaders} from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,13 @@ export class GroupsComponent implements OnInit {
   private UserGroupArray = [];
   private iterator = 0;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router) {
+
+  }
+
+  ngOnInit() {
     this.token = localStorage.getItem('id_token');
 
     let httpOptions = {
@@ -23,24 +30,87 @@ export class GroupsComponent implements OnInit {
       })
     }
 
-    this.http.get('http://localhost:62333/groups', httpOptions).subscribe(result => {
-      console.log(result);
+    this.displayUserGroups(httpOptions);
 
-      while (result[this.iterator]) {
-
-        this.UserGroupArray.push({
-          GroupId: result[this.iterator]['groupId'],
-          GroupName: result[this.iterator]['name'],
-          UserId: result[this.iterator]['creatorId']
-        });
-
-        this.iterator++;
-      }
-
-    }, error => console.error(error));
   }
 
-  ngOnInit() {
+  addUserGroupstoArray(result): void {
+    while (result[this.iterator]) {
+
+      this.UserGroupArray.push({
+        GroupId: result[this.iterator]['groupId'],
+        GroupName: result[this.iterator]['name'],
+        UserId: result[this.iterator]['creatorId']
+      });
+
+      this.iterator++;
+    }
+  }
+
+  displayUserGroups(httpOptions): void {
+
+    this.http.get('http://localhost:62333/groups', httpOptions).subscribe(result => {
+      this.addUserGroupstoArray(result);
+      console.log(result);
+
+    }, error => console.error(error));
+
+  }
+
+  deleteUserGroup(GroupId) {
+    this.token = localStorage.getItem('id_token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      }),
+      body: {
+        "GroupId": GroupId
+      },
+    };
+
+    this.http.delete('http://localhost:62333/groups/delete', httpOptions).subscribe(result => {
+      window.location.reload;
+    }, error => { console.error(error); });
+  }
+
+  assignUserGroup(UserEmail, GroupName) {
+    this.token = localStorage.getItem('id_token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+
+    let bodyOptions = {
+      "UserEmail": UserEmail,
+      "GroupName": GroupName
+    }
+    this.http.post('http://localhost:62333/groups/assign', bodyOptions, httpOptions).subscribe(result => {
+
+    }, error => { console.error(error); });
+  }
+
+  removeUserFromGroup(UserId, GroupId) {
+    this.token = localStorage.getItem('id_token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+
+    let bodyOptions = {
+      "UserId": UserId,
+      "GroupId": GroupId
+    }
+    this.http.post('http://localhost:62333/groups/remove', bodyOptions, httpOptions).subscribe(result => {
+
+    }, error => { console.error(error); });
   }
 
 }
