@@ -13,10 +13,10 @@ import { ToastsManager } from 'ng2-toastr';
 export class GroupsComponent implements OnInit {
 
   private token: any;
-  private UserGroupArray = [];
   private first = [];
   private second = [];
   private iterator = 0;
+  UserGroupArray = [];
 
   constructor(
     private http: HttpClient,

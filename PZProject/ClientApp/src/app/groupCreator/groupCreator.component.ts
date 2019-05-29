@@ -12,8 +12,8 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class GroupCreatorComponent implements OnInit {
 
-  private token: any;
-  private groupName: string;
+  token: any;
+  groupName: string;
 
   constructor(
     private http: HttpClient,

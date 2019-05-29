@@ -9,11 +9,11 @@ import { ToastsManager } from "ng2-toastr";
   styleUrls: ["./register.component.css"]
 })
 export class RegisterComponent implements OnInit {
-  private email: string;
-  private password: string;
-  private firstName: string;
-  private lastName: string;
-  private emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   constructor(
     private http: HttpClient,
