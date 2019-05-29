@@ -1,0 +1,12 @@
+﻿<form #createGroup="ngForm">
+  <div class="login-page">
+    <div class="form">
+      <div class="register-form">
+        <div class="groupCreatorTitle">Group creator</div>
+        <input type="text" [(ngModel)]="groupName" required #groupN="ngModel" name="groupN" placeholder="Group name"/>
+        <button type="submit" id="loginButton" (click)="createUserGroup()" [disabled]="createGroup.invalid">Create</button>
+        <p class="message"><a [routerLink]="['/groups']">Back to list</a></p>
+      </div>
+    </div>
+  </div>
+</form>

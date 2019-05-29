@@ -1,24 +1,39 @@
 <div class="container py-5">
-  <h3 class="text-center text-uppercase">List of User Groups</h3>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr class="text-center text-uppercase">
-        <th>Group name</th>
-        <th>Group ID</th>
-        <th>User ID</th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let element of UserGroupArray">
-        <td>{{element.GroupName}}</td>
-        <td>{{element.GroupId}}</td>
-        <td>{{element.UserId}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <!--<button type="button" id="moreInfo">More info about group</button>
-  <button type="button" id="leaveGroupButton">Leave group</button>-->
-</div>
-
-<!--<h1>{{zmienna}}</h1>-->
+    <h3 class="text-center text-uppercase">List of User Groups</h3>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="text-center text-uppercase">
+          <th>Group name</th>
+          <th>Creator ID</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of UserGroupArray">
+          <td>{{element.GroupName}}</td>
+          <td>{{element.UserId}}</td>
+          <td>
+            <label>Delete this group:  </label><button (click)="deleteUserGroup(element.GroupId)">Delete</button>
+  
+            <br><br>
+  
+            <label> User email: </label><input type="text" [(ngModel)]="UserEmail" />
+  
+            <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
+  
+            <br><br>
+  
+            <label>Remove user from group: </label><input type="text" [(ngModel)]="UserId" />
+  
+            <input type="submit" value="Remove user" (click)="removeUserFromGroup(UserId, element.GroupId)" />
+  
+            <br><br>
+  
+          </td>
+  
+        </tr>
+      </tbody>
+    </table>
+    <button [routerLink]="['/groupCreator']">Create new group</button>
+  
+  </div>

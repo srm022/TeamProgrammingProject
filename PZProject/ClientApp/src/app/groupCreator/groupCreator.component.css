@@ -1,5 +1,19 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.form button:disabled {
+  background: #a8a8a8;
+  color: rgb(255, 255, 255);
+}
+.groupCreatorTitle {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: rgb(0, 0, 0);
+}
+
 .login-page {
   width: 480px;
   padding: 20% 0 0;
@@ -70,18 +84,23 @@
   font-size: 12px;
 }
 
+.loginText {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  position: relative;
+  color: #6e6e6e;
+  padding-bottom: 30px;
+  font-weight: bold;
+  max-width: 480px;
+  text-align: center;
+}
+
 .alert {
   font-family: "Roboto", sans-serif;
   font-size: 11px;
   position: relative;
   color: crimson;
   font-weight: bold;
-  margin: 0 auto 5px;
-  padding: 5px;
   text-align: left;
 }
 
-.form button:disabled {
-  background: #a8a8a8;
-  color: rgb(255, 255, 255);
-}
