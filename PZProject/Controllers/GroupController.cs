@@ -100,5 +100,39 @@ namespace PZProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpGet("{id}/notes")]
+        public IActionResult GetNotesForGroup(int id)
+        {
+            try
+            {
+                var userId = this.GetUserId();
+                var notes = _groupOperationsHandler.GetNotesForGroup(id, userId);
+
+                return Ok(notes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("{id}/notes/create")]
+        public IActionResult CreateNoteForGroup([FromBody] CreateGroupNoteRequest request, int id)
+        {
+            try
+            {
+                var userId = this.GetUserId();
+                _groupOperationsHandler.CreateNoteForGroup(request, id, userId);
+
+                return Created(string.Empty, null);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

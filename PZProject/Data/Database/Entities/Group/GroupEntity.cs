@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PZProject.Data.Database.Entities.GroupNote;
 
 namespace PZProject.Data.Database.Entities.Group
 {
@@ -17,5 +18,7 @@ namespace PZProject.Data.Database.Entities.Group
         public int CreatorId { get; set; }
 
         public List<UserGroupEntity> UserGroups { get; set; }
+
+        public List<GroupNoteEntity> Notes { get; set; }
     }
 }
