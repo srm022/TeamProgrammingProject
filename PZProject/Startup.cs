@@ -27,9 +27,11 @@ namespace PZProject
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var settings = Configuration.GetSection("Settings");
-            services.Configure<SystemSettings>(settings);
-            var systemSettings = settings.Get<SystemSettings>();
+            var systemSettings = new SystemSettings
+            {
+                DbConnectionString = Configuration.GetValue<string>("DbConnectionString"),
+                JwtSecurityKey = Configuration.GetValue<string>("JwtSecurityKey")
+            };
 
             var key = Encoding.ASCII.GetBytes(systemSettings.JwtSecurityKey);
             services.AddDbContext<SystemDbContext>(options => options.UseSqlServer(systemSettings.DbConnectionString));
