@@ -13,7 +13,8 @@ namespace PZProject.Data
             CreateMap<RegisterUserRequest, UserEntity>();
             CreateMap<CreateGroupModel, GroupEntity>()
                 .ForMember(group => group.CreatorId, opt => opt.MapFrom(model => model.CreatorId))
-                .ForMember(group => group.Name, opt => opt.MapFrom(model => model.GroupName));
+                .ForMember(group => group.Name, opt => opt.MapFrom(model => model.GroupName))
+                .ForMember(group => group.Description, opt => opt.MapFrom(model => model.GroupDescription));
         }
     }
 }
