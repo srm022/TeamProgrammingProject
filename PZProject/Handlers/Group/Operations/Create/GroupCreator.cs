@@ -36,7 +36,8 @@ namespace PZProject.Handlers.Group.Operations.Create
             var groupModel = new CreateGroupModel
             {
                 CreatorId = userId,
-                GroupName = request.GroupName
+                GroupName = request.GroupName,
+                GroupDescription = request.GroupDescription
             };
 
             return groupModel;

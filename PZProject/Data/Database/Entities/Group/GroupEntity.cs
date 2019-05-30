@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,9 @@ namespace PZProject.Data.Database.Entities.Group
 
         [Required]
         public int CreatorId { get; set; }
+
+        [MaxLength(256)]
+        public string Description { get; set; }
 
         public List<UserGroupEntity> UserGroups { get; set; }
     }
