@@ -27,14 +27,17 @@ namespace PZProject
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var systemSettings = new SystemSettings
-            {
-                DbConnectionString = Configuration.GetValue<string>("DbConnectionString"),
-                JwtSecurityKey = Configuration.GetValue<string>("JwtSecurityKey")
-            };
+            var dbConnectionString = Configuration.GetValue<string>("DbConnectionString");
+            var jwtSecurityKey = Configuration.GetValue<string>("JwtSecurityKey");
 
-            var key = Encoding.ASCII.GetBytes(systemSettings.JwtSecurityKey);
-            services.AddDbContext<SystemDbContext>(options => options.UseSqlServer(systemSettings.DbConnectionString));
+            services.Configure<SystemSettings>(options =>
+            {
+                options.DbConnectionString = dbConnectionString;
+                options.JwtSecurityKey = jwtSecurityKey;
+            });
+
+            var key = Encoding.ASCII.GetBytes(jwtSecurityKey);
+            services.AddDbContext<SystemDbContext>(options => options.UseSqlServer(dbConnectionString));
 
             Mapper.Initialize(cfg => cfg.AddProfile<SystemMapperProfile>());
             services.AddAutoMapper();
