@@ -40,7 +40,7 @@ namespace PZProject.Handlers.User
             if (PasswordHashHandler.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 var token = _tokenGenerator.GenerateJwtToken(user.UserId, user.Role.Name);
-                return new LoginUserResponse(token);
+                return new LoginUserResponse(token, user.UserId);
             }
 
             throw new Exception("Wrong credentials");
