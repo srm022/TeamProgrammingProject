@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PZProject.Data.Database.Entities.Note;
 
 namespace PZProject.Data.Database.Entities.Group
 {
@@ -21,5 +22,7 @@ namespace PZProject.Data.Database.Entities.Group
         public string Description { get; set; }
 
         public List<UserGroupEntity> UserGroups { get; set; }
+
+        public List<NoteEntity> Notes { get; set; }
     }
 }
