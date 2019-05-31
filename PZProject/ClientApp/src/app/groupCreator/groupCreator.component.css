@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.form button:hover,.form button:active,.form button:focus {
+  background: #2b4b91;
+}
+
 .form button:disabled {
   background: #a8a8a8;
   color: rgb(255, 255, 255);
@@ -54,9 +58,7 @@
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
-  background: #2b4b91;
-}
+
 .form .message {
   margin: 15px 0 0;
   color: #6e6e6e;

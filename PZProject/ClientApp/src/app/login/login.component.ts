@@ -11,6 +11,7 @@ import { ToastsManager } from 'ng2-toastr';
 export class LoginComponent implements OnInit {
   private email: string;
   private password: string;
+  private isLoading = false;
   constructor(
     private http: HttpClient, 
     private router: Router, 
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   public login() {
+    this.isLoading = true;
     let credentials = {
       email: this.email,
       password: this.password
@@ -33,11 +35,13 @@ export class LoginComponent implements OnInit {
       })
       .subscribe(
         result => {
+          this.isLoading = false;
           localStorage.setItem('id_token', result['token']);
           this.router.navigate(['/']);
         },
         error => {
           console.error(error);
+          this.isLoading = false;
           this.showLoginError();
         }
       );

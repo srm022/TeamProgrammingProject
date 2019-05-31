@@ -42,12 +42,13 @@ export class RegisterComponent implements OnInit {
             console.log(result);
             this.router.navigate(['/login']);
           },
-          error => console.log(error)
+          error => this.showEmailTakenError(error)
         );
-        this.showEmailTakenError()
+        
   }
 
-  showEmailTakenError() {
+  showEmailTakenError(error: any) {
+    console.log(error);
     this.toastr.error('This email adress is already taken');
   }
 }
