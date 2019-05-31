@@ -12,3 +12,8 @@
 #moreInfo{
   background-color: rgb(2, 137, 247);
 }
+
+.spinnerCenter {
+  margin: 0 auto;
+  margin-top: 25%;
+}

@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { ToastsManager } from "ng2-toastr";
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
-  selector: "app-register",
-  templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.css"]
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
   email: string;
@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 
   public register() {
       this.isLoading = true;
-      let credentials = {
+      const credentials = {
         email: this.email,
         password: this.password,
         firstName: this.firstName,
@@ -47,7 +47,6 @@ export class RegisterComponent implements OnInit {
           },
           error => this.showEmailTakenError(error)
         );
-        
   }
 
   showEmailTakenError(error: any) {

@@ -1,4 +1,4 @@
-<div class="container py-5">
+<ng-container class="container py-5" *ngIf="!isLoading">
     <h3 class="text-center text-uppercase">List of User Groups</h3>
     <table class="table table-bordered table-striped">
       <thead>
@@ -36,4 +36,5 @@
     </table>
     <button [routerLink]="['/groupCreator']">Create new group</button>
   
-  </div>
+  </ng-container>
+<mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>
