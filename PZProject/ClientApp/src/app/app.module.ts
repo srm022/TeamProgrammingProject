@@ -13,6 +13,8 @@ import { RegisterComponent } from './register/register.component';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupCreatorComponent } from './groupCreator/groupCreator.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatProgressSpinnerModule,
     ToastModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

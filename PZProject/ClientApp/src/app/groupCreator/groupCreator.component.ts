@@ -38,7 +38,7 @@ export class GroupCreatorComponent implements OnInit {
     const bodyOptions = {
       'GroupName': this.groupName
     };
-    this.http.post('http://localhost:62333/groups/create', bodyOptions, httpOptions).subscribe(result => {
+    this.http.post('https://pzproject.azurewebsites.net/groups/create', bodyOptions, httpOptions).subscribe(result => {
     this.showSuccessAlert();
       setTimeout(() => {
         this.router.navigate(['/groups']);
