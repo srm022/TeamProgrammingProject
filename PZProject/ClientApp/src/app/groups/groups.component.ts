@@ -51,7 +51,7 @@ export class GroupsComponent implements OnInit {
         'Authorization': 'Bearer ' + this.token
       })
     }
-    this.http.get('http://localhost:62333/groups', httpOptions).subscribe(result => {
+    this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
       this.addUserGroupstoArray(result);
       console.log(result);
 
@@ -70,7 +70,7 @@ export class GroupsComponent implements OnInit {
       },
     };
 
-    this.http.delete('http://localhost:62333/groups/delete', httpOptions).subscribe(result => {
+    this.http.delete('https://pzproject.azurewebsites.net/groups/delete', httpOptions).subscribe(result => {
       this.router.navigate(['/groups']);
     }, error => { this.showErrorDeletingGroup(error); });
   }
@@ -95,7 +95,7 @@ export class GroupsComponent implements OnInit {
       'GroupName': groupName
     };
 
-    this.http.post('http://localhost:62333/groups/assign', bodyOptions, httpOptions).subscribe(result => {
+    this.http.post('https://pzproject.azurewebsites.net/groups/assign', bodyOptions, httpOptions).subscribe(result => {
     this.showSuccesAsign();
     }, error => { this.showErrorAdd(error); });
   }
@@ -123,7 +123,7 @@ export class GroupsComponent implements OnInit {
       'UserId': userId,
       'GroupId': groupId
     }
-    this.http.post('http://localhost:62333/groups/remove', bodyOptions, httpOptions).subscribe(result => {
+    this.http.post('https://pzproject.azurewebsites.net/groups/remove', bodyOptions, httpOptions).subscribe(result => {
 
     }, error => { this.showErrorRem(error); });
   }

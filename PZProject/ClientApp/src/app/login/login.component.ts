@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     };
 
     this.http
-      .post('https://localhost:44366/auth/login', credentials, {
+      .post('https://pzproject.azurewebsites.net/auth/login', credentials, {
         responseType: 'json'
       })
       .subscribe(

@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
         lastName: this.lastName
       };
 
-      this.http.post('https://localhost:44366/auth/register', credentials, {
+      this.http.post('https://pzproject.azurewebsites.net/auth/register', credentials, {
           responseType: 'text'
         })
         .subscribe(
