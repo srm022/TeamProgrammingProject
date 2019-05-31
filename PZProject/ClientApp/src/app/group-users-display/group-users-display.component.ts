@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { HttpClient } from 'selenium-webdriver/http';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-group-users-display',
@@ -25,9 +24,10 @@ export class GroupUsersDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.token = localStorage.getItem('id_token');
+    this.displayGroupNotes();
   }
 
-  addUserGroupstoArray(result: Object | { [x: string]: any; }[]) {
+  GroupNotestoArray(result: Object | { [x: string]: any; }[]) {
 
     while (result[this.iterator]) {
 
@@ -35,7 +35,8 @@ export class GroupUsersDisplayComponent implements OnInit {
         GroupId: result[this.iterator]['groupId'],
         GroupName: result[this.iterator]['name'],
         UserId: result[this.iterator]['creatorId'],
-        description: result[this.iterator]['description']
+        description: result[this.iterator]['description'],
+        userGroups: result[this.iterator]['userGroups']
       });
 
       this.iterator++;
@@ -49,7 +50,7 @@ export class GroupUsersDisplayComponent implements OnInit {
       })
     }
     this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
-      this.addUserGroupstoArray(result);
+      this.GroupNotestoArray(result);
       console.log(result);
   
     }, error => console.error(error));

@@ -1,4 +1,4 @@
-<div class="container py-5">
+<ng-container class="container py-5" *ngIf="!isLoading">
     <h3 class="text-center text-uppercase">List of User Groups</h3>
     <table class="table table-bordered table-striped">
       <thead>
@@ -17,7 +17,7 @@
           <td>
             <label>Delete this group:  </label><button (click)="deleteUserGroup(element.GroupId)">Delete</button>
             <button>Edit group</button>
-            <button>Show users</button>
+            <button [routerLink]="['/group-users-display']">Show users</button>
             <button>Show group notes</button>
   
             <!-- <br><br>
@@ -41,4 +41,5 @@
     </table>
     <button [routerLink]="['/groupCreator']">Create new group</button>
   
-  </div>
+  </ng-container>
+<mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

@@ -42,7 +42,8 @@ import { GroupUsersDisplayComponent } from './group-users-display/group-users-di
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'groups', component: GroupsComponent },
-      { path: 'groupCreator', component: GroupCreatorComponent }
+      { path: 'groupCreator', component: GroupCreatorComponent },
+      { path: 'group-users-display', component:  GroupUsersDisplayComponent}
     ])
   ],
   providers: [],

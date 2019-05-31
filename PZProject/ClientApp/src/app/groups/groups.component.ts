@@ -17,7 +17,7 @@ export class GroupsComponent implements OnInit {
   private second = [];
   private iterator = 0;
   UserGroupArray = [];
-
+  private isLoading = true;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -39,7 +39,8 @@ export class GroupsComponent implements OnInit {
         GroupId: result[this.iterator]['groupId'],
         GroupName: result[this.iterator]['name'],
         UserId: result[this.iterator]['creatorId'],
-        description: result[this.iterator]['description']
+        description: result[this.iterator]['description'],
+        userGroups: result[this.iterator]['userGroups']
       });
 
       this.iterator++;
@@ -55,7 +56,7 @@ export class GroupsComponent implements OnInit {
     this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
       this.addUserGroupstoArray(result);
       console.log(result);
-
+      this.isLoading = false;
     }, error => console.error(error));
 
   }

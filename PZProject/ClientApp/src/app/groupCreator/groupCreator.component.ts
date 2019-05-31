@@ -16,6 +16,7 @@ export class GroupCreatorComponent implements OnInit {
   groupName: string;
   groupDescription: string;
 
+  isLoading = false;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -29,6 +30,7 @@ export class GroupCreatorComponent implements OnInit {
   }
 
   createUserGroup() {
+    this.isLoading = true;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -43,6 +45,7 @@ export class GroupCreatorComponent implements OnInit {
     this.http.post('https://pzproject.azurewebsites.net/groups/create', bodyOptions, httpOptions).subscribe(result => {
     this.showSuccessAlert();
       setTimeout(() => {
+        this.isLoading = false;
         this.router.navigate(['/groups']);
       },
       2000);
@@ -56,6 +59,7 @@ export class GroupCreatorComponent implements OnInit {
 
   showGroupNameErrorAlert(error: any) {
     console.error(error);
+    this.isLoading = false;
     this.toastr.error('Group name already taken');
   }
 }
