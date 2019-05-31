@@ -14,6 +14,7 @@ import { GroupsComponent } from './groups/groups.component';
 import { GroupCreatorComponent } from './groupCreator/groupCreator.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { BaseServiceService } from './services/base-service/base-service.service';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       { path: 'groupCreator', component: GroupCreatorComponent }
     ])
   ],
-  providers: [],
+  providers: [ BaseServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

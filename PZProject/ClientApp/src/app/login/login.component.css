@@ -81,6 +81,17 @@
   text-align: center;
 }
 
+.emailText {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  position: relative;
+  color: #000000;
+  padding-bottom: 30px;
+  font-weight: bold;
+  max-width: 480px;
+  text-align: center;
+}
+
 .alert {
   font-family: "Roboto", sans-serif;
   font-size: 11px;

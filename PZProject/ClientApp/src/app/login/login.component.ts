@@ -9,6 +9,7 @@ import { ToastsManager } from 'ng2-toastr';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  private userLogin: string;
   private email: string;
   private password: string;
   private isLoading = false;
@@ -20,11 +21,13 @@ export class LoginComponent implements OnInit {
       this.toastr.setRootViewContainerRef(vcr);
     }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userLogin =  localStorage.getItem('email');
+  }
 
   public login() {
     this.isLoading = true;
-    let credentials = {
+    const credentials = {
       email: this.email,
       password: this.password
     };
@@ -37,6 +40,8 @@ export class LoginComponent implements OnInit {
         result => {
           this.isLoading = false;
           localStorage.setItem('id_token', result['token']);
+          localStorage.setItem('userId', result['userId']); 
+          localStorage.setItem('email', this.email);
           this.router.navigate(['/']);
         },
         error => {
@@ -56,6 +61,8 @@ export class LoginComponent implements OnInit {
   }
 
   clearStorage() {
-    localStorage.removeItem('id_token');
+    localStorage.clear();
   }
+
+
 }
