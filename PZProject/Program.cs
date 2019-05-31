@@ -17,7 +17,7 @@ namespace PZProject
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.SetBasePath(Directory.GetCurrentDirectory());
-                    config.AddJsonFile("settings.json", optional: false, reloadOnChange: false);
+                    config.AddJsonFile("settings.json", optional: true, reloadOnChange: false);
                 })
                 .UseStartup<Startup>();
     }
