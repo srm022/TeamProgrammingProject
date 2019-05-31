@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using PZProject.Data.Database.Entities.Group;
 
-namespace PZProject.Data.Database.Entities.GroupNote
+namespace PZProject.Data.Database.Entities.Note
 {
-    [Table("GroupNote")]
-    public class GroupNoteEntity
+    [Table("Note")]
+    public class NoteEntity
     {
         [Key, Required]
         public int NoteId { get; set; }

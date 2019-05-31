@@ -1,6 +1,6 @@
-﻿namespace PZProject.Data.Requests.GroupRequests
+﻿namespace PZProject.Data.Requests.NoteRequests
 {
-    public class CreateGroupNoteRequest
+    public class CreateNoteRequest
     {
         public string NoteName { get; set; }
         public string NoteDescription { get; set; }
