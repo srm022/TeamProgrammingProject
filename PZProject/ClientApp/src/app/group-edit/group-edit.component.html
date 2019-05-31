@@ -1,0 +1,14 @@
+<form #createGroup="ngForm">
+    <div class="login-page">
+      <div class="form">
+        <div class="register-form">
+          <div class="groupCreatorTitle">Group Editor</div>
+          <input type="text" [(ngModel)]="groupName" required #groupN="ngModel" name="groupN" placeholder="Group name"/>
+          <input type="text" [(ngModel)]="groupDescription" required #groupD="ngModel" name="groupD" placeholder="Group description"/>
+          <button type="submit" id="loginButton" (click)="" [disabled]="createGroup.invalid">Update</button>
+          <p class="message"><a [routerLink]="['/groups']">Back to list</a></p>
+        </div>
+      </div>
+    </div>
+  </form>
+  <mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner>
