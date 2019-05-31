@@ -14,6 +14,7 @@ export class GroupCreatorComponent implements OnInit {
 
   token: any;
   groupName: string;
+  groupDescription: string;
 
   constructor(
     private http: HttpClient,
@@ -36,7 +37,8 @@ export class GroupCreatorComponent implements OnInit {
     };
 
     const bodyOptions = {
-      'GroupName': this.groupName
+      'GroupName': this.groupName,
+      'GroupDescription': this.groupDescription
     };
     this.http.post('https://pzproject.azurewebsites.net/groups/create', bodyOptions, httpOptions).subscribe(result => {
     this.showSuccessAlert();

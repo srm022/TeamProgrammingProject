@@ -38,7 +38,8 @@ export class GroupsComponent implements OnInit {
       this.UserGroupArray.push({
         GroupId: result[this.iterator]['groupId'],
         GroupName: result[this.iterator]['name'],
-        UserId: result[this.iterator]['creatorId']
+        UserId: result[this.iterator]['creatorId'],
+        description: result[this.iterator]['description']
       });
 
       this.iterator++;

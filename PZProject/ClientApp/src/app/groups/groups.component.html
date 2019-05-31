@@ -5,6 +5,7 @@
         <tr class="text-center text-uppercase">
           <th>Group name</th>
           <th>Creator ID</th>
+          <th>Description</th>
           <th>Options</th>
         </tr>
       </thead>
@@ -12,10 +13,14 @@
         <tr *ngFor="let element of UserGroupArray">
           <td>{{element.GroupName}}</td>
           <td>{{element.UserId}}</td>
+          <td>{{element.description}}</td>
           <td>
             <label>Delete this group:  </label><button (click)="deleteUserGroup(element.GroupId)">Delete</button>
+            <button>Edit group</button>
+            <button>Show users</button>
+            <button>Show group notes</button>
   
-            <br><br>
+            <!-- <br><br>
   
             <label> User email: </label><input type="text" [(ngModel)]="UserEmail" />
   
@@ -27,7 +32,7 @@
   
             <input type="submit" value="Remove user" (click)="removeUserFromGroup(UserId, element.GroupId)" />
   
-            <br><br>
+            <br><br> -->
   
           </td>
   

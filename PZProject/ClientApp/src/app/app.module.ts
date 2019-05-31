@@ -13,7 +13,8 @@ import { RegisterComponent } from './register/register.component';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupCreatorComponent } from './groupCreator/groupCreator.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GroupEditComponent } from './group-edit/group-edit.component'; 
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LoginComponent,
     RegisterComponent,
     GroupsComponent,
-    GroupCreatorComponent
+    GroupCreatorComponent,
+    GroupEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
