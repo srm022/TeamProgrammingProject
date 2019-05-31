@@ -41,5 +41,4 @@ namespace PZProject.Handlers.Group.Operations.Edit
             SecurityAssertions.AssertThatIssuerIsAuthorizedToOperation(group, userId);
         }
     }
-    }
 }
