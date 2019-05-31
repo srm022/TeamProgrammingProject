@@ -43,6 +43,8 @@
     <Folder Include="Handlers\Note\" />
     <Folder Include="Handlers\Note\Operations\" />
     <Folder Include="Handlers\Note\Operations\CreateNote\" />
+    <Folder Include="Data\Responses\NotesResponses\" />
+    <Folder Include="Handlers\Group\Operations\Edit\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->

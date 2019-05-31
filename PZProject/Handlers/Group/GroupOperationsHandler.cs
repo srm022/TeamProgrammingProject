@@ -4,6 +4,7 @@ using PZProject.Data.Database.Entities.User;
 using PZProject.Data.Repositories.Group;
 using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.GroupRequests;
+using PZProject.Data.Responses.GroupResponses;
 using PZProject.Handlers.Group.Operations.AssignUser;
 using PZProject.Handlers.Group.Operations.Create;
 using PZProject.Handlers.Group.Operations.Delete;
@@ -15,7 +16,7 @@ namespace PZProject.Handlers.Group
     public interface IGroupOperationsHandler
     {
         void CreateNewGroup(CreateGroupRequest request, int issuerId);
-        List<GroupEntity> GetGroupsForUser(int userId);
+        List<GroupResponse> GetGroupsForUser(int userId);
         void DeleteGroup(DeleteGroupRequest request, int issuerId);
         void AssignUserToGroup(AssignUserToGroupRequest request, int issuerId);
         void RemoveUserFromGroup(RemoveUserFromGroupRequest request, int issuerId);
@@ -45,9 +46,17 @@ namespace PZProject.Handlers.Group
             _groupRemoveHandler = groupRemoveHandler;
         }
 
-        public List<GroupEntity> GetGroupsForUser(int userId)
+        public List<GroupResponse> GetGroupsForUser(int userId)
         {
-            return _groupRepository.GetGroupsForUser(userId);
+            var groups = _groupRepository.GetGroupsForUser(userId);
+            var groupResponses = new List<GroupResponse>();
+
+            foreach (GroupEntity group in groups)
+            {
+                var groupResponse = new GroupResponse(group.GroupId, group.CreatorId, group.Name, group.Description, group.UserGroups);
+                groupResponses.Add(groupResponse);
+            }
+            return groupResponses;
         }
 
         public void CreateNewGroup(CreateGroupRequest request, int issuerId)

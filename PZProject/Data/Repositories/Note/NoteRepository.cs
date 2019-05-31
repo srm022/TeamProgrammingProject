@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PZProject.Data.Database;
 using PZProject.Data.Database.Entities.Note;
 
@@ -31,6 +32,7 @@ namespace PZProject.Data.Repositories.Note
 
             var notes = _db.Notes
                 .Where(n => n.Group.GroupId == groupId)
+                .Include(n => n.Group)
                 .ToList();
 
             return notes;
