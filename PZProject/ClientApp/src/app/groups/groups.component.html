@@ -17,7 +17,7 @@
           <td>
             <label>Delete this group:  </label><button (click)="deleteUserGroup(element.GroupId)">Delete</button>
             <button>Edit group</button>
-            <button [routerLink]="['/group-users-display']">Show users</button>
+            <button (click)="showUserGroupList(element.GroupId)">Show users</button>
             <button>Show group notes</button>
   
             <!-- <br><br>

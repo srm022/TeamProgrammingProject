@@ -8,7 +8,7 @@
       <th>Options</th>
     </thead>
     <tbody>
-      <tr *ngFor="let element of GroupNotesArray">
+      <tr *ngFor="let element of userGroupArray">
         <td>{{element.GroupName}}</td>
         <td>
           <div *ngFor="let user of element.userGroups; let i = index">

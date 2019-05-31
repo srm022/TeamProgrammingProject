@@ -138,4 +138,9 @@ export class GroupsComponent implements OnInit {
     console.error(error);
     this.toastr.error('User ID must be valid, Admin status required', 'Error:');
   }
+
+  showUserGroupList(groupId: any) {
+    
+    this.router.navigate(['/group-users-display'], { queryParams: {groupId: groupId}});
+}
 }

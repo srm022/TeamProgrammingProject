@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
@@ -12,10 +12,12 @@ export class GroupUsersDisplayComponent implements OnInit {
 
   token: any;
   private iterator = 0;
-  private GroupNotesArray = [];
+  private userGroupArray = [];
+  private selectedGroupId;
 
   constructor(
     private http: HttpClient,
+    private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastsManager,
     private vcr: ViewContainerRef) {
@@ -23,27 +25,32 @@ export class GroupUsersDisplayComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.selectedGroupId = params["groupId"];
+    });
     this.token = localStorage.getItem('id_token');
-    this.displayGroupNotes();
+    this.displayGroupNotes(this.selectedGroupId);
+    console.log(this.selectedGroupId);
   }
 
   GroupNotestoArray(result: Object | { [x: string]: any; }[]) {
 
     while (result[this.iterator]) {
 
-      this.GroupNotesArray.push({
-        GroupId: result[this.iterator]['groupId'],
-        GroupName: result[this.iterator]['name'],
-        UserId: result[this.iterator]['creatorId'],
-        description: result[this.iterator]['description'],
-        userGroups: result[this.iterator]['userGroups']
-      });
+      if(result[this.iterator]['groupId'] == this.selectedGroupId){
+        this.userGroupArray.push({
+          GroupId: result[this.iterator]['groupId'],
+          GroupName: result[this.iterator]['name'],
+          userGroups: result[this.iterator]['userGroups']
+        });
+      }
+
 
       this.iterator++;
     }
   }
   
-  displayGroupNotes() {
+  displayGroupNotes(selectedGroupId: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.token
@@ -51,7 +58,6 @@ export class GroupUsersDisplayComponent implements OnInit {
     }
     this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
       this.GroupNotestoArray(result);
-      console.log(result);
   
     }, error => console.error(error));
   
