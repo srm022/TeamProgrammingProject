@@ -63,5 +63,67 @@ export class GroupUsersDisplayComponent implements OnInit {
   
   }
 
+  removeUserFromGroup(userId: any, groupId: any) {
+    this.token = localStorage.getItem('id_token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+
+    const bodyOptions = {
+      'UserId': userId,
+      'GroupId': groupId
+    }
+    this.http.post('https://pzproject.azurewebsites.net/groups/remove', bodyOptions, httpOptions).subscribe(result => {
+      window.location.reload();
+    }, error => { this.showErrorRem(error); });
+  }
+
+  assignUserGroup(userEmail: any, groupName: any) {
+    this.token = localStorage.getItem('id_token');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+
+    const bodyOptions = {
+      'UserEmail': userEmail,
+      'GroupName': groupName
+    };
+
+    this.http.post('https://pzproject.azurewebsites.net/groups/assign', bodyOptions, httpOptions).subscribe(result => {
+      window.location.reload();
+    this.showSuccesAsign();
+    }, error => { this.showErrorAdd(error); });
+  }
+
+  showErrorDeletingGroup(error: any) {
+    console.error(error);
+    this.toastr.error('Cannot delete group. Admin status required.');
+  }
+
+  showSuccesAsign() {
+    this.toastr.success('User assinged');
+  }
+
+  showErrorAdd(error: any) {
+    console.error(error);
+    this.toastr.error('Email adress must be valid, Admin status required, Given adress might already be in the group', 'Error:');
+  }
+
+  showSuccesRemoved() {
+    this.toastr.success('User remove from group');
+  }
+
+  showErrorRem(error: any) {
+    console.error(error);
+    this.toastr.error('User ID must be valid, Admin status required', 'Error:');
+  }
 }
 

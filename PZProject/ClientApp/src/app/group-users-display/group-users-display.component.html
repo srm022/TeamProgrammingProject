@@ -1,35 +1,33 @@
 <ng-container class="container py-5" *ngIf="!isLoading">
-  <h3 class="text-center text-uppercase">List of User Groups</h3>
+  <h3 class="text-center text-uppercase">List of users</h3>
   <table class="table table-bordered table-striped">
     <thead>
       <tr class="text-center text-uppercase"></tr>
       <th>Group name</th>
       <th>Users list</th>
-      <th>Options</th>
     </thead>
     <tbody>
       <tr *ngFor="let element of userGroupArray">
         <td>{{element.GroupName}}</td>
         <td>
           <div *ngFor="let user of element.userGroups; let i = index">
-            <p>{{user.userId}}</p>
+            <div>
+                <b>{{user.userId}}</b> <button type="submit" value="Remove user" (click)="removeUserFromGroup(user.userId, element.GroupId)">
+                  X
+                </button>
+      
+                <br><br>
+            </div>
+            
           </div>
         </td>
+        <label> User email: </label><input type="text" [(ngModel)]="UserEmail" />
 
-        <td>
-          <label> User email: </label><input type="text" [(ngModel)]="UserEmail" />
+        <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
 
-          <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
 
-          <br><br>
 
-          <label>Remove user from group: </label><input type="text" [(ngModel)]="UserId" />
 
-          <input type="submit" value="Remove user" (click)="removeUserFromGroup(UserId, element.GroupId)" />
-
-          <br><br>
-
-        </td>
 
       </tr>
     </tbody>
