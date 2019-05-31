@@ -29,8 +29,9 @@
 
         <button type="submit" id="registerButton" (click)="register()" [disabled]="registerForm.invalid">create</button>
 
-        <p class="message">Already registered? <a href="/login">Sign In</a></p>
+        <p class="message">Already registered? <a [routerLink]="['/login']">Sign In</a></p>
       </div>
     </div>
   </div>
 </form>
+<mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner>

@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   password: string;
   firstName: string;
   lastName: string;
+  isLoading = false;
   emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   constructor(
@@ -27,6 +28,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {}
 
   public register() {
+      this.isLoading = true;
       let credentials = {
         email: this.email,
         password: this.password,
@@ -40,6 +42,7 @@ export class RegisterComponent implements OnInit {
         .subscribe(
           result => {
             console.log(result);
+            this.isLoading = false;
             this.router.navigate(['/login']);
           },
           error => this.showEmailTakenError(error)
@@ -48,6 +51,7 @@ export class RegisterComponent implements OnInit {
   }
 
   showEmailTakenError(error: any) {
+    this.isLoading = false;
     console.log(error);
     this.toastr.error('This email adress is already taken');
   }
