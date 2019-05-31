@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PZProject.Data.Database.Entities.Group;
+using PZProject.Data.Database.Entities.Note;
 using PZProject.Data.Database.Entities.User;
 
 namespace PZProject.Data.Database
@@ -14,5 +15,6 @@ namespace PZProject.Data.Database
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<GroupEntity> Groups { get; set; }
         public DbSet<UserGroupEntity> UserGroups { get; set; }
+        public DbSet<NoteEntity> Notes { get; set; }
     }
 }
