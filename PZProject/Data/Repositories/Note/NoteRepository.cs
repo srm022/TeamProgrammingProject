@@ -12,6 +12,7 @@ namespace PZProject.Data.Repositories.Note
         List<NoteEntity> GetNotesForGroup(int groupId, int userId);
         NoteEntity CreateNote(NoteEntity noteEntity, int groupId, int userId);
         void EditNote(NoteEntity note, string noteName, string noteDescription);
+        void DeleteNote(NoteEntity note);
         NoteEntity GetNoteById(int noteId);
     }
 
@@ -62,6 +63,12 @@ namespace PZProject.Data.Repositories.Note
         {
             note.Name = noteName ?? note.Name;
             note.Description = noteDescription ?? note.Description;
+            SaveChanges();
+        }
+
+        public void DeleteNote(NoteEntity note)
+        {
+            _db.Notes.Remove(note);
             SaveChanges();
         }
 
