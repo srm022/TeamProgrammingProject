@@ -50,5 +50,22 @@ namespace PZProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpPut("edit")]
+        public IActionResult EditNote([FromBody] EditNoteRequest request)
+        {
+            try
+            {
+                var userId = this.GetUserId();
+                _noteOperationsHandler.EditNote(request, userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

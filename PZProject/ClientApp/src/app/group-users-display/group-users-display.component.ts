@@ -11,9 +11,9 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 export class GroupUsersDisplayComponent implements OnInit {
 
   token: any;
-  private iterator = 0;
-  private userGroupArray = [];
-  private selectedGroupId;
+  iterator = 0;
+  userGroupArray = [];
+  selectedGroupId;
 
   constructor(
     private http: HttpClient,
@@ -21,8 +21,8 @@ export class GroupUsersDisplayComponent implements OnInit {
     private router: Router,
     private toastr: ToastsManager,
     private vcr: ViewContainerRef) {
-      this.toastr.setRootViewContainerRef(vcr);
-    }
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -37,7 +37,7 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     while (result[this.iterator]) {
 
-      if(result[this.iterator]['groupId'] == this.selectedGroupId){
+      if (result[this.iterator]['groupId'] == this.selectedGroupId) {
         this.userGroupArray.push({
           GroupId: result[this.iterator]['groupId'],
           GroupName: result[this.iterator]['name'],
@@ -49,7 +49,7 @@ export class GroupUsersDisplayComponent implements OnInit {
       this.iterator++;
     }
   }
-  
+
   displayGroupNotes(selectedGroupId: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -58,9 +58,9 @@ export class GroupUsersDisplayComponent implements OnInit {
     }
     this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
       this.GroupNotestoArray(result);
-  
+
     }, error => console.error(error));
-  
+
   }
 
   removeUserFromGroup(userId: any, groupId: any) {
@@ -99,7 +99,7 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     this.http.post('https://pzproject.azurewebsites.net/groups/assign', bodyOptions, httpOptions).subscribe(result => {
       window.location.reload();
-    this.showSuccesAsign();
+      this.showSuccesAsign();
     }, error => { this.showErrorAdd(error); });
   }
 

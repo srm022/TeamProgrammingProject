@@ -6,14 +6,17 @@ using PZProject.Data.Database.Entities.User;
 using PZProject.Data.Repositories.Note;
 using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.NoteRequests;
+using PZProject.Data.Responses.NotesResponses;
 using PZProject.Handlers.Group.Operations.CreateNote;
+using PZProject.Handlers.Note.Operations.Edit;
 
 namespace PZProject.Handlers.Note
 {
     public interface INoteOperationsHandler
     {
-        List<NoteEntity> GetNotesForGroup(int groupId, int issuerId);
+        List<NoteResponse> GetNotesForGroup(int groupId, int issuerId);
         void CreateNoteForGroup(CreateNoteRequest request, int groupId, int issuerId);
+        void EditNote(EditNoteRequest request, int issuerId);
     }
 
     public class NoteOperationsHandler: INoteOperationsHandler
@@ -21,25 +24,42 @@ namespace PZProject.Handlers.Note
         private readonly IUserRepository _userRepository;
         private readonly INoteRepository _notesRepository;
         private readonly INoteCreator _notesCreator;
+        private readonly INoteEditHandler _noteEditHandler;
+
+        public int NoteResponse { get; private set; }
 
         public NoteOperationsHandler(IUserRepository userRepository, 
             INoteRepository noteRepository,
-            INoteCreator notesCreator)
+            INoteCreator notesCreator,
+            INoteEditHandler noteEditHandler)
         {
             _userRepository = userRepository;
             _notesRepository = noteRepository;
             _notesCreator = notesCreator;
+            _noteEditHandler = noteEditHandler;
         }
 
-        public List<NoteEntity> GetNotesForGroup(int groupId, int issuerId)
+        public List<NoteResponse> GetNotesForGroup(int groupId, int issuerId)
         {
-            return _notesRepository.GetNotesForGroup(groupId, issuerId);
+            var notes = _notesRepository.GetNotesForGroup(groupId, issuerId);
+            var noteResponses = new List<NoteResponse>();
+
+            foreach (NoteEntity note in notes)
+            {
+                var noteResponse = new NoteResponse(note.NoteId, note.CreatorId, note.Group.GroupId, note.Name, note.Description);
+                noteResponses.Add(noteResponse);
+            }
+            return noteResponses;
         }
 
         public void CreateNoteForGroup(CreateNoteRequest request, int groupId, int issuerId)
         {
-            var user = GetUserForId(issuerId);
             _notesCreator.CreateNewNoteForGroup(request, groupId, issuerId);
+        }
+
+        public void EditNote(EditNoteRequest request, int issuerId)
+        {
+            _noteEditHandler.EditNote(request.NoteId, request.NoteName, request.NoteDescription, issuerId);
         }
 
         private UserEntity GetUserForId(int userId)

@@ -1,7 +1,8 @@
 <div *ngIf = "isTokenPresent()" >
   <div class="login-page">
     <div class="form">
-      <div class="loginText" >You are logged in</div>
+      <div class="loginText" >Currently logged in:</div>
+      <div class="emailText" > {{userLogin}} </div>
       <button (click) = "clearStorage()">Log out</button>
     </div>
   </div>

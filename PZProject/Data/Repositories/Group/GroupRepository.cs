@@ -16,6 +16,7 @@ namespace PZProject.Data.Repositories.Group
         void AssignUserToGroup(int userId, int groupId);
         void DeleteGroup(GroupEntity group);
         void RemoveFromGroup(List<UserGroupEntity> group, int userId);
+        void EditGroup(GroupEntity group, string groupName, string groupDescription);
     }
 
     public class GroupRepository : IGroupRepository
@@ -80,6 +81,13 @@ namespace PZProject.Data.Repositories.Group
         public void DeleteGroup(GroupEntity group)
         {
             _db.Groups.Remove(group);
+            SaveChanges();
+        }
+
+        public void EditGroup(GroupEntity group, string groupName, string groupDescription)
+        {
+            group.Name = groupName ?? group.Name;
+            group.Description = groupDescription ?? group.Description;
             SaveChanges();
         }
 
