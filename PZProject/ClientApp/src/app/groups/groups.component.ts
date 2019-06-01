@@ -12,11 +12,9 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class GroupsComponent implements OnInit {
   token: any;
-   first = [];
-   second = [];
-   iterator = 0;
+  iterator = 0;
   UserGroupArray = [];
-   isLoading = true;
+  isLoading = true;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -79,7 +77,7 @@ export class GroupsComponent implements OnInit {
     }, error => { this.showErrorDeletingGroup(error); });
   }
 
-  updateUserGroup(GroupId: any){
+  updateUserGroup(GroupId: any) {
     this.router.navigate(['/group-edit', GroupId])
   }
   showErrorDeletingGroup(error: any) {
@@ -115,6 +113,6 @@ export class GroupsComponent implements OnInit {
   }
 
   checkAdminStatus(creatorId: any) {
-    return creatorId == localStorage.getItem('userId');  
+    return creatorId == localStorage.getItem('userId');
   }
 }

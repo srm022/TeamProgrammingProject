@@ -25,28 +25,28 @@ export class RegisterComponent implements OnInit {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public register() {
-      this.isLoading = true;
-      const credentials = {
-        email: this.email,
-        password: this.password,
-        firstName: this.firstName,
-        lastName: this.lastName
-      };
+    this.isLoading = true;
+    const credentials = {
+      email: this.email,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName
+    };
 
-      this.http.post('https://pzproject.azurewebsites.net/auth/register', credentials, {
-          responseType: 'text'
-        })
-        .subscribe(
-          result => {
-            console.log(result);
-            this.isLoading = false;
-            this.router.navigate(['/login']);
-          },
-          error => this.showEmailTakenError(error)
-        );
+    this.http.post('https://pzproject.azurewebsites.net/auth/register', credentials, {
+      responseType: 'text'
+    })
+      .subscribe(
+        result => {
+          console.log(result);
+          this.isLoading = false;
+          this.router.navigate(['/login']);
+        },
+        error => this.showEmailTakenError(error)
+      );
   }
 
   showEmailTakenError(error: any) {
