@@ -78,6 +78,9 @@ export class GroupsComponent implements OnInit {
     }, error => { this.showErrorDeletingGroup(error); });
   }
 
+  updateUserGroup(GroupId: any){
+    this.router.navigate(['/group-edit', GroupId]);
+  }
   showErrorDeletingGroup(error: any) {
     console.error(error);
     this.toastr.error('Cannot delete group. Admin status required.');
