@@ -29,6 +29,7 @@
     <EmbeddedResource Remove="Pages\**" />
     <None Remove="Pages\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <None Remove="ClientApp\package-lock.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,7 @@
     <Folder Include="Data\Responses\NotesResponses\" />
     <Folder Include="Handlers\Group\Operations\Edit\" />
     <Folder Include="Handlers\Note\Operations\Edit\" />
+    <Folder Include="Handlers\Note\Operations\Delete\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->

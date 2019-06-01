@@ -38,7 +38,7 @@ namespace PZProject.Handlers.Group.Operations.Edit
 
         private void AssertThatRequestCameFromCreator(GroupEntity group, int userId)
         {
-            SecurityAssertions.AssertThatIssuerIsAuthorizedToOperation(group, userId);
+            SecurityAssertions.AssertThatIssuerIsAuthorizedToManageGroup(group, userId);
         }
     }
 }

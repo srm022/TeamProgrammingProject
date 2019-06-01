@@ -52,7 +52,7 @@ namespace PZProject.Handlers.Group.Operations.AssignUser
 
         private void AssertThatRequestCameFromCreator(GroupEntity group, int userId)
         {
-            SecurityAssertions.AssertThatIssuerIsAuthorizedToOperation(group, userId);
+            SecurityAssertions.AssertThatIssuerIsAuthorizedToManageGroup(group, userId);
         }
     }
 }
