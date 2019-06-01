@@ -23,11 +23,16 @@ steps:
     verbose: true
 
 - task: Npm@1
-  displayName: 'Build Angular'
   inputs:
-    command: custom
-    customCommand: run build -- --prod
-    
+    command: 'custom'
+    customCommand: 'run prod-build-dev'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'dist'
+    ArtifactName: 'app'
+    publishLocation: 'Container'
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
