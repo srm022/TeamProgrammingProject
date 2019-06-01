@@ -31,9 +31,8 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: 'dist'
+    PathtoPublish: '$(clientAppDirectory)/dist'
     ArtifactName: 'app'
-    publishLocation: 'Container'
 
 - task: ArchiveFiles@2
   inputs:
