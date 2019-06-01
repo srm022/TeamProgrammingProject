@@ -14,38 +14,54 @@ variables:
   clientAppDirectory: 'PZProject\ClientApp'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-
-- task: Npm@1
-  displayName: 'npm install'
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
   inputs:
-    command: install
-    workingDir: $(clientAppDirectory)
+    command: restore
+    projects: '**/*.csproj'
 
-- task: Npm@1
+- task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    command: 'custom'
-    customCommand: 'run prod-build-dev'
-    workingDir: $(clientAppDirectory)
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration Release'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(clientAppDirectory)/dist'
-    ArtifactName: 'app'
+# - task: Npm@1
+#   displayName: 'npm install'
+#   inputs:
+#     command: install
+#     workingDir: $(clientAppDirectory)
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(System.DefaultWorkingDirectory)/pzproject/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run prod-build-dev'
+#     workingDir: $(clientAppDirectory)
 
-- task: AzureWebApp@1
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(clientAppDirectory)/dist'
+#     ArtifactName: 'app'
+
+- task: DotNetCoreCLI@2
   inputs:
-    azureSubscription: 'Azure dla studentów(b3728535-34fc-48d5-8dc0-291fae5f6121)'
-    appType: 'webApp'
-    appName: 'pzproject'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    deploymentMethod: 'auto'
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+# - task: AzureRmWebAppDeployment@3
+#   inputs:
+#     azureSubscription: 'Azure dla studentów(b3728535-34fc-48d5-8dc0-291fae5f6121)'
+#     WebAppName: 'pzproject'
+#     Package: $(System.ArtifactsDirectory)/**/*.zip
+
+# - task: AzureWebApp@1
+#   inputs:
+#     azureSubscription: 'Azure dla studentów(b3728535-34fc-48d5-8dc0-291fae5f6121)'
+#     appType: 'webApp'
+#     appName: 'pzproject'
+#     package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+#     deploymentMethod: 'auto'
