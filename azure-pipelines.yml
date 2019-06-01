@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- azure-pipelines-integration
+- master
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -20,6 +20,7 @@ steps:
   displayName: 'npm install'
   inputs:
     command: install
+    verbose: true
     workingDir: src
 
 - task: Npm@1
@@ -28,7 +29,7 @@ steps:
     command: custom
     customCommand: run build -- --prod
     workingDir: src
-
+    
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
