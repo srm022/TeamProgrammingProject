@@ -125,5 +125,6 @@ export class GroupUsersDisplayComponent implements OnInit {
     console.error(error);
     this.toastr.error('User ID must be valid, Admin status required', 'Error:');
   }
+  
 }
 
