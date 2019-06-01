@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- master
+- azure-pipelines-integration
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -21,14 +21,12 @@ steps:
   inputs:
     command: install
     verbose: true
-    workingDir: src
 
 - task: Npm@1
   displayName: 'Build Angular'
   inputs:
     command: custom
     customCommand: run build -- --prod
-    workingDir: src
     
 - task: ArchiveFiles@2
   inputs:
