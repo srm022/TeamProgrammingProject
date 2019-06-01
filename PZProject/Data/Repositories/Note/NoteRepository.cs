@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PZProject.Data.Database;
+using PZProject.Data.Database.Entities.Note;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 

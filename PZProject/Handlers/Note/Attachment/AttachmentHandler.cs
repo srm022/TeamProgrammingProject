@@ -82,7 +82,7 @@ namespace PZProject.Handlers.Note.Attachment
 
         private void AssertThatUserIsNoteCreator(NoteEntity note, int userId)
         {
-            SecurityAssertions.AssertThatIssuerIsAuthorizedToOperation(note, userId);
+            SecurityAssertions.AssertThatIssuerIsAuthorizedToManageNote(note, userId);
         }
     }
 }

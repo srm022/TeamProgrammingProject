@@ -18,7 +18,7 @@ namespace PZProject.Handlers.Note
         void DeleteNote(DeleteNoteRequest request, int issuerId);
     }
 
-    public class NoteOperationsHandler: INoteOperationsHandler
+    public class NoteOperationsHandler : INoteOperationsHandler
     {
         private readonly IUserRepository _userRepository;
         private readonly INoteRepository _notesRepository;
@@ -26,7 +26,7 @@ namespace PZProject.Handlers.Note
         private readonly INoteEditHandler _noteEditHandler;
         private readonly INoteDeleteHandler _noteDeleteHandler;
 
-        public NoteOperationsHandler(IUserRepository userRepository, 
+        public NoteOperationsHandler(IUserRepository userRepository,
             INoteRepository noteRepository,
             INoteCreator notesCreator,
             INoteEditHandler noteEditHandler,
@@ -46,9 +46,11 @@ namespace PZProject.Handlers.Note
 
             foreach (NoteEntity note in notes)
             {
-                var noteResponse = new NoteResponse(note.NoteId, note.CreatorId, note.Group.GroupId, note.Name, note.Description);
+                var noteResponse = new NoteResponse(note.NoteId, note.CreatorId, note.Group.GroupId, note.Name,
+                    note.Description);
                 noteResponses.Add(noteResponse);
             }
+
             return noteResponses;
         }
 
@@ -61,18 +63,10 @@ namespace PZProject.Handlers.Note
         {
             _noteEditHandler.EditNote(request.NoteId, request.NoteName, request.NoteDescription, issuerId);
         }
-        }
 
         public void DeleteNote(DeleteNoteRequest request, int issuerId)
         {
             _noteDeleteHandler.DeleteNote(request.NoteId, issuerId);
         }
-
-        private UserEntity GetUserForId(int userId)
-        {
-            var user = _userRepository.GetUserById(userId);
-            user.AssertThatExists();
-
-            return user;
-        }    }
+    }
 }

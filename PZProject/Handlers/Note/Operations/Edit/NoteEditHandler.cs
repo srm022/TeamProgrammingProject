@@ -37,7 +37,7 @@ namespace PZProject.Handlers.Note.Operations.Edit
 
         private void AssertThatRequestCameFromCreator(NoteEntity note, int userId)
         {
-            SecurityAssertions.AssertThatIssuerIsAuthorizedToEditNote(note, userId);
+            SecurityAssertions.AssertThatIssuerIsAuthorizedToManageNote(note, userId);
         }
     }
 }

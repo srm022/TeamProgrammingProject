@@ -13,7 +13,7 @@ namespace PZProject.Handlers.Utils
                 throw new SecurityException($"User with ID: {userId} does not have access to this operation.");
         }
 
-        public static void AssertThatIssuerIsAuthorizedToEditNote(NoteEntity note, int userId)
+        public static void AssertThatIssuerIsAuthorizedToManageNote(NoteEntity note, int userId)
         {
             if (note.CreatorId != userId)
                 throw new SecurityException($"User with ID: {userId} does not have access to this operation.");
