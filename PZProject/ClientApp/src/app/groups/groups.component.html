@@ -1,56 +1,44 @@
-<ng-container class="container py-5" *ngIf="!isLoading">
-  <h3 class="text-center text-uppercase">List of User Groups</h3>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr class="text-center text-uppercase">
-        <th>Access level</th>
-        <th>Group name</th>
-        <th>Creator ID</th>
-        <th>Description</th>
-        <th>Options</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let element of UserGroupArray">
-        <td>
-          <ng-container *ngIf="checkAdminStatus(element.UserId)">
-            <div>Admin</div>
-          </ng-container>
-          <ng-container *ngIf="!checkAdminStatus(element.UserId)">
-            <div>User</div>
-          </ng-container>
-        </td>
-        <td>{{element.GroupName}}</td>
-        <td>{{element.UserId}}</td>
-        <td>{{element.description}}</td>
-        <td>
-          <ng-container *ngIf="checkAdminStatus(element.UserId)">
-            <label>Delete this group: </label><button (click)="deleteUserGroup(element.GroupId)">Delete</button>
-            <button [routerLink]="['/group-edit']">Edit group</button>
-          </ng-container>
-          <button (click)="showUserGroupList(element.GroupId)">Show users</button>
-          <button>Show group notes</button>
+<h3 class="text-center text-uppercase">List of User Groups</h3>
 
-          <!-- <br><br>
-  
-            <label> User email: </label><input type="text" [(ngModel)]="UserEmail" />
-  
-            <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
-  
-            <br><br>
-  
-            <label>Remove user from group: </label><input type="text" [(ngModel)]="UserId" />
-  
-            <input type="submit" value="Remove user" (click)="removeUserFromGroup(UserId, element.GroupId)" />
-  
-            <br><br> -->
+<div *ngFor="let element of UserGroupArray">
 
-        </td>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
 
-      </tr>
-    </tbody>
-  </table>
-  <button [routerLink]="['/groupCreator']">Create new group</button>
+      <ng-container *ngIf="checkAdminStatus(element.UserId)">
+        <b>
+          <mat-panel-title>
+            <div id="title">Access lvl:</div>
+            <p id="text">Admin</p>
+          </mat-panel-title>
+        </b>
+      </ng-container>
+      <ng-container>
+        <mat-panel-title *ngIf="!checkAdminStatus(element.UserId)">
+          <div id="title">Access lvl:</div>
+          <p id="text">User</p>
+        </mat-panel-title>
+      </ng-container>
+      <mat-panel-description>
+        <div id="title">Group name:</div>
+        <b>
+          <p id="text">{{element.GroupName}}</p>
+        </b>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 
-</ng-container>
+    <p id="text">{{element.description}}</p>
+
+    <mat-action-row>
+      <ng-container *ngIf="checkAdminStatus(element.UserId)">
+        <button [routerLink]="['/group-edit']" class="editGroupButton" (click)="updateUserGroup(element.GroupId)">Edit group</button>
+        <button (click)="deleteUserGroup(element.GroupId)" class="deleteGroupButton">Delete group</button>
+      </ng-container>
+      <button (click)="showUserGroupList(element.GroupId)" class="showUsersButton">Show users</button>
+      <button class="showNotesButton">Show group notes</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</div>
+
+<br><button [routerLink]="['/groupCreator']" class="createGroupButton">Create new group</button>
 <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

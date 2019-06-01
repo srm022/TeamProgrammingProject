@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr';
+
 
 @Component({
   selector: 'app-group-edit',
@@ -7,9 +12,79 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupEditComponent implements OnInit {
 
-  constructor() { }
+  selectedGroupId: number;
+  iterator = 0;
+  groupInfoArray = [];
+  token: any;
+  name: any;
+  description: any;
 
-  ngOnInit() {
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastsManager,
+    private vcr: ViewContainerRef) {
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.selectedGroupId = params['id'];
+    })
+    this.token = localStorage.getItem('id_token');
+    this.displayGroupInfo(this.selectedGroupId);
+    console.log(this.selectedGroupId);
+
+  };
+
+  GroupInfoToArray(result: Object | { [x: string]: any; }[]) {
+    while (result[this.iterator]) {
+
+      if (result[this.iterator]['groupId'] == this.selectedGroupId) {
+        this.name = result[this.iterator]['name'];
+        this.description = result[this.iterator]['description'];
+        this.groupInfoArray.push({
+          GroupId: result[this.iterator]['groupId'],
+          GroupName: result[this.iterator]['name'],
+          GroupDescription: result[this.iterator]['description']
+        });
+        console.log(this.description);
+        console.log(this.name);
+      }
+
+
+      this.iterator++;
+    }
+  }
+  displayGroupInfo(selectedGroupId: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.token
+      })
+    }
+    this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
+      this.GroupInfoToArray(result);
+
+    }, error => console.error(error));
+
+  }
+
+  updateUserGroup(groupId: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+
+    const bodyOptions = {
+      'GroupId': groupId,
+      'name': this.name,
+      'description': this.description
+    };
+    this.http.put('https://pzproject.azurewebsites.net/groups/edit', bodyOptions, httpOptions).subscribe(result => {
+      this.router.navigate(['/groups']);
+    }, error => console.error(error));
+  }
 }

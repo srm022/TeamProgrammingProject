@@ -4,18 +4,17 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 
+
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
-  private token: any;
-  private first = [];
-  private second = [];
-  private iterator = 0;
+  token: any;
+  iterator = 0;
   UserGroupArray = [];
-  private isLoading = true;
+  isLoading = true;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -73,52 +72,17 @@ export class GroupsComponent implements OnInit {
       }
     };
 
-    this.http
-      .delete('https://pzproject.azurewebsites.net/groups/delete', httpOptions)
-      .subscribe(
-        result => {
-          this.router.navigate(['/groups']);
-        },
-        error => {
-          this.showErrorDeletingGroup(error);
-        }
-      );
+    this.http.delete('https://pzproject.azurewebsites.net/groups/delete', httpOptions).subscribe(result => {
+      window.location.reload();
+    }, error => { this.showErrorDeletingGroup(error); });
   }
 
+  updateUserGroup(GroupId: any) {
+    this.router.navigate(['/group-edit', GroupId])
+  }
   showErrorDeletingGroup(error: any) {
     console.error(error);
     this.toastr.error('Cannot delete group. Admin status required.');
-  }
-
-  assignUserGroup(userEmail: any, groupName: any) {
-    this.token = localStorage.getItem('id_token');
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.token
-      })
-    };
-
-    const bodyOptions = {
-      UserEmail: userEmail,
-      GroupName: groupName
-    };
-
-    this.http
-      .post(
-        'https://pzproject.azurewebsites.net/groups/assign',
-        bodyOptions,
-        httpOptions
-      )
-      .subscribe(
-        result => {
-          this.showSuccesAsign();
-        },
-        error => {
-          this.showErrorAdd(error);
-        }
-      );
   }
 
   showSuccesAsign() {
@@ -131,34 +95,6 @@ export class GroupsComponent implements OnInit {
       'Email adress must be valid, Admin status required, Given adress might already be in the group',
       'Error:'
     );
-  }
-
-  removeUserFromGroup(userId: any, groupId: any) {
-    this.token = localStorage.getItem('id_token');
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.token
-      })
-    };
-
-    const bodyOptions = {
-      UserId: userId,
-      GroupId: groupId
-    };
-    this.http
-      .post(
-        'https://pzproject.azurewebsites.net/groups/remove',
-        bodyOptions,
-        httpOptions
-      )
-      .subscribe(
-        result => {},
-        error => {
-          this.showErrorRem(error);
-        }
-      );
   }
 
   showSuccesRemoved() {
@@ -177,6 +113,6 @@ export class GroupsComponent implements OnInit {
   }
 
   checkAdminStatus(creatorId: any) {
-    return creatorId == localStorage.getItem('userId');  
+    return creatorId == localStorage.getItem('userId');
   }
 }
