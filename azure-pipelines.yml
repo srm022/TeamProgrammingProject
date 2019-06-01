@@ -20,7 +20,7 @@ steps:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/pzproject/$(Build.BuildId).zip'
+    archiveFile: '$(System.DefaultWorkingDirectory)/pzproject/$(Build.BuildId).zip'
     replaceExistingArchive: true
 - task: AzureWebApp@1
   inputs:
