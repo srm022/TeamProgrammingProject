@@ -22,13 +22,12 @@ steps:
   displayName: 'npm install'
   inputs:
     command: install
-    verbose: true
     workingDir: $(clientAppDirectory)
 
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'run build —- —-prod'
+    customCommand: 'run build —-prod'
     workingDir: $(clientAppDirectory)
 
 - task: PublishBuildArtifacts@1
