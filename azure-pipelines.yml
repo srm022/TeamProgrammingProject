@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  clientAppDirectory: 'PZProject\ClientApp'
 
 steps:
 # - script: dotnet build --configuration $(buildConfiguration)
@@ -22,11 +23,13 @@ steps:
   inputs:
     command: install
     verbose: true
+    workingDir: $(clientAppDirectory)
 
 - task: Npm@1
   inputs:
     command: 'custom'
     customCommand: 'run prod-build-dev'
+    workingDir: $(clientAppDirectory)
 
 - task: PublishBuildArtifacts@1
   inputs:
