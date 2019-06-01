@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PZProject.Data.Database;
-using PZProject.Data.Database.Entities.Note;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +9,7 @@ namespace PZProject.Data.Repositories.Note
         List<NoteEntity> GetNotesForGroup(int groupId, int userId);
         NoteEntity CreateNote(NoteEntity noteEntity, int groupId, int userId);
         void EditNote(NoteEntity note, string noteName, string noteDescription);
+        void DeleteNote(NoteEntity note);
         NoteEntity GetNoteById(int noteId);
         void CreateAttachmentReference(NoteEntity note, string fileName);
         void DeleteAttachmentReference(NoteEntity note);
@@ -67,12 +65,17 @@ namespace PZProject.Data.Repositories.Note
             SaveChanges();
         }
 
+        public void DeleteNote(NoteEntity note)
+        {
+            _db.Notes.Remove(note);
+            SaveChanges();
+        }
+
         public void CreateAttachmentReference(NoteEntity note, string fileName)
         {
             note.AttachmentIdentity = fileName;
             SaveChanges();
         }
-
         public NoteEntity GetNoteById(int noteId)
         {
             return _db.Notes

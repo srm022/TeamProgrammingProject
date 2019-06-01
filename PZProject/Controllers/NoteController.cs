@@ -67,5 +67,22 @@ namespace PZProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpDelete("delete")]
+        public IActionResult DeleteNote([FromBody] DeleteNoteRequest request)
+        {
+            try
+            {
+                var userId = this.GetUserId();
+                _noteOperationsHandler.DeleteNote(request, userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
