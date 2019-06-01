@@ -48,7 +48,8 @@ import {MatListModule} from '@angular/material/list';
       { path: 'groups', component: GroupsComponent },
       { path: 'groupCreator', component: GroupCreatorComponent },
       { path: 'group-users-display', component:  GroupUsersDisplayComponent},
-      { path: 'group-edit/:id', component:  GroupEditComponent}
+      { path: 'group-edit/:id', component:  GroupEditComponent},
+      { path: 'group-edit', component:  GroupEditComponent}
     ])
   ],
   providers: [ BaseServiceService ],

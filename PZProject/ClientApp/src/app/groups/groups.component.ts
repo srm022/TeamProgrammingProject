@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 
+
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
@@ -79,7 +80,7 @@ export class GroupsComponent implements OnInit {
   }
 
   updateUserGroup(GroupId: any){
-    this.router.navigate(['/group-edit', GroupId]);
+    this.router.navigate(['/group-edit', GroupId])
   }
   showErrorDeletingGroup(error: any) {
     console.error(error);

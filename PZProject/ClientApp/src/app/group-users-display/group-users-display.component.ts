@@ -29,7 +29,7 @@ export class GroupUsersDisplayComponent implements OnInit {
       this.selectedGroupId = params["groupId"];
     });
     this.token = localStorage.getItem('id_token');
-    this.displayGroupNotes(this.selectedGroupId);
+    this.displayGroupUsers(this.selectedGroupId);
     console.log(this.selectedGroupId);
   }
 
@@ -50,7 +50,7 @@ export class GroupUsersDisplayComponent implements OnInit {
     }
   }
 
-  displayGroupNotes(selectedGroupId: any) {
+  displayGroupUsers(selectedGroupId: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.token

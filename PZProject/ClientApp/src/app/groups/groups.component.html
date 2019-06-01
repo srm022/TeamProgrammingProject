@@ -31,7 +31,7 @@
 
     <mat-action-row>
       <ng-container *ngIf="checkAdminStatus(element.UserId)">
-        <button [routerLink]="['/group-edit']" class="editGroupButton" (click)="updateUserGroup(element.UserId)">Edit group</button>
+        <button [routerLink]="['/group-edit']" class="editGroupButton" (click)="updateUserGroup(element.GroupId)">Edit group</button>
         <button (click)="deleteUserGroup(element.GroupId)" class="deleteGroupButton">Delete group</button>
       </ng-container>
       <button (click)="showUserGroupList(element.GroupId)" class="showUsersButton">Show users</button>
