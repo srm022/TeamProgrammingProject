@@ -46,8 +46,7 @@ namespace PZProject.Handlers.Note
 
             foreach (NoteEntity note in notes)
             {
-                var noteResponse = new NoteResponse(note.NoteId, note.CreatorId, note.Group.GroupId, note.Name,
-                    note.Description);
+                var noteResponse = new NoteResponse(note.NoteId, note.CreatorId, note.Group.GroupId, note.Name, note.Description);
                 noteResponses.Add(noteResponse);
             }
 
