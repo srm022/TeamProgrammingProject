@@ -20,7 +20,7 @@ steps:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/pzproject/$(Build.BuildId).zip'
     replaceExistingArchive: true
 - task: AzureWebApp@1
   inputs:
@@ -36,8 +36,3 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run prod-build-dev'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
