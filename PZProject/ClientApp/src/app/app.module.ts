@@ -13,6 +13,11 @@ import { RegisterComponent } from './register/register.component';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupCreatorComponent } from './groupCreator/groupCreator.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { BaseServiceService } from './services/base-service/base-service.service';
+import { GroupEditComponent } from './group-edit/group-edit.component';
+import { GroupUsersDisplayComponent } from './group-users-display/group-users-display.component'; 
+
 
 @NgModule({
   declarations: [
@@ -22,23 +27,28 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     LoginComponent,
     RegisterComponent,
     GroupsComponent,
-    GroupCreatorComponent
+    GroupCreatorComponent,
+    GroupEditComponent,
+    GroupUsersDisplayComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatProgressSpinnerModule,
     ToastModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'groups', component: GroupsComponent },
-      { path: 'groupCreator', component: GroupCreatorComponent }
+      { path: 'groupCreator', component: GroupCreatorComponent },
+      { path: 'group-users-display', component:  GroupUsersDisplayComponent},
+      { path: 'group-edit', component:  GroupEditComponent}
     ])
   ],
-  providers: [],
+  providers: [ BaseServiceService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

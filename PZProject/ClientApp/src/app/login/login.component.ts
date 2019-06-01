@@ -9,8 +9,10 @@ import { ToastsManager } from 'ng2-toastr';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  private userLogin: string;
   private email: string;
   private password: string;
+  private isLoading = false;
   constructor(
     private http: HttpClient, 
     private router: Router, 
@@ -19,25 +21,32 @@ export class LoginComponent implements OnInit {
       this.toastr.setRootViewContainerRef(vcr);
     }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userLogin =  localStorage.getItem('email');
+  }
 
   public login() {
-    let credentials = {
+    this.isLoading = true;
+    const credentials = {
       email: this.email,
       password: this.password
     };
 
     this.http
-      .post('https://localhost:44366/auth/login', credentials, {
+      .post('https://pzproject.azurewebsites.net/auth/login', credentials, {
         responseType: 'json'
       })
       .subscribe(
         result => {
+          this.isLoading = false;
           localStorage.setItem('id_token', result['token']);
+          localStorage.setItem('userId', result['userId']); 
+          localStorage.setItem('email', this.email);
           this.router.navigate(['/']);
         },
         error => {
           console.error(error);
+          this.isLoading = false;
           this.showLoginError();
         }
       );
@@ -52,6 +61,8 @@ export class LoginComponent implements OnInit {
   }
 
   clearStorage() {
-    localStorage.removeItem('id_token');
+    localStorage.clear();
   }
+
+
 }

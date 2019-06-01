@@ -1,7 +1,8 @@
 <div *ngIf = "isTokenPresent()" >
   <div class="login-page">
     <div class="form">
-      <div class="loginText" >You are logged in</div>
+      <div class="loginText" >Currently logged in:</div>
+      <div class="emailText" > {{userLogin}} </div>
       <button (click) = "clearStorage()">Log out</button>
     </div>
   </div>
@@ -13,7 +14,8 @@
         <input type="text" id="email" required [(ngModel)]="email" placeholder="username"/>
         <input type="password" id="password" required [(ngModel)]="password" placeholder="password"/>
         <button type="submit" id="loginButton" (click)="login()">login</button>
-        <p class="message">Not registered? <a href="/register" >Create an account</a></p>
+        <p class="message">Not registered? <a [routerLink]="['/register']">Create an account</a></p>
       </div>
     </div>
 </div>
+<mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner>

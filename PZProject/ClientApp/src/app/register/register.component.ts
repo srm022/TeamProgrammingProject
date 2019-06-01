@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { ToastsManager } from "ng2-toastr";
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
-  selector: "app-register",
-  templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.css"]
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
+  isLoading = false;
   emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   constructor(
@@ -27,27 +28,30 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {}
 
   public register() {
-      let credentials = {
+      this.isLoading = true;
+      const credentials = {
         email: this.email,
         password: this.password,
         firstName: this.firstName,
         lastName: this.lastName
       };
 
-      this.http.post('https://localhost:44366/auth/register', credentials, {
+      this.http.post('https://pzproject.azurewebsites.net/auth/register', credentials, {
           responseType: 'text'
         })
         .subscribe(
           result => {
             console.log(result);
+            this.isLoading = false;
             this.router.navigate(['/login']);
           },
-          error => console.log(error)
+          error => this.showEmailTakenError(error)
         );
-        this.showEmailTakenError()
   }
 
-  showEmailTakenError() {
+  showEmailTakenError(error: any) {
+    this.isLoading = false;
+    console.log(error);
     this.toastr.error('This email adress is already taken');
   }
 }
