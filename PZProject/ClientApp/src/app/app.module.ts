@@ -17,6 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BaseServiceService } from './services/base-service/base-service.service';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupUsersDisplayComponent } from './group-users-display/group-users-display.component'; 
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { GroupUsersDisplayComponent } from './group-users-display/group-users-di
     BrowserAnimationsModule,
     FormsModule,
     MatProgressSpinnerModule,
+    MatExpansionModule,
     ToastModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
