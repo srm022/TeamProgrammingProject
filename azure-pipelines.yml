@@ -29,10 +29,10 @@ steps:
     appName: 'pzproject'
     package: '$(System.DefaultWorkingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
-- task: Npm@1
-  inputs:
-    command: 'install'
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'run prod-build-dev'
+# - task: Npm@1
+#   inputs:
+#     command: 'install'
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run prod-build-dev'
