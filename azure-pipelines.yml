@@ -40,17 +40,17 @@ steps:
 #     customCommand: 'run prod-build-dev'
 #     workingDir: $(clientAppDirectory)
 
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     PathtoPublish: '$(clientAppDirectory)/dist'
-#     ArtifactName: 'app'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
     publishWebProjects: True
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    # ArtifactName: 'app'
 
 # - task: AzureRmWebAppDeployment@3
 #   inputs:
