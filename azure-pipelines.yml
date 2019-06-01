@@ -15,6 +15,7 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
@@ -22,6 +23,7 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(System.DefaultWorkingDirectory)/pzproject/$(Build.BuildId).zip'
     replaceExistingArchive: true
+
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azure dla studentów(b3728535-34fc-48d5-8dc0-291fae5f6121)'
@@ -29,10 +31,16 @@ steps:
     appName: 'pzproject'
     package: '$(System.DefaultWorkingDirectory)/**/*.zip'
     deploymentMethod: 'auto'
-# - task: Npm@1
-#   inputs:
-#     command: 'install'
-# - task: Npm@1
-#   inputs:
-#     command: 'custom'
-#     customCommand: 'run prod-build-dev'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    command: install
+    workingDir: src
+
+- task: Npm@1
+  displayName: 'Build Angular'
+  inputs:
+    command: custom
+    customCommand: run build -- --prod
+    workingDir: src
