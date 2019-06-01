@@ -22,8 +22,8 @@ export class GroupCreatorComponent implements OnInit {
     private router: Router,
     private toastr: ToastsManager,
     private vcr: ViewContainerRef) {
-      this.toastr.setRootViewContainerRef(vcr);
-    }
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit() {
     this.token = localStorage.getItem('id_token');
@@ -43,12 +43,12 @@ export class GroupCreatorComponent implements OnInit {
       'GroupDescription': this.groupDescription
     };
     this.http.post('https://pzproject.azurewebsites.net/groups/create', bodyOptions, httpOptions).subscribe(result => {
-    this.showSuccessAlert();
+      this.showSuccessAlert();
       setTimeout(() => {
         this.isLoading = false;
         this.router.navigate(['/groups']);
       },
-      2000);
+        2000);
     }, error => { this.showGroupNameErrorAlert(error); }
     );
   }

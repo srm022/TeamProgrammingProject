@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PZProject.Data.Database;
 using PZProject.Data.Database.Entities.Note;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PZProject.Data.Repositories.Note
 {
@@ -14,6 +14,8 @@ namespace PZProject.Data.Repositories.Note
         void EditNote(NoteEntity note, string noteName, string noteDescription);
         void DeleteNote(NoteEntity note);
         NoteEntity GetNoteById(int noteId);
+        void CreateAttachmentReference(NoteEntity note, string fileName);
+        void DeleteAttachmentReference(NoteEntity note);
     }
 
     public class NoteRepository: INoteRepository
@@ -72,11 +74,23 @@ namespace PZProject.Data.Repositories.Note
             SaveChanges();
         }
 
+        public void CreateAttachmentReference(NoteEntity note, string fileName)
+        {
+            note.AttachmentIdentity = fileName;
+            SaveChanges();
+        }
         public NoteEntity GetNoteById(int noteId)
         {
             return _db.Notes
                 .Include(g => g.Group)
+                .ThenInclude(ug => ug.UserGroups)
                 .SingleOrDefault(n => n.NoteId == noteId);
+        }
+
+        public void DeleteAttachmentReference(NoteEntity note)
+        {
+            note.AttachmentIdentity = null;
+            SaveChanges();
         }
 
         private bool IsGroupMember(int groupId, int userId)

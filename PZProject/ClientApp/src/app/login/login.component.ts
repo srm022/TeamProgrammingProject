@@ -9,20 +9,20 @@ import { ToastsManager } from 'ng2-toastr';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private userLogin: string;
-  private email: string;
-  private password: string;
-  private isLoading = false;
+  userLogin: string;
+  email: string;
+  password: string;
+  isLoading = false;
   constructor(
-    private http: HttpClient, 
-    private router: Router, 
+    private http: HttpClient,
+    private router: Router,
     private toastr: ToastsManager,
     private vcr: ViewContainerRef) {
-      this.toastr.setRootViewContainerRef(vcr);
-    }
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit() {
-    this.userLogin =  localStorage.getItem('email');
+    this.userLogin = localStorage.getItem('email');
   }
 
   public login() {
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         result => {
           this.isLoading = false;
           localStorage.setItem('id_token', result['token']);
-          localStorage.setItem('userId', result['userId']); 
+          localStorage.setItem('userId', result['userId']);
           localStorage.setItem('email', this.email);
           this.router.navigate(['/']);
         },

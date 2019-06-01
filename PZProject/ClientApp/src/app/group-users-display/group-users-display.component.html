@@ -1,40 +1,26 @@
-<ng-container class="container py-5" *ngIf="!isLoading">
-  <h3 class="text-center text-uppercase">List of User Groups</h3>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr class="text-center text-uppercase"></tr>
-      <th>Group name</th>
-      <th>Users list</th>
-      <th>Options</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let element of userGroupArray">
-        <td>{{element.GroupName}}</td>
-        <td>
-          <div *ngFor="let user of element.userGroups; let i = index">
-            <p>{{user.userId}}</p>
-          </div>
-        </td>
+<h3>List of users</h3>
+<mat-list *ngIf="!isLoading">
 
-        <td>
-          <label> User email: </label><input type="text" [(ngModel)]="UserEmail" />
+  <div *ngFor="let element of userGroupArray">
+    <div>
+      <div *ngFor="let user of element.userGroups; let i = index">
+        <b id="title">{{user.userId}}</b> <button type="submit" value="Remove user"
+          (click)="removeUserFromGroup(user.userId, element.GroupId)" class="deleteUserButton">
+          <b>X</b>
+        </button>
 
-          <input type="submit" value="Assign user" (click)="assignUserGroup(UserEmail, element.GroupName)" />
+        <br><br>
 
-          <br><br>
 
-          <label>Remove user from group: </label><input type="text" [(ngModel)]="UserId" />
+      </div>
 
-          <input type="submit" value="Remove user" (click)="removeUserFromGroup(UserId, element.GroupId)" />
+    </div>
+    <label id="title"> User email: </label><input type="text" [(ngModel)]="UserEmail" />
 
-          <br><br>
+    <button type="submit" (click)="assignUserGroup(UserEmail, element.GroupName)" class="addUserButton">Assign
+      user</button>
+  </div>
+</mat-list>
 
-        </td>
 
-      </tr>
-    </tbody>
-  </table>
-  <button [routerLink]="['/groupCreator']">Create new group</button>
-
-</ng-container>
 <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

@@ -1,11 +1,11 @@
 <form #createGroup="ngForm">
     <div class="login-page">
       <div class="form">
-        <div class="register-form">
+        <div class="register-form"  *ngFor="let element of groupInfoArray">
           <div class="groupCreatorTitle">Group Editor</div>
-          <input type="text" [(ngModel)]="groupName" required #groupN="ngModel" name="groupN" placeholder="Group name"/>
-          <input type="text" [(ngModel)]="groupDescription" required #groupD="ngModel" name="groupD" placeholder="Group description"/>
-          <button type="submit" id="loginButton" [disabled]="createGroup.invalid">Update</button>
+          <input type="text" [(ngModel)]="name" required #groupN="ngModel" name="groupN"/>
+          <input type="text" [(ngModel)]="description" required #groupD="ngModel" name="groupD"/>
+          <button type="submit" id="loginButton" [disabled]="createGroup.invalid" (click)="updateUserGroup(element.GroupId)">Update</button>
           <p class="message"><a [routerLink]="['/groups']">Back to list</a></p>
         </div>
       </div>
