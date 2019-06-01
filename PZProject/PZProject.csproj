@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="10.0.3" />
     <PackageReference Include="Scrutor" Version="3.0.2" />
   </ItemGroup>
 
@@ -40,7 +41,6 @@
     <Folder Include="Data\Database\Entities\Note\" />
     <Folder Include="Data\Requests\NoteRequests\" />
     <Folder Include="Data\Repositories\Note\" />
-    <Folder Include="Handlers\Note\" />
     <Folder Include="Handlers\Note\Operations\" />
     <Folder Include="Handlers\Note\Operations\CreateNote\" />
     <Folder Include="Data\Responses\NotesResponses\" />
@@ -67,7 +67,7 @@
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
       <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </ResolvedFileToPublish>

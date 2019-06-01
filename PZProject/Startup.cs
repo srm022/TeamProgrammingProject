@@ -34,6 +34,8 @@ namespace PZProject
             {
                 options.DbConnectionString = dbConnectionString;
                 options.JwtSecurityKey = jwtSecurityKey;
+                options.StorageAccountConnectionString = Configuration.GetValue<string>("StorageAccountConnectionString");
+                options.StorageAccountBlobContainerName = Configuration.GetValue<string>("StorageAccountBlobContainerName");
             });
 
             var key = Encoding.ASCII.GetBytes(jwtSecurityKey);

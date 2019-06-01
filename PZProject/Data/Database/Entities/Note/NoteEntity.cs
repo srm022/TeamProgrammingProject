@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PZProject.Data.Database.Entities.Group;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using PZProject.Data.Database.Entities.Group;
 
 namespace PZProject.Data.Database.Entities.Note
 {
@@ -18,6 +18,8 @@ namespace PZProject.Data.Database.Entities.Note
 
         [MaxLength(512)]
         public string Description { get; set; }
+
+        public string AttachmentIdentity { get; set; }
 
         [Required]
         public GroupEntity Group { get; set; }
