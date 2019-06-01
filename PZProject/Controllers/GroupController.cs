@@ -100,5 +100,22 @@ namespace PZProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpPut("edit")]
+        public IActionResult Edit([FromBody] EditGroupRequest request)
+        {
+            try
+            {
+                var userId = this.GetUserId();
+                _groupOperationsHandler.EditGroup(request, userId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
