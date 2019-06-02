@@ -1,0 +1,4 @@
+<h3>Notes display</h3>
+<mat-grid-list cols="2" rowHeight="1:1" *ngFor="let element of GroupNotesArray">
+  <mat-grid-tile>Creator Id: {{element.CreatorId}} Note title: {{element.NoteName}} Description: {{element.description}}</mat-grid-tile>
+</mat-grid-list>
