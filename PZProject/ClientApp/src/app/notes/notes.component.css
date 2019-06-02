@@ -1,3 +1,53 @@
 mat-grid-tile {
     background: lightblue;
   }
+  
+.pageTitle {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: rgb(0, 0, 0);
+}
+
+.form {
+  float: left;
+  background: #fee857;
+  max-width: 400px;
+  max-height: 200px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 15px 15px 0 rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+  height: 1px;
+  width: 0px;
+  margin-bottom: 2%;
+}
+
+mat-card {
+  background: #fee857;
+  width: calc(100%);
+  height: calc(100%);
+}
+
+mat-card-header {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  justify-content: center;
+  color: rgb(0, 0, 0);
+}
+
+mat-card-content {
+  font-family: "Roboto", sans-serif;
+  margin-top: 15%;
+  text-transform: uppercase;
+  justify-content: center;
+  color: rgb(0, 0, 0);
+}
+mat-card-actions {
+  margin-left: 27%;
+  margin-bottom: 10px;
+}

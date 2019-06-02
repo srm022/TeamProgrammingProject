@@ -35,7 +35,7 @@ export class GroupEditComponent implements OnInit {
     });
     this.token = localStorage.getItem('id_token');
     this.displayGroupInfo(this.selectedGroupId);
-  };
+  }
 
   GroupInfoToArray(result: Object | { [x: string]: any }[]) {
     while (result[this.iterator]) {
@@ -70,7 +70,6 @@ export class GroupEditComponent implements OnInit {
           this.isLoading = false;
         },
         error => this.errorMsg(error)
-
       );
   }
 
@@ -105,19 +104,21 @@ export class GroupEditComponent implements OnInit {
           setTimeout(() => {
             this.isLoading = false;
             this.router.navigate(['/groups']);
-          },
-            2000);
-        }, error => { this.showGroupNameErrorAlert(error); }
-        );
-      }
-    
-      showSuccessAlert() {
-        this.toastr.success('Group updated successfully');
-      }
-    
-      showGroupNameErrorAlert(error: any) {
-        console.error(error);
-        this.isLoading = false;
-        this.toastr.error('Error');
-      }
+          }, 2000);
+        },
+        error => {
+          this.showGroupNameErrorAlert(error);
+        }
+      );
+  }
+
+  showSuccessAlert() {
+    this.toastr.success('Group updated successfully');
+  }
+
+  showGroupNameErrorAlert(error: any) {
+    console.error(error);
+    this.isLoading = false;
+    this.toastr.error('Error');
+  }
 }
