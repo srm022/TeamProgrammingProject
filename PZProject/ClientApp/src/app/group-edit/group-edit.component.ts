@@ -34,23 +34,24 @@ export class GroupEditComponent implements OnInit {
     })
     this.token = localStorage.getItem('id_token');
     this.displayGroupInfo(this.selectedGroupId);
-    console.log(this.selectedGroupId);
+    console.log(this.selectedGroupId + "to jest moje id :))))");
+
 
   };
 
   GroupInfoToArray(result: Object | { [x: string]: any; }[]) {
     while (result[this.iterator]) {
 
-      if (result[this.iterator]['groupId'] == this.selectedGroupId) {
+      if (result[this.iterator]['id'] == this.selectedGroupId) {
         this.name = result[this.iterator]['name'];
         this.description = result[this.iterator]['description'];
         this.groupInfoArray.push({
-          GroupId: result[this.iterator]['groupId'],
+          GroupId: result[this.iterator]['id'],
           GroupName: result[this.iterator]['name'],
           GroupDescription: result[this.iterator]['description']
         });
-        console.log(this.description);
-        console.log(this.name);
+        // console.log(this.description);
+        // console.log(this.name);
       }
 
 
@@ -80,8 +81,8 @@ export class GroupEditComponent implements OnInit {
 
     const bodyOptions = {
       'GroupId': groupId,
-      'name': this.name,
-      'description': this.description
+      'GroupName': this.name,
+      'GroupDescription': this.description
     };
     this.http.put('https://pzproject.azurewebsites.net/groups/edit', bodyOptions, httpOptions).subscribe(result => {
       this.router.navigate(['/groups']);

@@ -50,8 +50,7 @@ import { NotesComponent } from './notes/notes.component';
       { path: 'groups', component: GroupsComponent },
       { path: 'groupCreator', component: GroupCreatorComponent },
       { path: 'group-users-display', component:  GroupUsersDisplayComponent},
-      { path: 'group-edit/:id', component:  GroupEditComponent},
-      { path: 'group-edit', component:  GroupEditComponent}
+      { path: 'group-edit/:id', component:  GroupEditComponent}
     ])
   ],
   providers: [ BaseServiceService ],
