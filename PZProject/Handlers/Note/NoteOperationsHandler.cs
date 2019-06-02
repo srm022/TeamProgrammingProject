@@ -1,6 +1,5 @@
 ﻿using PZProject.Data.Database.Entities.Note;
 using PZProject.Data.Repositories.Note;
-using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.NoteRequests;
 using PZProject.Data.Responses.NotesResponses;
 using PZProject.Handlers.Group.Operations.CreateNote;
@@ -20,19 +19,16 @@ namespace PZProject.Handlers.Note
 
     public class NoteOperationsHandler : INoteOperationsHandler
     {
-        private readonly IUserRepository _userRepository;
         private readonly INoteRepository _notesRepository;
         private readonly INoteCreator _notesCreator;
         private readonly INoteEditHandler _noteEditHandler;
         private readonly INoteDeleteHandler _noteDeleteHandler;
 
-        public NoteOperationsHandler(IUserRepository userRepository,
-            INoteRepository noteRepository,
+        public NoteOperationsHandler(INoteRepository noteRepository,
             INoteCreator notesCreator,
             INoteEditHandler noteEditHandler,
             INoteDeleteHandler noteDeleteHandler)
         {
-            _userRepository = userRepository;
             _notesRepository = noteRepository;
             _notesCreator = notesCreator;
             _noteEditHandler = noteEditHandler;
@@ -46,7 +42,7 @@ namespace PZProject.Handlers.Note
 
             foreach (NoteEntity note in notes)
             {
-                var noteResponse = new NoteResponse(note.NoteId, note.CreatorId, note.Group.GroupId, note.Name, note.Description);
+                var noteResponse = new NoteResponse(note);
                 noteResponses.Add(noteResponse);
             }
 
