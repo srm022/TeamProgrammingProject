@@ -29,7 +29,6 @@ export class NotesComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.selectedGroupId = params['id'];
     })
-    console.log(this.selectedGroupId);
     this.token = localStorage.getItem('id_token');
     this.displayGroupNotes();
   }
@@ -58,8 +57,6 @@ export class NotesComponent implements OnInit {
       .subscribe(
         result => {
           this.addGroupNotesToArray(result);
-          console.log(result);
-          console.log(this.GroupNotesArray);
           this.isLoading = false;
         },
         error => console.error(error)

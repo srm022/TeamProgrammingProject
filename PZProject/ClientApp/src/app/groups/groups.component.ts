@@ -53,7 +53,6 @@ export class GroupsComponent implements OnInit {
       .subscribe(
         result => {
           this.addUserGroupstoArray(result);
-          console.log(result);
           this.isLoading = false;
         },
         error => console.error(error)

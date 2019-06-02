@@ -30,8 +30,6 @@ export class NoteEditComponentComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.selectedGroupId = params['id'];
       this.selectedNoteId = params['id2'];
-      console.log( params['id']);
-      console.log( params['id2']);
     })
     this.token = localStorage.getItem('id_token');
     this.displayGroupNotes();
@@ -67,8 +65,6 @@ export class NoteEditComponentComponent implements OnInit {
       .subscribe(
         result => {
           this.addNotesInfoToArray(result);
-          console.log(result);
-          console.log(this.noteInfoArray);
         },
         error => console.error(error)
       );
@@ -87,7 +83,7 @@ export class NoteEditComponentComponent implements OnInit {
       'NoteName': this.noteName,
       'NoteDescription': this.noteDescription
     };
-    this.http.put('https://pzproject.azurewebsites.net/groups/' + this.selectedGroupId +'/notes/edit', bodyOptions, httpOptions).subscribe(result => {
+    this.http.put('https://pzproject.azurewebsites.net/groups/' + this.selectedGroupId + '/notes/edit', bodyOptions, httpOptions).subscribe(result => {
       this.router.navigate(['/groups/' + this.selectedGroupId + '/notes']);
     }, error => console.error(error));
   }
