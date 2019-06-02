@@ -1,5 +1,5 @@
 <h3>List of users</h3>
-<mat-list *ngIf="!isLoading">
+<!-- <mat-list *ngIf="!isLoading"> -->
 
   <div *ngFor="let element of userGroupArray">
     <div>
@@ -20,7 +20,7 @@
     <button type="submit" (click)="assignUserGroup(UserEmail, element.GroupName)" class="addUserButton">Assign
       user</button>
   </div>
-</mat-list>
+<!-- </mat-list> -->
 
 
-<mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>
+<!-- <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner> -->

@@ -1,46 +1,34 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
-- master
+- azure-pipelines-integration
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'vs2017-win2016'
 
 variables:
   buildConfiguration: 'Release'
+  clientAppDirectory: 'PZProject\ClientApp'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-
-- task: ArchiveFiles@2
+- task: DotNetCoreCLI@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(System.DefaultWorkingDirectory)/pzproject/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    command: restore
+    projects: '**/*.csproj'
 
-- task: AzureWebApp@1
+- task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    azureSubscription: 'Azure dla studentów(b3728535-34fc-48d5-8dc0-291fae5f6121)'
-    appType: 'webApp'
-    appName: 'pzproject'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    deploymentMethod: 'auto'
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration Release'
 
-- task: Npm@1
-  displayName: 'npm install'
+- task: DotNetCoreCLI@2
   inputs:
-    command: install
-    workingDir: src
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
 
-- task: Npm@1
-  displayName: 'Build Angular'
+- task: PublishBuildArtifacts@1
   inputs:
-    command: custom
-    customCommand: run build -- --prod
-    workingDir: src
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'app'
