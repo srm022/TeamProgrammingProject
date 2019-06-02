@@ -1,21 +1,24 @@
-﻿using System;
+﻿using PZProject.Data.Database.Entities.Note;
+
 namespace PZProject.Data.Responses.NotesResponses
 {
     public class NoteResponse
     {
-        public int id { get; set; }
-        public int creatorId { get; set; }
-        public int groupId { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public int Id { get; set; }
+        public int CreatorId { get; set; }
+        public int GroupId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string AttachmentIdentity { get; set; }
 
-        public NoteResponse(int id, int creatorId, int groupId, string name, string description)
+        public NoteResponse(NoteEntity noteEntity)
         {
-            this.id = id;
-            this.creatorId = creatorId;
-            this.groupId = groupId;
-            this.name = name;
-            this.description = description;
+            Id = noteEntity.NoteId;
+            CreatorId = noteEntity.CreatorId;
+            GroupId = noteEntity.Group.GroupId;
+            Name = noteEntity.Name;
+            Description = noteEntity.Description;
+            AttachmentIdentity = noteEntity.AttachmentIdentity;
         }
     }
 }
