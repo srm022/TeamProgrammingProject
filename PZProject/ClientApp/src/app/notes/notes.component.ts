@@ -69,6 +69,22 @@ export class NotesComponent implements OnInit {
   createNote(){
     this.router.navigate(['/groups/' + this.selectedGroupId + '/notes/create']);
   }
+  
+  deleteNote(noteId: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.token
+      }),
+      body: {
+        NoteId: noteId
+      }
+    };
+
+    this.http.delete('https://pzproject.azurewebsites.net/groups/' + this.selectedGroupId + '/notes/delete', httpOptions).subscribe(result => {
+      window.location.reload();
+    }, error => console.error(error));
+  }
 }
 
 
