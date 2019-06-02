@@ -2,6 +2,8 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { resource } from 'selenium-webdriver/http';
+import { removeSummaryDuplicates } from '@angular/compiler';
 
 @Component({
   selector: 'app-group-users-display',
@@ -14,6 +16,7 @@ export class GroupUsersDisplayComponent implements OnInit {
   iterator = 0;
   userGroupArray = [];
   selectedGroupId;
+  creatorId: string;
   isLoading = false;
   constructor(
     private http: HttpClient,
@@ -30,22 +33,21 @@ export class GroupUsersDisplayComponent implements OnInit {
     });
     this.token = localStorage.getItem('id_token');
     this.displayGroupUsers(this.selectedGroupId);
-    console.log(this.selectedGroupId);
   }
 
   GroupNotestoArray(result: Object | { [x: string]: any; }[]) {
-
     while (result[this.iterator]) {
 
       if (result[this.iterator]['id'] == this.selectedGroupId) {
+        this.creatorId = result[this.iterator]['creatorId'];
         this.userGroupArray.push({
+          CreatorId: result[this.iterator]['creatorId'],
           GroupId: result[this.iterator]['id'],
           GroupName: result[this.iterator]['name'],
           userGroups: result[this.iterator]['userGroups']
         });
       }
-
-
+      console.log(this.creatorId)
       this.iterator++;
     }
   }
@@ -132,6 +134,10 @@ export class GroupUsersDisplayComponent implements OnInit {
   showErrorRem(error: any) {
     console.error(error);
     this.toastr.error('User ID must be valid, Admin status required', 'Error:');
+  }
+
+  checkAdminStatus() {
+    return this.creatorId == localStorage.getItem('userId');
   }
   
 }

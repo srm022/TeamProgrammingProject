@@ -3,16 +3,18 @@
   <div *ngFor="let element of userGroupArray">
     <div>
       <div *ngFor="let user of element.userGroups; let i = index">
-        <b id="title">{{user.userId}}</b> <button type="submit" value="Remove user"
+        <b id="title">{{user.userId}}</b> <button  *ngIf="checkAdminStatus()" type="submit" value="Remove user"
           (click)="removeUserFromGroup(user.userId, element.GroupId)" class="deleteUserButton">
           <b>X</b>
         </button>
         <br><br>
       </div>
     </div>
+    <ng-container *ngIf="checkAdminStatus()">
     <label id="title"> User email: </label><input type="text" [(ngModel)]="UserEmail" />
     <button type="submit" (click)="assignUserGroup(UserEmail, element.GroupName)" class="addUserButton">Assign
       user</button>
+    </ng-container>
   </div>
 </mat-list>
 <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>
