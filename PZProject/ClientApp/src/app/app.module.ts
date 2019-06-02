@@ -19,6 +19,7 @@ import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupUsersDisplayComponent } from './group-users-display/group-users-display.component'; 
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {MatListModule} from '@angular/material/list';
     GroupsComponent,
     GroupCreatorComponent,
     GroupEditComponent,
-    GroupUsersDisplayComponent
+    GroupUsersDisplayComponent,
+    NotesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
