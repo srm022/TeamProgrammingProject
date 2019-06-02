@@ -21,6 +21,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import { NotesComponent } from './notes/notes.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { NoteCreatorComponent } from './note-creator/note-creator.component';
+import { NoteEditComponentComponent } from './note-edit-component/note-edit-component.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     GroupEditComponent,
     GroupUsersDisplayComponent,
     NotesComponent,
+    NoteCreatorComponent,
+    NoteEditComponentComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -53,7 +57,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
       { path: 'groupCreator', component: GroupCreatorComponent },
       { path: 'group-users-display', component:  GroupUsersDisplayComponent},
       { path: 'group-edit/:id', component:  GroupEditComponent},
-      { path: 'groups/:id/notes', component:  NotesComponent}
+      { path: 'groups/:id/notes', component:  NotesComponent},
+      { path: 'groups/:id/notes/create', component:  NotesComponent}
     ])
   ],
   providers: [ BaseServiceService ],
