@@ -66,10 +66,10 @@ export class NotesComponent implements OnInit {
       );
   }
 
-  createNote(){
+  createNote() {
     this.router.navigate(['/groups/' + this.selectedGroupId + '/notes/create']);
   }
-  
+
   deleteNote(noteId: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -84,6 +84,10 @@ export class NotesComponent implements OnInit {
     this.http.delete('https://pzproject.azurewebsites.net/groups/' + this.selectedGroupId + '/notes/delete', httpOptions).subscribe(result => {
       window.location.reload();
     }, error => console.error(error));
+  }
+
+  updateNote(NoteId: any) {
+    this.router.navigate(['/groups/' + this.selectedGroupId + '/notes' + '/edit/' + NoteId])
   }
 }
 

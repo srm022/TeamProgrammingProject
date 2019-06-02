@@ -58,7 +58,8 @@ import { NoteEditComponentComponent } from './note-edit-component/note-edit-comp
       { path: 'group-users-display', component:  GroupUsersDisplayComponent},
       { path: 'group-edit/:id', component:  GroupEditComponent},
       { path: 'groups/:id/notes', component:  NotesComponent},
-      { path: 'groups/:id/notes/create', component:  NoteCreatorComponent}
+      { path: 'groups/:id/notes/create', component:  NoteCreatorComponent},
+      { path: 'groups/:id/notes/edit/:id2', component:  NoteEditComponentComponent}
     ])
   ],
   providers: [ BaseServiceService ],

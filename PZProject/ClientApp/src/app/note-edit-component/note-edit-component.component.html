@@ -1,3 +1,14 @@
-<p>
-  note-edit-component works!
-</p>
+<form #createGroup="ngForm">
+  <div class="login-page">
+    <div class="form">
+      <div class="register-form"  *ngFor="let element of noteInfoArray">
+        <div class="groupCreatorTitle">Group Editor</div>
+        <input type="text" [(ngModel)]="noteName" required #groupN="ngModel" name="groupN"/>
+        <input type="text" [(ngModel)]="noteDescription" required #groupD="ngModel" name="groupD"/>
+        <button type="submit" id="loginButton" [disabled]="createGroup.invalid" (click)="updateNote(element.NoteId)">Update</button>
+        <p class="message"><a [routerLink]="['/groups']">Back to list</a></p>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- <mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner> -->

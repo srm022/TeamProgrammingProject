@@ -34,7 +34,6 @@ export class GroupEditComponent implements OnInit {
     })
     this.token = localStorage.getItem('id_token');
     this.displayGroupInfo(this.selectedGroupId);
-    console.log(this.selectedGroupId + "to jest moje id :))))");
 
 
   };
