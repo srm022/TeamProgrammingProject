@@ -37,9 +37,9 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     while (result[this.iterator]) {
 
-      if (result[this.iterator]['groupId'] == this.selectedGroupId) {
+      if (result[this.iterator]['id'] == this.selectedGroupId) {
         this.userGroupArray.push({
-          GroupId: result[this.iterator]['groupId'],
+          GroupId: result[this.iterator]['id'],
           GroupName: result[this.iterator]['name'],
           userGroups: result[this.iterator]['userGroups']
         });

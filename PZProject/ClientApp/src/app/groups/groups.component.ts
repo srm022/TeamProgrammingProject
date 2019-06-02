@@ -32,7 +32,7 @@ export class GroupsComponent implements OnInit {
   addUserGroupstoArray(result: Object | { [x: string]: any }[]) {
     while (result[this.iterator]) {
       this.UserGroupArray.push({
-        GroupId: result[this.iterator]['groupId'],
+        GroupId: result[this.iterator]['id'],
         GroupName: result[this.iterator]['name'],
         UserId: result[this.iterator]['creatorId'],
         description: result[this.iterator]['description'],
@@ -78,6 +78,7 @@ export class GroupsComponent implements OnInit {
   }
 
   updateUserGroup(GroupId: any) {
+    console.log(GroupId+"to moje group id przy edytowaniu");
     this.router.navigate(['/group-edit', GroupId])
   }
   showErrorDeletingGroup(error: any) {
