@@ -1,3 +1,4 @@
+import { ValidationPatterns } from './../models/validation.patterns';
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
   firstName: string;
   lastName: string;
   isLoading = false;
-  emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  patterns = new ValidationPatterns();
 
   constructor(
     private http: HttpClient,

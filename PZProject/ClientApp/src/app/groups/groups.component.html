@@ -1,22 +1,20 @@
-<h3 class="text-center text-uppercase">List of User Groups</h3>
+<h3 class="groupTitle">List of User Groups</h3>
 
 <div *ngFor="let element of UserGroupArray">
 
-  <mat-expansion-panel>
+  <mat-expansion-panel class="form">
     <mat-expansion-panel-header>
 
       <ng-container *ngIf="checkAdminStatus(element.UserId)">
-        <b>
           <mat-panel-title>
             <div id="title"> Access lvl: </div>&nbsp;
             <div id="text"> Admin </div>
           </mat-panel-title>
-        </b>
       </ng-container>
       <ng-container>
         <mat-panel-title *ngIf="!checkAdminStatus(element.UserId)">
-          <div id="title">Access lvl: </div>&nbsp;
-          <div id="text"> User </div>
+        <div  id="title">Access lvl: </div>&nbsp;
+        <div id="text"> User </div>
         </mat-panel-title>
       </ng-container>
       <mat-panel-description>
@@ -40,6 +38,6 @@
   </mat-expansion-panel>
 </div>
 
-<br><button *ngIf="!isLoading" [routerLink]="['/groupCreator']" class="createGroupButton">Create new group</button>
+<br><button *ngIf="!isLoading" [routerLink]="['/groupCreator']" id="centerB" class="createGroupButton">Create new group</button>
 
 <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

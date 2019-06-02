@@ -25,7 +25,7 @@
           <div *ngIf="emailAddress.errors.pattern">* Email address invalid</div>
         </div>
 
-        <input type="text" [(ngModel)]="email" placeholder="email address" [pattern]="emailPattern" required #emailAddress="ngModel" name="emailAddress"/>
+        <input type="text" [(ngModel)]="email" placeholder="email address" [pattern]="patterns.emailPattern" required #emailAddress="ngModel" name="emailAddress"/>
 
         <button type="submit" id="registerButton" (click)="register()" [disabled]="registerForm.invalid">create</button>
 

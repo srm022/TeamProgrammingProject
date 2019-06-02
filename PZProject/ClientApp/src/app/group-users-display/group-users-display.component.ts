@@ -4,6 +4,7 @@ import { ToastsManager } from 'ng2-toastr';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { resource } from 'selenium-webdriver/http';
 import { removeSummaryDuplicates } from '@angular/compiler';
+import { ValidationPatterns } from './../models/validation.patterns';
 
 @Component({
   selector: 'app-group-users-display',
@@ -17,7 +18,9 @@ export class GroupUsersDisplayComponent implements OnInit {
   userGroupArray = [];
   selectedGroupId;
   creatorId: string;
+  groupName: string;
   isLoading = false;
+  patterns = new ValidationPatterns();
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -39,6 +42,7 @@ export class GroupUsersDisplayComponent implements OnInit {
     while (result[this.iterator]) {
 
       if (result[this.iterator]['id'] == this.selectedGroupId) {
+        this.groupName = result[this.iterator]['name'];
         this.creatorId = result[this.iterator]['creatorId'];
         this.userGroupArray.push({
           CreatorId: result[this.iterator]['creatorId'],
@@ -47,7 +51,8 @@ export class GroupUsersDisplayComponent implements OnInit {
           userGroups: result[this.iterator]['userGroups']
         });
       }
-      console.log(this.creatorId)
+      console.log(this.creatorId);
+      console.log(this.groupName);
       this.iterator++;
     }
   }
@@ -73,7 +78,7 @@ export class GroupUsersDisplayComponent implements OnInit {
     this.toastr.error('Error');
   }
 
-  removeUserFromGroup(userId: any, groupId: any) {
+  removeUserFromGroup(userId: any) {
     this.token = localStorage.getItem('id_token');
 
     const httpOptions = {
@@ -85,7 +90,7 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     const bodyOptions = {
       'UserId': userId,
-      'GroupId': groupId
+      'GroupId': this.groupName
     }
     this.http.post('https://pzproject.azurewebsites.net/groups/remove', bodyOptions, httpOptions).subscribe(result => {
       window.location.reload();
