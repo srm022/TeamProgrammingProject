@@ -19,8 +19,7 @@ export class GroupsComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private toastr: ToastsManager,
-    private vcr: ViewContainerRef
-  ) {
+    private vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -54,7 +53,6 @@ export class GroupsComponent implements OnInit {
       .subscribe(
         result => {
           this.addUserGroupstoArray(result);
-          console.log(result);
           this.isLoading = false;
         },
         error => console.error(error)
@@ -78,9 +76,13 @@ export class GroupsComponent implements OnInit {
   }
 
   updateUserGroup(GroupId: any) {
-    console.log(GroupId+"to moje group id przy edytowaniu");
     this.router.navigate(['/group-edit', GroupId])
   }
+
+  showGroupNotes(GroupId: any) {
+    this.router.navigate(['/groups/' + GroupId + '/notes']);
+  }
+
   showErrorDeletingGroup(error: any) {
     console.error(error);
     this.toastr.error('Cannot delete group. Admin status required.');

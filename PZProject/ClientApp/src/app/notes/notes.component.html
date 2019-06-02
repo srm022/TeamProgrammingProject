@@ -1,0 +1,12 @@
+<h3>Notes display</h3>
+<mat-grid-list cols="3" rowHeight="1:1">
+  <mat-grid-tile *ngFor="let element of GroupNotesArray">Creator Id: {{element.CreatorId}} Note title:
+    {{element.NoteName}} Description: {{element.description}} Note ID: {{element.NoteId}}
+    <button class="editGroupButton" (click)="updateNote(element.NoteId)">Edit group</button>
+    <button (click)="deleteNote(element.NoteId)" class="deleteGroupButton">Delete note</button>
+  </mat-grid-tile>
+
+
+</mat-grid-list>
+
+<br><button (click)="createNote()" class="createGroupButton">Create new note</button>

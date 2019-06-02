@@ -30,7 +30,6 @@ export class GroupUsersDisplayComponent implements OnInit {
     });
     this.token = localStorage.getItem('id_token');
     this.displayGroupUsers(this.selectedGroupId);
-    console.log(this.selectedGroupId);
   }
 
   GroupNotestoArray(result: Object | { [x: string]: any; }[]) {
@@ -125,6 +124,6 @@ export class GroupUsersDisplayComponent implements OnInit {
     console.error(error);
     this.toastr.error('User ID must be valid, Admin status required', 'Error:');
   }
-  
+
 }
 

@@ -20,6 +20,9 @@ import { GroupUsersDisplayComponent } from './group-users-display/group-users-di
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import { NotesComponent } from './notes/notes.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { NoteCreatorComponent } from './note-creator/note-creator.component';
+import { NoteEditComponentComponent } from './note-edit-component/note-edit-component.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import { NotesComponent } from './notes/notes.component';
     GroupCreatorComponent,
     GroupEditComponent,
     GroupUsersDisplayComponent,
-    NotesComponent
+    NotesComponent,
+    NoteCreatorComponent,
+    NoteEditComponentComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,6 +47,7 @@ import { NotesComponent } from './notes/notes.component';
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatListModule,
+    MatGridListModule,
     ToastModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -50,7 +56,10 @@ import { NotesComponent } from './notes/notes.component';
       { path: 'groups', component: GroupsComponent },
       { path: 'groupCreator', component: GroupCreatorComponent },
       { path: 'group-users-display', component:  GroupUsersDisplayComponent},
-      { path: 'group-edit/:id', component:  GroupEditComponent}
+      { path: 'group-edit/:id', component:  GroupEditComponent},
+      { path: 'groups/:id/notes', component:  NotesComponent},
+      { path: 'groups/:id/notes/create', component:  NoteCreatorComponent},
+      { path: 'groups/:id/notes/edit/:id2', component:  NoteEditComponentComponent}
     ])
   ],
   providers: [ BaseServiceService ],
