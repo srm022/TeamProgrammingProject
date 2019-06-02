@@ -33,7 +33,7 @@
         <button (click)="deleteUserGroup(element.GroupId)" class="deleteGroupButton">Delete group</button>
       </ng-container>
       <button (click)="showUserGroupList(element.GroupId)" class="showUsersButton">Show users</button>
-      <button class="showNotesButton">Show group notes</button>
+      <button class="showNotesButton" (click)="showGroupNotes(element.GroupId)">Show group notes</button>
     </mat-action-row>
   </mat-expansion-panel>
 </div>

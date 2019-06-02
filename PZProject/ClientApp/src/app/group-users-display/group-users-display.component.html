@@ -4,7 +4,7 @@
     <div>
       <div *ngFor="let user of element.userGroups; let i = index">
         <b id="title">{{user.userId}}</b> <button  *ngIf="checkAdminStatus()" type="submit" value="Remove user"
-          (click)="removeUserFromGroup(user.userId, element.GroupId)" class="deleteUserButton">
+          (click)="removeUserFromGroup(user.userId)" class="deleteUserButton">
           <b>X</b>
         </button>
         <br><br>

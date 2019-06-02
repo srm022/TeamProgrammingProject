@@ -2,8 +2,6 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { resource } from 'selenium-webdriver/http';
-import { removeSummaryDuplicates } from '@angular/compiler';
 import { ValidationPatterns } from './../models/validation.patterns';
 
 @Component({
@@ -19,6 +17,7 @@ export class GroupUsersDisplayComponent implements OnInit {
   selectedGroupId;
   creatorId: string;
   groupName: string;
+  groupId: string;
   isLoading = false;
   patterns = new ValidationPatterns();
   constructor(
@@ -44,6 +43,7 @@ export class GroupUsersDisplayComponent implements OnInit {
       if (result[this.iterator]['id'] == this.selectedGroupId) {
         this.groupName = result[this.iterator]['name'];
         this.creatorId = result[this.iterator]['creatorId'];
+        this.groupId = result[this.iterator]['id'];
         this.userGroupArray.push({
           CreatorId: result[this.iterator]['creatorId'],
           GroupId: result[this.iterator]['id'],
@@ -90,14 +90,14 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     const bodyOptions = {
       'UserId': userId,
-      'GroupId': this.groupName
+      'GroupId': this.groupId
     }
     this.http.post('https://pzproject.azurewebsites.net/groups/remove', bodyOptions, httpOptions).subscribe(result => {
       window.location.reload();
     }, error => { this.showErrorRem(error); });
   }
 
-  assignUserGroup(userEmail: any, groupName: any) {
+  assignUserGroup(userEmail: any) {
     this.token = localStorage.getItem('id_token');
 
     const httpOptions = {
@@ -109,7 +109,7 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     const bodyOptions = {
       'UserEmail': userEmail,
-      'GroupName': groupName
+      'GroupName': this.groupName
     };
 
     this.http.post('https://pzproject.azurewebsites.net/groups/assign', bodyOptions, httpOptions).subscribe(result => {

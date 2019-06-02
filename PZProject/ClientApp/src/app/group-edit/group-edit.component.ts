@@ -35,7 +35,7 @@ export class GroupEditComponent implements OnInit {
     });
     this.token = localStorage.getItem('id_token');
     this.displayGroupInfo(this.selectedGroupId);
-  }
+  };
 
   GroupInfoToArray(result: Object | { [x: string]: any }[]) {
     while (result[this.iterator]) {
