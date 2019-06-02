@@ -1,6 +1,5 @@
 <h3>List of users</h3>
-<!-- <mat-list *ngIf="!isLoading"> -->
-
+<mat-list *ngIf="!isLoading">
   <div *ngFor="let element of userGroupArray">
     <div>
       <div *ngFor="let user of element.userGroups; let i = index">
@@ -8,19 +7,12 @@
           (click)="removeUserFromGroup(user.userId, element.GroupId)" class="deleteUserButton">
           <b>X</b>
         </button>
-
         <br><br>
-
-
       </div>
-
     </div>
     <label id="title"> User email: </label><input type="text" [(ngModel)]="UserEmail" />
-
     <button type="submit" (click)="assignUserGroup(UserEmail, element.GroupName)" class="addUserButton">Assign
       user</button>
   </div>
-<!-- </mat-list> -->
-
-
-<!-- <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner> -->
+</mat-list>
+<mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

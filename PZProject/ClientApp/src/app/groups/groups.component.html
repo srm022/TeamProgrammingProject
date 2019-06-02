@@ -40,5 +40,6 @@
   </mat-expansion-panel>
 </div>
 
-<br><button [routerLink]="['/groupCreator']" class="createGroupButton">Create new group</button>
+<br><button *ngIf="!isLoading" [routerLink]="['/groupCreator']" class="createGroupButton">Create new group</button>
+
 <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

@@ -14,7 +14,7 @@ export class GroupUsersDisplayComponent implements OnInit {
   iterator = 0;
   userGroupArray = [];
   selectedGroupId;
-
+  isLoading = false;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -26,7 +26,7 @@ export class GroupUsersDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.selectedGroupId = params["groupId"];
+      this.selectedGroupId = params['groupId'];
     });
     this.token = localStorage.getItem('id_token');
     this.displayGroupUsers(this.selectedGroupId);
@@ -51,6 +51,7 @@ export class GroupUsersDisplayComponent implements OnInit {
   }
 
   displayGroupUsers(selectedGroupId: any) {
+    this.isLoading = true;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.token
@@ -58,9 +59,16 @@ export class GroupUsersDisplayComponent implements OnInit {
     }
     this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
       this.GroupNotestoArray(result);
+      this.isLoading = false;
 
-    }, error => console.error(error));
+    }, error => this.errorHandling(error)
+    );
+  }
 
+  errorHandling(error: any) {
+    console.error(error);
+    this.isLoading = false;
+    this.toastr.error('Error');
   }
 
   removeUserFromGroup(userId: any, groupId: any) {

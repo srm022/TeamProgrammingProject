@@ -14,7 +14,6 @@ import { GroupsComponent } from './groups/groups.component';
 import { GroupCreatorComponent } from './groupCreator/groupCreator.component';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
-import { BaseServiceService } from './services/base-service/base-service.service';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupUsersDisplayComponent } from './group-users-display/group-users-display.component'; 
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -53,7 +52,7 @@ import { NotesComponent } from './notes/notes.component';
       { path: 'group-edit/:id', component:  GroupEditComponent}
     ])
   ],
-  providers: [ BaseServiceService ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

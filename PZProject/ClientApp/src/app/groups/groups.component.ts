@@ -4,7 +4,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 
-
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
@@ -57,8 +56,19 @@ export class GroupsComponent implements OnInit {
           console.log(result);
           this.isLoading = false;
         },
-        error => console.error(error)
+        error => this.errorHandleing(error)
       );
+  }
+
+  errorHandleing(error: any) {
+    console.error(error);
+    localStorage.clear();
+    this.toastr.error('Session expired', 'Error:');
+
+    setTimeout(() => {
+      this.isLoading = false;
+      this.router.navigate(['/login']);
+    }, 2500);
   }
 
   deleteUserGroup(groupId: any) {
@@ -72,14 +82,20 @@ export class GroupsComponent implements OnInit {
       }
     };
 
-    this.http.delete('https://pzproject.azurewebsites.net/groups/delete', httpOptions).subscribe(result => {
-      window.location.reload();
-    }, error => { this.showErrorDeletingGroup(error); });
+    this.http
+      .delete('https://pzproject.azurewebsites.net/groups/delete', httpOptions)
+      .subscribe(
+        result => {
+          window.location.reload();
+        },
+        error => {
+          this.showErrorDeletingGroup(error);
+        }
+      );
   }
 
   updateUserGroup(GroupId: any) {
-    console.log(GroupId+"to moje group id przy edytowaniu");
-    this.router.navigate(['/group-edit', GroupId])
+    this.router.navigate(['/group-edit', GroupId]);
   }
   showErrorDeletingGroup(error: any) {
     console.error(error);

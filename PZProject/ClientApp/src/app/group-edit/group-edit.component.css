@@ -106,3 +106,8 @@
   text-align: left;
 }
 
+.spinnerCenter {
+  margin: 0 auto;
+  margin-top: 25%;
+}
+
