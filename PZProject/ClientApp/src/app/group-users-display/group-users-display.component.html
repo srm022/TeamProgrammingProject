@@ -1,26 +1,20 @@
-<h3>List of users</h3>
-<!-- <mat-list *ngIf="!isLoading"> -->
-
+<h3 class="groupTitle" > List of users</h3>
+<mat-list class="form" *ngIf="!isLoading">
   <div *ngFor="let element of userGroupArray">
     <div>
       <div *ngFor="let user of element.userGroups; let i = index">
-        <b id="title">{{user.userId}}</b> <button type="submit" value="Remove user"
-          (click)="removeUserFromGroup(user.userId, element.GroupId)" class="deleteUserButton">
+        <b id="title">{{user.userId}}</b> <button  *ngIf="checkAdminStatus()" type="submit" value="Remove user"
+          (click)="removeUserFromGroup(user.userId)" class="deleteUserButton">
           <b>X</b>
         </button>
-
         <br><br>
-
-
       </div>
-
     </div>
-    <label id="title"> User email: </label><input type="text" [(ngModel)]="UserEmail" />
-
-    <button type="submit" (click)="assignUserGroup(UserEmail, element.GroupName)" class="addUserButton">Assign
-      user</button>
   </div>
-<!-- </mat-list> -->
-
-
-<!-- <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner> -->
+</mat-list>
+<div class="form" *ngIf="checkAdminStatus()">
+<input type="text" [(ngModel)]="UserEmail"  [pattern]="patterns.emailPattern" required #email="ngModel" placeholder="User email"/>
+<br> <br>
+<button type="submit" (click)="assignUserGroup(UserEmail)" [disabled]="email.invalid">Assign user</button>
+</div>
+<mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

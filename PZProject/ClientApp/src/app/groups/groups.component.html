@@ -1,33 +1,31 @@
-<h3 class="text-center text-uppercase">List of User Groups</h3>
+<h3 class="groupTitle">List of User Groups</h3>
 
 <div *ngFor="let element of UserGroupArray">
 
-  <mat-expansion-panel>
+  <mat-expansion-panel class="form">
     <mat-expansion-panel-header>
 
       <ng-container *ngIf="checkAdminStatus(element.UserId)">
-        <b>
           <mat-panel-title>
-            <div id="title">Access lvl:</div>
-            <p id="text">Admin</p>
+            <div id="title"> Access lvl: </div>&nbsp;
+            <div id="text"> Admin </div>
           </mat-panel-title>
-        </b>
       </ng-container>
       <ng-container>
         <mat-panel-title *ngIf="!checkAdminStatus(element.UserId)">
-          <div id="title">Access lvl:</div>
-          <p id="text">User</p>
+        <div  id="title">Access lvl: </div>&nbsp;
+        <div id="text"> User </div>
         </mat-panel-title>
       </ng-container>
       <mat-panel-description>
-        <div id="title">Group name:</div>
+        <div id="title"> Group name: </div>&nbsp;
         <b>
-          <p id="text">{{element.GroupName}}</p>
+          <p id="text"> {{element.GroupName}} </p>
         </b>
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <p id="text">{{element.description}}</p>
+    <p id="text"> {{element.description}} </p>
 
     <mat-action-row>
       <ng-container *ngIf="checkAdminStatus(element.UserId)">
@@ -40,5 +38,6 @@
   </mat-expansion-panel>
 </div>
 
-<br><button [routerLink]="['/groupCreator']" class="createGroupButton">Create new group</button>
+<br><button *ngIf="!isLoading" [routerLink]="['/groupCreator']" id="centerB" class="createGroupButton">Create new group</button>
+
 <mat-spinner class="spinnerCenter" *ngIf="isLoading">div</mat-spinner>

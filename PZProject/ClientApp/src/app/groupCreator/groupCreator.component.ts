@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
+import { ValidationPatterns } from '../models/validation.patterns';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class GroupCreatorComponent implements OnInit {
   token: any;
   groupName: string;
   groupDescription: string;
-
+  patterns = new ValidationPatterns();
   isLoading = false;
   constructor(
     private http: HttpClient,

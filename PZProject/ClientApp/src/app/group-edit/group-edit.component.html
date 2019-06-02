@@ -1,14 +1,14 @@
-<form #createGroup="ngForm">
+<form #createGroup="ngForm" *ngIf = "!isLoading">
     <div class="login-page">
       <div class="form">
         <div class="register-form"  *ngFor="let element of groupInfoArray">
           <div class="groupCreatorTitle">Group Editor</div>
-          <input type="text" [(ngModel)]="name" required #groupN="ngModel" name="groupN"/>
-          <input type="text" [(ngModel)]="description" required #groupD="ngModel" name="groupD"/>
+          <input type="text" [(ngModel)]="name" [pattern]="patterns.objectName" required #groupN="ngModel" name="groupN"/>
+          <input type="text" [(ngModel)]="description" [pattern]="patterns.groupDescription" required #groupD="ngModel" name="groupD"/>
           <button type="submit" id="loginButton" [disabled]="createGroup.invalid" (click)="updateUserGroup(element.GroupId)">Update</button>
           <p class="message"><a [routerLink]="['/groups']">Back to list</a></p>
         </div>
       </div>
     </div>
   </form>
-  <!-- <mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner> -->
+  <mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner>

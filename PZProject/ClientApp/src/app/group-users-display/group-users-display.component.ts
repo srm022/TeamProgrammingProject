@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { ValidationPatterns } from './../models/validation.patterns';
 
 @Component({
   selector: 'app-group-users-display',
@@ -14,7 +15,11 @@ export class GroupUsersDisplayComponent implements OnInit {
   iterator = 0;
   userGroupArray = [];
   selectedGroupId;
-
+  creatorId: string;
+  groupName: string;
+  groupId: string;
+  isLoading = false;
+  patterns = new ValidationPatterns();
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -26,30 +31,34 @@ export class GroupUsersDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.selectedGroupId = params["groupId"];
+      this.selectedGroupId = params['groupId'];
     });
     this.token = localStorage.getItem('id_token');
     this.displayGroupUsers(this.selectedGroupId);
   }
 
   GroupNotestoArray(result: Object | { [x: string]: any; }[]) {
-
     while (result[this.iterator]) {
 
       if (result[this.iterator]['id'] == this.selectedGroupId) {
+        this.groupName = result[this.iterator]['name'];
+        this.creatorId = result[this.iterator]['creatorId'];
+        this.groupId = result[this.iterator]['id'];
         this.userGroupArray.push({
+          CreatorId: result[this.iterator]['creatorId'],
           GroupId: result[this.iterator]['id'],
           GroupName: result[this.iterator]['name'],
           userGroups: result[this.iterator]['userGroups']
         });
       }
-
-
+      console.log(this.creatorId);
+      console.log(this.groupName);
       this.iterator++;
     }
   }
 
   displayGroupUsers(selectedGroupId: any) {
+    this.isLoading = true;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.token
@@ -57,12 +66,19 @@ export class GroupUsersDisplayComponent implements OnInit {
     }
     this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
       this.GroupNotestoArray(result);
+      this.isLoading = false;
 
-    }, error => console.error(error));
-
+    }, error => this.errorHandling(error)
+    );
   }
 
-  removeUserFromGroup(userId: any, groupId: any) {
+  errorHandling(error: any) {
+    console.error(error);
+    this.isLoading = false;
+    this.toastr.error('Error');
+  }
+
+  removeUserFromGroup(userId: any) {
     this.token = localStorage.getItem('id_token');
 
     const httpOptions = {
@@ -74,14 +90,14 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     const bodyOptions = {
       'UserId': userId,
-      'GroupId': groupId
+      'GroupId': this.groupId
     }
     this.http.post('https://pzproject.azurewebsites.net/groups/remove', bodyOptions, httpOptions).subscribe(result => {
       window.location.reload();
     }, error => { this.showErrorRem(error); });
   }
 
-  assignUserGroup(userEmail: any, groupName: any) {
+  assignUserGroup(userEmail: any) {
     this.token = localStorage.getItem('id_token');
 
     const httpOptions = {
@@ -93,7 +109,7 @@ export class GroupUsersDisplayComponent implements OnInit {
 
     const bodyOptions = {
       'UserEmail': userEmail,
-      'GroupName': groupName
+      'GroupName': this.groupName
     };
 
     this.http.post('https://pzproject.azurewebsites.net/groups/assign', bodyOptions, httpOptions).subscribe(result => {
@@ -125,5 +141,9 @@ export class GroupUsersDisplayComponent implements OnInit {
     this.toastr.error('User ID must be valid, Admin status required', 'Error:');
   }
 
+  checkAdminStatus() {
+    return this.creatorId == localStorage.getItem('userId');
+  }
+  
 }
 
