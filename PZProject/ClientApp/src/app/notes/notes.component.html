@@ -3,4 +3,4 @@
   <mat-grid-tile  *ngFor="let element of GroupNotesArray">Creator Id: {{element.CreatorId}} Note title: {{element.NoteName}} Description: {{element.description}}</mat-grid-tile>
 </mat-grid-list>
 
-<br><button [routerLink]="['/create]" class="createGroupButton">Create new note</button>
+<br><button (click)="createNote()"  class="createGroupButton">Create new note</button>

@@ -65,6 +65,10 @@ export class NotesComponent implements OnInit {
         error => console.error(error)
       );
   }
+
+  createNote(){
+    this.router.navigate(['/groups/' + this.selectedGroupId + '/notes/create']);
+  }
 }
 
 
