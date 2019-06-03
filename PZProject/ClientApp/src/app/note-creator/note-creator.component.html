@@ -2,9 +2,9 @@
     <div class="login-page">
       <div class="form">
         <div class="register-form">
-          <div class="groupCreatorTitle">Note creator</div>
+          <div class="noteTitle">Note creator</div>
           <input type="text" [(ngModel)]="noteName" [pattern]="patterns.objectName" required #noteN="ngModel" name="noteN" placeholder="Note title"/>
-          <input type="text" [(ngModel)]="noteDescription" [pattern]="patterns.emailPattern" required #noteD="ngModel" name="noteD" placeholder="Note content"/>
+          <input type="text" [(ngModel)]="noteDescription" [pattern]="patterns.noteContent" required #noteD="ngModel" name="noteD" placeholder="Note content"/>
           <button type="submit" id="loginButton" (click)="createNote()" [disabled]="createNotee.invalid">Create</button>
           <p class="message"><a (click)="backToNotes()">Back to notes</a></p>
         </div>

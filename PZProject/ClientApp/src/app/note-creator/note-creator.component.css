@@ -16,7 +16,7 @@
 }
 
 
-.groupCreatorTitle {
+.noteTitle {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -115,3 +115,6 @@
   text-align: left;
 }
 
+span {
+  padding: 30px;
+}

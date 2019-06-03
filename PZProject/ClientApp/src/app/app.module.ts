@@ -22,6 +22,7 @@ import { NotesComponent } from './notes/notes.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { NoteCreatorComponent } from './note-creator/note-creator.component';
 import { NoteEditComponentComponent } from './note-edit-component/note-edit-component.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { NoteEditComponentComponent } from './note-edit-component/note-edit-comp
     MatExpansionModule,
     MatListModule,
     MatGridListModule,
+    MatCardModule,
     ToastModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

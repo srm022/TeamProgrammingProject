@@ -10,7 +10,6 @@ import { ValidationPatterns } from './../models/validation.patterns';
   styleUrls: ['./group-users-display.component.css']
 })
 export class GroupUsersDisplayComponent implements OnInit {
-
   token: any;
   iterator = 0;
   userGroupArray = [];
@@ -25,7 +24,8 @@ export class GroupUsersDisplayComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastsManager,
-    private vcr: ViewContainerRef) {
+    private vcr: ViewContainerRef
+  ) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -37,9 +37,8 @@ export class GroupUsersDisplayComponent implements OnInit {
     this.displayGroupUsers(this.selectedGroupId);
   }
 
-  GroupNotestoArray(result: Object | { [x: string]: any; }[]) {
+  GroupNotestoArray(result: Object | { [x: string]: any }[]) {
     while (result[this.iterator]) {
-
       if (result[this.iterator]['id'] == this.selectedGroupId) {
         this.groupName = result[this.iterator]['name'];
         this.creatorId = result[this.iterator]['creatorId'];
@@ -61,15 +60,18 @@ export class GroupUsersDisplayComponent implements OnInit {
     this.isLoading = true;
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.token
+        Authorization: 'Bearer ' + this.token
       })
-    }
-    this.http.get('https://pzproject.azurewebsites.net/groups', httpOptions).subscribe(result => {
-      this.GroupNotestoArray(result);
-      this.isLoading = false;
-
-    }, error => this.errorHandling(error)
-    );
+    };
+    this.http
+      .get('https://pzproject.azurewebsites.net/groups', httpOptions)
+      .subscribe(
+        result => {
+          this.GroupNotestoArray(result);
+          this.isLoading = false;
+        },
+        error => this.errorHandling(error)
+      );
   }
 
   errorHandling(error: any) {
@@ -84,17 +86,28 @@ export class GroupUsersDisplayComponent implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.token
+        Authorization: 'Bearer ' + this.token
       })
     };
 
     const bodyOptions = {
-      'UserId': userId,
-      'GroupId': this.groupId
-    }
-    this.http.post('https://pzproject.azurewebsites.net/groups/remove', bodyOptions, httpOptions).subscribe(result => {
-      window.location.reload();
-    }, error => { this.showErrorRem(error); });
+      UserId: userId,
+      GroupId: this.groupId
+    };
+    this.http
+      .post(
+        'https://pzproject.azurewebsites.net/groups/remove',
+        bodyOptions,
+        httpOptions
+      )
+      .subscribe(
+        result => {
+          window.location.reload();
+        },
+        error => {
+          this.showErrorRem(error);
+        }
+      );
   }
 
   assignUserGroup(userEmail: any) {
@@ -103,19 +116,30 @@ export class GroupUsersDisplayComponent implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.token
+        Authorization: 'Bearer ' + this.token
       })
     };
 
     const bodyOptions = {
-      'UserEmail': userEmail,
-      'GroupName': this.groupName
+      UserEmail: userEmail,
+      GroupName: this.groupName
     };
 
-    this.http.post('https://pzproject.azurewebsites.net/groups/assign', bodyOptions, httpOptions).subscribe(result => {
-      window.location.reload();
-      this.showSuccesAsign();
-    }, error => { this.showErrorAdd(error); });
+    this.http
+      .post(
+        'https://pzproject.azurewebsites.net/groups/assign',
+        bodyOptions,
+        httpOptions
+      )
+      .subscribe(
+        result => {
+          window.location.reload();
+          this.showSuccesAsign();
+        },
+        error => {
+          this.showErrorAdd(error);
+        }
+      );
   }
 
   showErrorDeletingGroup(error: any) {
@@ -129,7 +153,10 @@ export class GroupUsersDisplayComponent implements OnInit {
 
   showErrorAdd(error: any) {
     console.error(error);
-    this.toastr.error('Email adress must be valid, Admin status required, Given adress might already be in the group', 'Error:');
+    this.toastr.error(
+      'Email adress must be valid, Admin status required, Given adress might already be in the group',
+      'Error:'
+    );
   }
 
   showSuccesRemoved() {
@@ -144,6 +171,4 @@ export class GroupUsersDisplayComponent implements OnInit {
   checkAdminStatus() {
     return this.creatorId == localStorage.getItem('userId');
   }
-  
 }
-

@@ -9,12 +9,12 @@ import { ToastsManager } from 'ng2-toastr';
   styleUrls: ['./notes.component.css']
 })
 export class NotesComponent implements OnInit {
-
   token: any;
   iterator = 0;
   GroupNotesArray = [];
   selectedGroupId: any;
   isLoading = true;
+  userId;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -28,8 +28,10 @@ export class NotesComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.selectedGroupId = params['id'];
-    })
+    });
     this.token = localStorage.getItem('id_token');
+    this.userId = localStorage.getItem('userId');
+    console.log(this.userId)
     this.displayGroupNotes();
   }
 
@@ -41,7 +43,6 @@ export class NotesComponent implements OnInit {
         CreatorId: result[this.iterator]['creatorId'],
         description: result[this.iterator]['description']
       });
-
       this.iterator++;
     }
   }
@@ -53,7 +54,12 @@ export class NotesComponent implements OnInit {
       })
     };
     this.http
-      .get('https://pzproject.azurewebsites.net/groups/' + this.selectedGroupId + '/notes', httpOptions)
+      .get(
+        'https://pzproject.azurewebsites.net/groups/' +
+          this.selectedGroupId +
+          '/notes',
+        httpOptions
+      )
       .subscribe(
         result => {
           this.addGroupNotesToArray(result);
@@ -78,14 +84,32 @@ export class NotesComponent implements OnInit {
       }
     };
 
-    this.http.delete('https://pzproject.azurewebsites.net/groups/' + this.selectedGroupId + '/notes/delete', httpOptions).subscribe(result => {
-      window.location.reload();
-    }, error => console.error(error));
+    this.http
+      .delete(
+        'https://pzproject.azurewebsites.net/groups/' +
+          this.selectedGroupId +
+          '/notes/delete',
+        httpOptions
+      )
+      .subscribe(
+        result => {
+          window.location.reload();
+        },
+        error => this.deleteError(error)
+      );
   }
 
+  deleteError(error: any) {
+    console.error(error);
+    this.toastr.error('Note deleting failed');
+  }
   updateNote(NoteId: any) {
-    this.router.navigate(['/groups/' + this.selectedGroupId + '/notes' + '/edit/' + NoteId])
+    this.router.navigate([
+      '/groups/' + this.selectedGroupId + '/notes' + '/edit/' + NoteId
+    ]);
+  }
+
+  adminChecker(creatorId: string) {
+    return creatorId == this.userId;
   }
 }
-
-
