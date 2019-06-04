@@ -16,7 +16,9 @@ export class NoteEditComponentComponent implements OnInit {
   token: any;
   noteName: any;
   noteDescription: any;
+  noteAttachment: any;
   isLoading = false;
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -75,6 +77,11 @@ export class NoteEditComponentComponent implements OnInit {
       );
   }
 
+  handleFileInput(files) {
+    this.noteAttachment = files[0];
+    console.log(this.noteAttachment)
+  }
+
   updateNote(noteId: any) {
     this.isLoading = true;
     const httpOptions = {
@@ -91,7 +98,7 @@ export class NoteEditComponentComponent implements OnInit {
     };
     this.http
       .put(
-        'https://pzproject.azurewebsites.net/groups/' +
+        'http://localhost:44366/groups/' +
           this.selectedGroupId +
           '/notes/edit',
         bodyOptions,
@@ -99,13 +106,44 @@ export class NoteEditComponentComponent implements OnInit {
       )
       .subscribe(
         result => {
-          this.showSuccessAlert();
-          setTimeout(() => {
-            this.isLoading = false;
-            this.router.navigate(['/groups/' + this.selectedGroupId + '/notes']);
-          }, 2000);
+          if (this.noteAttachment) {
+            this.addAttachment();
+          }
         },
         error => this.showErrorAlert(error)
+      );
+  }
+
+  addAttachment() {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+    
+    let file: File = this.noteAttachment;
+    console.log(this.noteAttachment)
+    let formData: FormData = new FormData();
+    formData.append('file', file);
+
+    console.log('sending attachment body method');
+    
+    this.http
+      .post('http://localhost:62333/groups/' +
+        this.selectedGroupId +
+        '/notes/' +
+        this.selectedNoteId +
+        '/attachment/create',
+        formData,
+        httpOptions
+      )
+      .subscribe(
+        result => {
+          console.log(result);
+        },
+        //error => this.showErrorAlert(error)
+        error => console.log(error)
       );
   }
 

@@ -47,6 +47,7 @@ export class NoteCreatorComponent implements OnInit {
       NoteName: this.noteName,
       NoteDescription: this.noteDescription
     };
+
     this.http
       .post(
         'https://pzproject.azurewebsites.net/groups/' +
