@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-note-edit-component',
@@ -18,13 +19,16 @@ export class NoteEditComponentComponent implements OnInit {
   noteDescription: any;
   noteAttachment: any;
   isLoading = false;
+  AttachmentIdentity: any;
+  sanatizeUrl: any;
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastsManager,
-    private vcr: ViewContainerRef
+    private vcr: ViewContainerRef,
+    private sanitizer:DomSanitizer
   ) {
     this.toastr.setRootViewContainerRef(vcr);
   }
@@ -41,6 +45,7 @@ export class NoteEditComponentComponent implements OnInit {
   addNotesInfoToArray(result: Object | { [x: string]: any }[]) {
     while (result[this.iterator]) {
       if (result[this.iterator]['id'] == this.selectedNoteId) {
+        this.AttachmentIdentity = result[this.iterator]['attachmentIdentity']
         this.noteName = result[this.iterator]['name'];
         this.noteDescription = result[this.iterator]['description'];
         this.noteInfoArray.push({
@@ -71,6 +76,8 @@ export class NoteEditComponentComponent implements OnInit {
       .subscribe(
         result => {
           this.addNotesInfoToArray(result);
+          this.sanatizeUrl = "https://pzprojectstorage.blob.core.windows.net:443/pzproject-blobstorage/"+this.AttachmentIdentity;
+          console.log("TO MOJ URI: "+ "https://pzprojectstorage.blob.core.windows.net:443/pzproject-blobstorage/"+this.AttachmentIdentity);
           this.isLoading = false;
         },
         error => console.error(error)
@@ -98,7 +105,7 @@ export class NoteEditComponentComponent implements OnInit {
     };
     this.http
       .put(
-        'http://localhost:44366/groups/' +
+        'https://pzproject.azurewebsites.net/groups/' +
           this.selectedGroupId +
           '/notes/edit',
         bodyOptions,
@@ -130,7 +137,7 @@ export class NoteEditComponentComponent implements OnInit {
     console.log('sending attachment body method');
     
     this.http
-      .post('http://localhost:62333/groups/' +
+      .post('https://pzproject.azurewebsites.net/groups/' +
         this.selectedGroupId +
         '/notes/' +
         this.selectedNoteId +

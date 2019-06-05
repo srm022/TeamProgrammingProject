@@ -15,6 +15,7 @@ export class NotesComponent implements OnInit {
   selectedGroupId: any;
   isLoading = true;
   userId;
+  attachmentIdentity;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -41,7 +42,8 @@ export class NotesComponent implements OnInit {
         NoteId: result[this.iterator]['id'],
         NoteName: result[this.iterator]['name'],
         CreatorId: result[this.iterator]['creatorId'],
-        description: result[this.iterator]['description']
+        description: result[this.iterator]['description'],
+        AttachmentIdentity: result[this.iterator]['attachmentIdentity']
       });
       this.iterator++;
     }

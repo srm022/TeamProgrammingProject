@@ -9,7 +9,8 @@
               {{element.NoteName}}
             </mat-card-header>
             <mat-card-content>
-              {{element.description}} 
+              {{element.description}}
+              {{element.AttachmentIdentity}} 
             </mat-card-content>
             <mat-card-actions *ngIf="adminChecker(element.CreatorId)">
               <button class="editGroupButton" (click)="updateNote(element.NoteId)">Edit</button>
