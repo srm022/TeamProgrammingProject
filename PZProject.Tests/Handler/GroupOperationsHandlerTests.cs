@@ -34,6 +34,25 @@ namespace PZProject.Tests.Handler
             var exception = Assert.Throws<Exception>(() => fixture.Sut.CreateNewGroup(request, invalidIssuerId));
             Assert.That(exception.Message, Is.EqualTo($"Could not find entity of type [{typeof(UserEntity).Name}]"));
         }
+
+        [Test]
+        public void Should_Create_Group_For_Valid_Input_Parameters([Values(-1, 0, null)] int invalidIssuerId)
+        {
+            //ARRANGE
+            var fixture = new GroupOperationsHandlerTestsFixture()
+                .SetupUserRepository()
+                .ConfigureSut();
+
+            var request = new CreateGroupRequest
+            {
+                GroupName = "groupName",
+                GroupDescription = "groupDescription"
+            };
+
+            //ACT && ASSERT
+            var exception = Assert.Throws<Exception>(() => fixture.Sut.CreateNewGroup(request, invalidIssuerId));
+            Assert.That(exception.Message, Is.EqualTo($"Could not find entity of type [{typeof(UserEntity).Name}]"));
+        }
     }
 
     public class GroupOperationsHandlerTestsFixture
@@ -56,6 +75,20 @@ namespace PZProject.Tests.Handler
                 _groupAssignUserHandlerMock.Object,
                 _groupRemoveUserHandlerMock.Object,
                 _groupEditHandlerMock.Object);
+
+            return this;
+        }
+
+        public GroupOperationsHandlerTestsFixture SetupUserRepository()
+        {
+            _userRepositoryMock
+                .Setup(r => r.GetUserById(It.IsAny<int>()))
+                .Returns(new UserEntity
+                {
+                    UserId = 12345,
+                    FirstName = "TestUser",
+                    LastName = "LastName"
+                });
 
             return this;
         }
