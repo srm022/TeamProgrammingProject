@@ -15,11 +15,15 @@ steps:
     projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
-  displayName: Build
   inputs:
     command: build
     projects: '**/*.csproj'
     arguments: '--configuration Release'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
   inputs:
