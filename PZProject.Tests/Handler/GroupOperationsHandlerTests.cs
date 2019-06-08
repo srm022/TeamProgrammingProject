@@ -24,11 +24,7 @@ namespace PZProject.Tests.Handler
             var fixture = new GroupOperationsHandlerTestsFixture()
                 .ConfigureSut();
 
-            var request = new CreateGroupRequest
-            {
-                GroupName = "groupName",
-                GroupDescription = "groupDescription"
-            };
+            var request = CreateValidRequest();
 
             //ACT && ASSERT
             var exception = Assert.Throws<Exception>(() => fixture.Sut.CreateNewGroup(request, invalidIssuerId));
@@ -36,28 +32,35 @@ namespace PZProject.Tests.Handler
         }
 
         [Test]
-        public void Should_Create_Group_For_Valid_Input_Parameters([Values(-1, 0, null)] int invalidIssuerId)
+        public void Should_Create_Group_For_Valid_Input_Parameters()
         {
             //ARRANGE
+            var issuerId = 100;
             var fixture = new GroupOperationsHandlerTestsFixture()
-                .SetupUserRepository()
+                .SetupUserRepositoryToReturnUserForId(issuerId)
                 .ConfigureSut();
 
-            var request = new CreateGroupRequest
+            var request = CreateValidRequest();
+
+            //ACT && ASSERT
+            Assert.DoesNotThrow(() => fixture.Sut.CreateNewGroup(request, issuerId));
+        }
+
+        private CreateGroupRequest CreateValidRequest()
+        {
+            return new CreateGroupRequest
             {
                 GroupName = "groupName",
                 GroupDescription = "groupDescription"
             };
-
-            //ACT && ASSERT
-            var exception = Assert.Throws<Exception>(() => fixture.Sut.CreateNewGroup(request, invalidIssuerId));
-            Assert.That(exception.Message, Is.EqualTo($"Could not find entity of type [{typeof(UserEntity).Name}]"));
         }
     }
 
     public class GroupOperationsHandlerTestsFixture
     {
         public GroupOperationsHandler Sut { get; set; }
+        public int ValidIssuerId { get; set; }
+
         private readonly Mock<IGroupCreator> _groupCreatorMock = new Mock<IGroupCreator>();
         private readonly Mock<IUserRepository> _userRepositoryMock = new Mock<IUserRepository>();
         private readonly Mock<IGroupRepository> _groupRepositoryMock = new Mock<IGroupRepository>();
@@ -79,13 +82,13 @@ namespace PZProject.Tests.Handler
             return this;
         }
 
-        public GroupOperationsHandlerTestsFixture SetupUserRepository()
+        public GroupOperationsHandlerTestsFixture SetupUserRepositoryToReturnUserForId(int userId)
         {
             _userRepositoryMock
                 .Setup(r => r.GetUserById(It.IsAny<int>()))
                 .Returns(new UserEntity
                 {
-                    UserId = 12345,
+                    UserId = userId,
                     FirstName = "TestUser",
                     LastName = "LastName"
                 });
