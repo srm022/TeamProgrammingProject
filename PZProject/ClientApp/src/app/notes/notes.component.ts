@@ -2,6 +2,8 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-notes',
@@ -14,15 +16,32 @@ export class NotesComponent implements OnInit {
   GroupNotesArray = [];
   selectedGroupId: any;
   isLoading = true;
-  userId;
+  userId: string;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastsManager,
-    private vcr: ViewContainerRef
+    private vcr: ViewContainerRef,
+    iconRegistry: MatIconRegistry, 
+    sanitizer: DomSanitizer
   ) {
     this.toastr.setRootViewContainerRef(vcr);
+    iconRegistry.addSvgIcon(
+      'more_horiz',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/more_horiz.svg'));
+
+    iconRegistry.addSvgIcon(
+      'edit',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/edit.svg'));
+
+    iconRegistry.addSvgIcon(
+      'delete',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/delete.svg'));
+
+    iconRegistry.addSvgIcon(
+      'attachment',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/attachment.svg'));
   }
 
   ngOnInit() {
@@ -41,7 +60,9 @@ export class NotesComponent implements OnInit {
         NoteId: result[this.iterator]['id'],
         NoteName: result[this.iterator]['name'],
         CreatorId: result[this.iterator]['creatorId'],
-        description: result[this.iterator]['description']
+        description: result[this.iterator]['description'],
+        AttachmentIdentity: result[this.iterator]['attachmentIdentity'],
+        Url: 'https://pzprojectstorage.blob.core.windows.net:443/pzproject-blobstorage/' + result[this.iterator]['attachmentIdentity']
       });
       this.iterator++;
     }
@@ -103,9 +124,16 @@ export class NotesComponent implements OnInit {
     console.error(error);
     this.toastr.error('Note deleting failed');
   }
+
   updateNote(NoteId: any) {
     this.router.navigate([
       '/groups/' + this.selectedGroupId + '/notes' + '/edit/' + NoteId
+    ]);
+  }
+
+  attachmentEdit(NoteId: any) {
+    this.router.navigate([
+      '/groups/' + this.selectedGroupId + '/notes' + '/attachment/' + NoteId
     ]);
   }
 

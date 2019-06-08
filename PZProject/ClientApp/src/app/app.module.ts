@@ -16,13 +16,28 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupUsersDisplayComponent } from './group-users-display/group-users-display.component'; 
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatListModule} from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 import { NotesComponent } from './notes/notes.component';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { NoteCreatorComponent } from './note-creator/note-creator.component';
 import { NoteEditComponentComponent } from './note-edit-component/note-edit-component.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { AttachmentsEditComponent } from './attachments-edit/attachments-edit.component';
+
+const AngularMaterial = [
+  MatProgressSpinnerModule,
+  MatExpansionModule,
+  MatListModule,
+  MatGridListModule,
+  MatCardModule,
+  MatMenuModule,
+  MatIconModule,
+  MatButtonModule
+];
 
 @NgModule({
   declarations: [
@@ -38,17 +53,14 @@ import { MatCardModule } from '@angular/material/card';
     NotesComponent,
     NoteCreatorComponent,
     NoteEditComponentComponent,
+    AttachmentsEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatProgressSpinnerModule,
-    MatExpansionModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
+    AngularMaterial,
     ToastModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -60,7 +72,8 @@ import { MatCardModule } from '@angular/material/card';
       { path: 'group-edit/:id', component:  GroupEditComponent},
       { path: 'groups/:id/notes', component:  NotesComponent},
       { path: 'groups/:id/notes/create', component:  NoteCreatorComponent},
-      { path: 'groups/:id/notes/edit/:id2', component:  NoteEditComponentComponent}
+      { path: 'groups/:id/notes/edit/:id2', component:  NoteEditComponentComponent},
+      { path: 'groups/:id/notes/attachment/:id3', component:  AttachmentsEditComponent}
     ])
   ],
   providers: [],

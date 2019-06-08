@@ -16,7 +16,7 @@ mat-grid-tile {
 
 .form {
   float: left;
-  background: #fee857;
+  background: #fff;
   max-width: 400px;
   max-height: 200px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 15px 15px 0 rgba(0, 0, 0, 0.24);
@@ -28,8 +28,8 @@ mat-grid-tile {
 
 mat-card {
   background: #fee857;
-  width: calc(100%);
-  height: calc(100%);
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
 }
 
 mat-card-header {
@@ -46,8 +46,43 @@ mat-card-content {
   text-transform: uppercase;
   justify-content: center;
   color: rgb(0, 0, 0);
+  text-align: center;
 }
 mat-card-actions {
-  margin-left: 27%;
-  margin-bottom: 10px;
+  margin-left: 95%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+#attachment {
+  background-color: rgb(64, 168, 64);
+}
+
+#attachment:hover {
+  background-color: rgb(102, 255, 102);
+}
+
+#edit{
+  background-color: rgb(17, 120, 255);
+}
+
+#edit:hover {
+  background-color: rgb(0, 153, 255);
+}
+
+#delete{
+  background-color: rgb(151, 36, 36);
+}
+
+#delete:hover {
+  background-color: rgb(202, 24, 24);
+}
+
+.spinnerCenter {
+  margin: 0 auto;
+  margin-top: 25%;
+}
+
+mat-card-footer {
+  text-align: center;
 }
