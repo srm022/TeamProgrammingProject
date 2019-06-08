@@ -32,5 +32,6 @@ namespace PZProject.Handlers.Utils
 
             if (!userGroups.Any(u => u.UserId == userId))
                 throw new SecurityException($"User with ID: {userId} does not have access to this operation.");
-        }    }
+        }
+    }
 }

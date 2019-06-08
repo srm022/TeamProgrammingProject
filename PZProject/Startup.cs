@@ -27,15 +27,18 @@ namespace PZProject
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var dbConnectionString = Configuration.GetValue<string>("DbConnectionString");
-            var jwtSecurityKey = Configuration.GetValue<string>("JwtSecurityKey");
+            var dbConnectionString = Configuration["DbConnectionString"];
+            var jwtSecurityKey = Configuration["JwtSecurityKey"];
+            var storageAccountConnectionString = Configuration["StorageAccountConnectionString"];
+            var storageAccountBlobContainerName = Configuration["StorageAccountBlobContainerName"];
+
 
             services.Configure<SystemSettings>(options =>
             {
                 options.DbConnectionString = dbConnectionString;
                 options.JwtSecurityKey = jwtSecurityKey;
-                options.StorageAccountConnectionString = Configuration.GetValue<string>("StorageAccountConnectionString");
-                options.StorageAccountBlobContainerName = Configuration.GetValue<string>("StorageAccountBlobContainerName");
+                options.StorageAccountConnectionString = storageAccountConnectionString;
+                options.StorageAccountBlobContainerName = storageAccountBlobContainerName;
             });
 
             var key = Encoding.ASCII.GetBytes(jwtSecurityKey);
