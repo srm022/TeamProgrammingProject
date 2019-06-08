@@ -1,5 +1,10 @@
-﻿using PZProject.Data.Database.Entities.Note;
+﻿using PZProject.Data.Database.Entities;
+using PZProject.Data.Database.Entities.Group;
+using PZProject.Data.Database.Entities.Note;
+using PZProject.Data.Database.Entities.User;
+using PZProject.Data.Repositories.Group;
 using PZProject.Data.Repositories.Note;
+using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.NoteRequests;
 using PZProject.Data.Responses.NotesResponses;
 using PZProject.Handlers.Group.Operations.CreateNote;
@@ -23,16 +28,22 @@ namespace PZProject.Handlers.Note
         private readonly INoteCreator _notesCreator;
         private readonly INoteEditHandler _noteEditHandler;
         private readonly INoteDeleteHandler _noteDeleteHandler;
+        private readonly IUserRepository _userRepository;
+        private readonly IGroupRepository _groupRepository;
 
         public NoteOperationsHandler(INoteRepository noteRepository,
             INoteCreator notesCreator,
             INoteEditHandler noteEditHandler,
-            INoteDeleteHandler noteDeleteHandler)
+            INoteDeleteHandler noteDeleteHandler,
+            IUserRepository userRepository,
+            IGroupRepository groupRepository)
         {
             _notesRepository = noteRepository;
             _notesCreator = notesCreator;
             _noteEditHandler = noteEditHandler;
             _noteDeleteHandler = noteDeleteHandler;
+            _userRepository = userRepository;
+            _groupRepository = groupRepository;
         }
 
         public List<NoteResponse> GetNotesForGroup(int groupId, int issuerId)
@@ -51,17 +62,46 @@ namespace PZProject.Handlers.Note
 
         public void CreateNoteForGroup(CreateNoteRequest request, int groupId, int issuerId)
         {
-            _notesCreator.CreateNewNoteForGroup(request, groupId, issuerId);
+            var user = GetUserForId(issuerId);
+            var group = GetGroupForId(groupId);
+            _notesCreator.CreateNewNoteForGroup(request, group.GroupId, user.UserId);
         }
 
         public void EditNote(EditNoteRequest request, int issuerId)
         {
-            _noteEditHandler.EditNote(request.NoteId, request.NoteName, request.NoteDescription, issuerId);
+            var user = GetUserForId(issuerId);
+            var note = GetNoteForId(request.NoteId);
+            _noteEditHandler.EditNote(note, request.NoteName, request.NoteDescription, user.UserId);
         }
 
         public void DeleteNote(DeleteNoteRequest request, int issuerId)
         {
-            _noteDeleteHandler.DeleteNote(request.NoteId, issuerId);
+            var user = GetUserForId(issuerId);
+            _noteDeleteHandler.DeleteNote(request.NoteId, user.UserId);
+        }
+
+        private UserEntity GetUserForId(int userId)
+        {
+            var user = _userRepository.GetUserById(userId);
+            user.AssertThatExists();
+
+            return user;
+        }
+
+        private GroupEntity GetGroupForId(int groupId)
+        {
+            var group = _groupRepository.GetGroupById(groupId);
+            group.AssertThatExists();
+
+            return group;
+        }
+
+        private NoteEntity GetNoteForId(int noteId)
+        {
+            var note = _notesRepository.GetNoteById(noteId);
+            note.AssertThatExists();
+
+            return note;
         }
     }
 }

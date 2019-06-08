@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PZProject.Data.Database.Entities;
 using PZProject.Data.Database.Entities.User;
 using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.UserRequests;
@@ -37,6 +38,7 @@ namespace PZProject.Handlers.User
         public LoginUserResponse LoginUser(LoginUserRequest request)
         {
             var user = GetUserByEmail(request.Email);
+            if (user == null) throw new Exception("Wrong credentials");
             if (PasswordHashHandler.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 var token = _tokenGenerator.GenerateJwtToken(user.UserId, user.Role.Name);
