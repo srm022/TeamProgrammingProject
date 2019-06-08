@@ -1,21 +1,43 @@
-<h3 class="pageTitle" >Notes display</h3>
+<ng-container *ngIf="!isLoading">
+<h3 class="pageTitle">Notes display</h3>
 <button (click)="createNote()" class="createGroupButton">Create new note</button>
 <br><br><br><br>
-<mat-grid-list  cols="3" rowHeight="1:1" gutterSize="100px" rowspan="2">
+<mat-grid-list cols="3" rowHeight="1:1" gutterSize="100px" rowspan="2">
   <ng-container *ngFor="let element of GroupNotesArray">
     <mat-grid-tile class="form">
-        <mat-card>
-            <mat-card-header>
-              {{element.NoteName}}
-            </mat-card-header>
-            <mat-card-content>
-              {{element.description}} 
-            </mat-card-content>
-            <mat-card-actions *ngIf="adminChecker(element.CreatorId)">
-              <button class="editGroupButton" (click)="updateNote(element.NoteId)">Edit</button>
-              <button (click)="deleteNote(element.NoteId)" class="deleteGroupButton">Delete</button>
-            </mat-card-actions>
-        </mat-card>    
+      <mat-card>
+        <mat-card-actions *ngIf="adminChecker(element.CreatorId)">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon svgIcon="more_horiz"></mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="attachmentEdit(element.NoteId)" id="attachment">
+              <mat-icon svgIcon="attachment"></mat-icon>
+              <span>Attachment</span>
+            </button>
+            <button mat-menu-item (click)="updateNote(element.NoteId)" id="edit">
+              <mat-icon svgIcon="edit"></mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="deleteNote(element.NoteId)" id="delete">
+              <mat-icon svgIcon="delete"></mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </mat-card-actions>
+        <mat-card-header>
+          {{element.NoteName}}
+        </mat-card-header>
+        <mat-card-content>
+          {{element.description}}
+        </mat-card-content>
+        <mat-card-footer *ngIf="element.AttachmentIdentity !== null" >
+          <mat-icon svgIcon="attachment"></mat-icon>
+          <a class="attachmmentName" [href]='element.Url'>{{element.AttachmentIdentity}}</a>
+        </mat-card-footer>
+      </mat-card>
     </mat-grid-tile>
   </ng-container>
 </mat-grid-list>
+</ng-container>
+<mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner>

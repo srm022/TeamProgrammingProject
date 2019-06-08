@@ -1,0 +1,15 @@
+<form #createGroup="ngForm" *ngIf="!isLoading">
+    <div class="login-page">
+      <div class="form">
+        <div class="register-form">
+          <div class="attachmmentTitle">Attachment panel</div>
+          <a class="attachmmentName" *ngIf="attachmentName!=null" [href]='url'>{{attachmentName}}</a>
+          <input *ngIf="attachmentName===null" type="file" (change)="handleFileInput($event.target.files)"/>
+          <button *ngIf="attachmentName===null" type="submit" id="loginButton" (click)="addAttachment()">Add</button>
+          <button *ngIf="attachmentName!==null"type="submit" id="loginButton" (click)="deleteAttachment()">Delete</button>
+          <p class="message"><a (click)="backToNotes()">Back to list</a></p>
+        </div>
+      </div>
+    </div>
+  </form>
+  <mat-spinner class="spinnerCenter" *ngIf="isLoading"></mat-spinner>
