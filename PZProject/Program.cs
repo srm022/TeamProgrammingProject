@@ -1,3 +1,5 @@
+#define Managed
+
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.KeyVault;
@@ -32,6 +34,6 @@ namespace PZProject
                 ).UseStartup<Startup>()
                 .Build();
 
-        private static string GetKeyVaultEndpoint() => "https://pzproject-vault.vault.azure.net";
+        private static string GetKeyVaultEndpoint() => "https://pzproject-vault.vault.azure.net/";
     }
 }
