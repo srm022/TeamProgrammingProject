@@ -27,9 +27,6 @@ namespace PZProject
                                     azureServiceTokenProvider.KeyVaultTokenCallback));
                             builder.AddAzureKeyVault(
                                 keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
-
-
-                            ctx.Configuration = builder.Build();
                         }
                     }
                 ).UseStartup<Startup>()
