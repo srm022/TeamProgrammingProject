@@ -6,10 +6,7 @@
         <div class="noteTitle">Note editor</div>
         <input type="text" [(ngModel)]="noteName" required #groupN="ngModel" name="groupN" />
         <input type="text" [(ngModel)]="noteDescription" required #groupD="ngModel" name="groupD" />
-        <input type="file" (change)="handleFileInput($event.target.files)"/>
-        <button type="button" id="loginButton" [disabled]="createGroup.invalid" (click)="addAttachment()">Update</button>
-        <!-- updateNote(element.NoteId) -->
-        <a [href]='sanatizeUrl'>Download link </a>
+        <button type="button" id="loginButton" [disabled]="createGroup.invalid" (click)="updateNote()">Update</button>
         <p class="message"><a (click)="backToNotes()">Back to notes</a></p>
       </div>
     </div>

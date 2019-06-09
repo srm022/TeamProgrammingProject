@@ -20,7 +20,6 @@ export class NoteEditComponentComponent implements OnInit {
   noteAttachment: any;
   isLoading = false;
   AttachmentIdentity: any;
-  sanatizeUrl: any;
 
   constructor(
     private http: HttpClient,
@@ -76,8 +75,6 @@ export class NoteEditComponentComponent implements OnInit {
       .subscribe(
         result => {
           this.addNotesInfoToArray(result);
-          this.sanatizeUrl = "https://pzprojectstorage.blob.core.windows.net:443/pzproject-blobstorage/"+this.AttachmentIdentity;
-          console.log("TO MOJ URI: "+ "https://pzprojectstorage.blob.core.windows.net:443/pzproject-blobstorage/"+this.AttachmentIdentity);
           this.isLoading = false;
         },
         error => console.error(error)
@@ -89,7 +86,7 @@ export class NoteEditComponentComponent implements OnInit {
     console.log(this.noteAttachment)
   }
 
-  updateNote(noteId: any) {
+  updateNote() {
     this.isLoading = true;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -99,7 +96,7 @@ export class NoteEditComponentComponent implements OnInit {
     };
 
     const bodyOptions = {
-      NoteId: noteId,
+      NoteId: this.selectedNoteId,
       NoteName: this.noteName,
       NoteDescription: this.noteDescription
     };
@@ -113,44 +110,10 @@ export class NoteEditComponentComponent implements OnInit {
       )
       .subscribe(
         result => {
-          if (this.noteAttachment) {
-            this.addAttachment();
-          }
+          this.isLoading = false;
+          this.backToNotes();
         },
         error => this.showErrorAlert(error)
-      );
-  }
-
-  addAttachment() {
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.token
-      })
-    };
-    
-    let file: File = this.noteAttachment;
-    console.log(this.noteAttachment)
-    let formData: FormData = new FormData();
-    formData.append('file', file);
-
-    console.log('sending attachment body method');
-    
-    this.http
-      .post('https://pzproject.azurewebsites.net/groups/' +
-        this.selectedGroupId +
-        '/notes/' +
-        this.selectedNoteId +
-        '/attachment/create',
-        formData,
-        httpOptions
-      )
-      .subscribe(
-        result => {
-          console.log(result);
-        },
-        //error => this.showErrorAlert(error)
-        error => console.log(error)
       );
   }
 
