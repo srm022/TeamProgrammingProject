@@ -46,9 +46,4 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('result should be int', () => {
-    const result = 1;
-    expect(result).toBe(1);
-  });
 });
