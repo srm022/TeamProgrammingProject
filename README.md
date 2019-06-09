@@ -3,3 +3,7 @@
 
 
 Team programming college project
+
+
+Docs can be found under:
+https://docs.google.com/document/d/12rKMjZolYk--nYeisRuOAx1doAHXWGhoDgKh7jsx_VU/edit?fbclid=IwAR3NmTzbK4EIGadLG2o-XZT-S6OyV-01wduc2Lu36yZFYYJuTXjZLgb7kGQ
