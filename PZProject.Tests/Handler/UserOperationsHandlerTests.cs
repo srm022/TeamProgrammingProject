@@ -7,6 +7,8 @@ using PZProject.Data.Repositories.User;
 using PZProject.Data.Requests.UserRequests;
 using PZProject.Handlers.User;
 using PZProject.Handlers.Utils;
+using AutoMapper;
+using PZProject.Data;
 
 namespace PZProject.Tests.Handler
 {
@@ -30,6 +32,20 @@ namespace PZProject.Tests.Handler
             Assert.That(exception.Message, Is.EqualTo($"Wrong credentials"));
         }
 
+        [Test]
+        public void Should_Register_User_For_Valid_Input_Parameters()
+        {
+            //ARRANGE
+            var fixture = new UserOperationsHandlerTestsFixture()
+                .ConfigureMapper()
+                .ConfigureSut();
+
+            var request = CreateValidCreateUserRequest();
+
+            //ACT && ASSERT
+            Assert.DoesNotThrow(() => fixture.Sut.RegisterNewUser(request));
+        }
+
         private RegisterUserRequest CreateValidCreateUserRequest()
         {
             return new RegisterUserRequest
@@ -43,7 +59,6 @@ namespace PZProject.Tests.Handler
     public class UserOperationsHandlerTestsFixture
     {
         public UserOperationsHandler Sut { get; set; }
-        public int ValidIssuerId { get; set; }
 
         private readonly Mock<IUserRepository> _userRepositoryMock = new Mock<IUserRepository>();
         private readonly Mock<IJwtTokenGenerator> _tokenGeneratorMock = new Mock<IJwtTokenGenerator>();
@@ -52,6 +67,16 @@ namespace PZProject.Tests.Handler
         {
             Sut = new UserOperationsHandler(_userRepositoryMock.Object,
                 _tokenGeneratorMock.Object);
+
+            return this;
+        }
+
+        public UserOperationsHandlerTestsFixture ConfigureMapper()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<SystemMapperProfile>();
+            });
 
             return this;
         }
