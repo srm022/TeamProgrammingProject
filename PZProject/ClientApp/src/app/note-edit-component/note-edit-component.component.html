@@ -2,11 +2,11 @@
 <form #createGroup="ngForm">
   <div class="login-page">
     <div class="form">
-      <div class="register-form"  *ngFor="let element of noteInfoArray">
+      <div class="register-form" *ngFor="let element of noteInfoArray">
         <div class="noteTitle">Note editor</div>
-        <input type="text" [(ngModel)]="noteName" required #groupN="ngModel" name="groupN"/>
-        <input type="text" [(ngModel)]="noteDescription" required #groupD="ngModel" name="groupD"/>
-        <button type="submit" id="loginButton" [disabled]="createGroup.invalid" (click)="updateNote(element.NoteId)">Update</button>
+        <input type="text" [(ngModel)]="noteName" required #groupN="ngModel" name="groupN" />
+        <input type="text" [(ngModel)]="noteDescription" required #groupD="ngModel" name="groupD" />
+        <button type="button" id="loginButton" [disabled]="createGroup.invalid" (click)="updateNote()">Update</button>
         <p class="message"><a (click)="backToNotes()">Back to notes</a></p>
       </div>
     </div>

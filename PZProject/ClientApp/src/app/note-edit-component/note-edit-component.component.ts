@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-note-edit-component',
@@ -16,13 +17,17 @@ export class NoteEditComponentComponent implements OnInit {
   token: any;
   noteName: any;
   noteDescription: any;
+  noteAttachment: any;
   isLoading = false;
+  AttachmentIdentity: any;
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastsManager,
-    private vcr: ViewContainerRef
+    private vcr: ViewContainerRef,
+    private sanitizer:DomSanitizer
   ) {
     this.toastr.setRootViewContainerRef(vcr);
   }
@@ -39,6 +44,7 @@ export class NoteEditComponentComponent implements OnInit {
   addNotesInfoToArray(result: Object | { [x: string]: any }[]) {
     while (result[this.iterator]) {
       if (result[this.iterator]['id'] == this.selectedNoteId) {
+        this.AttachmentIdentity = result[this.iterator]['attachmentIdentity']
         this.noteName = result[this.iterator]['name'];
         this.noteDescription = result[this.iterator]['description'];
         this.noteInfoArray.push({
@@ -75,7 +81,12 @@ export class NoteEditComponentComponent implements OnInit {
       );
   }
 
-  updateNote(noteId: any) {
+  handleFileInput(files) {
+    this.noteAttachment = files[0];
+    console.log(this.noteAttachment)
+  }
+
+  updateNote() {
     this.isLoading = true;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -85,7 +96,7 @@ export class NoteEditComponentComponent implements OnInit {
     };
 
     const bodyOptions = {
-      NoteId: noteId,
+      NoteId: this.selectedNoteId,
       NoteName: this.noteName,
       NoteDescription: this.noteDescription
     };
@@ -99,11 +110,8 @@ export class NoteEditComponentComponent implements OnInit {
       )
       .subscribe(
         result => {
-          this.showSuccessAlert();
-          setTimeout(() => {
-            this.isLoading = false;
-            this.router.navigate(['/groups/' + this.selectedGroupId + '/notes']);
-          }, 2000);
+          this.isLoading = false;
+          this.backToNotes();
         },
         error => this.showErrorAlert(error)
       );

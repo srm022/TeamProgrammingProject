@@ -56,7 +56,8 @@ namespace PZProject
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .AllowCredentials();
             }));
             services.AddAuthentication(x =>
             {
